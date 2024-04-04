@@ -1,5 +1,6 @@
 <template>
   <div class="">
+    <Header/>
     <main class="dark:bg-gray-800 bg-white relative overflow-hidden h-screen">
 
         <div class="bg-white dark:bg-gray-800 flex relative z-20 items-center overflow-hidden">
@@ -247,8 +248,12 @@
         </div>
       </div>
   </div>
+  <Footer/>
 </template>
 
-<script>
+<script setup>
+
+import Header from "../layouts/header.vue"
+import Footer from "../layouts/footer.vue"
 
 </script>
