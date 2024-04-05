@@ -1,7 +1,8 @@
 <template>
   <div class="">
+    <Head/>
     <Header/>
-    <main class="dark:bg-gray-800 bg-white relative overflow-hidden h-screen">
+    <main class="dark:bg-gray-800 bg-white relative overflow-hidden">
 
         <div class="bg-white dark:bg-gray-800 flex relative z-20 items-center overflow-hidden">
             <div class="container mx-auto px-6 flex relative py-16">
@@ -32,7 +33,7 @@
             </div>
         </div>
     </main>
-    <section class="container w-3/4 mx-auto px-5 md:px-0 py-10 md:py-20 mt-0">
+    <section class="container w-3/4 mx-auto px-5 md:px-0 py-10 md:py-20 mt-28">
         <section class="flex flex-col md:flex-row items-center justify-between relative transform duration-500 hover:shadow-2xl cursor-pointer hover:-translate-y-1 ">
             <img class="w-full md:w-auto md:max-w-5xl h-96 object-cover" src="storage/images/mouton1.jpg" alt="">
             <div class="bg-white p-6 md:p-12 lg:max-w-lg w-full">
@@ -252,8 +253,7 @@
 </template>
 
 <script setup>
-
-import Header from "../layouts/header.vue"
-import Footer from "../layouts/footer.vue"
-
+  import Header from "../layouts/header.vue"
+  import Footer from "../layouts/footer.vue"
+  import Head from "../layouts/head.vue"
 </script>

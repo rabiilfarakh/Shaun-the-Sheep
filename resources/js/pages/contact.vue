@@ -1,4 +1,6 @@
 <template>
+    <Head/>
+    <Header/>
     <div class="">
         <div class=" dark:bg-gray-900" id="contact">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 text-center">
@@ -70,4 +72,12 @@
         </div>
     </div>
     </div>
+    <Footer/>
 </template>
+
+<script setup>
+
+import Header from "../layouts/header.vue"
+import Footer from "../layouts/footer.vue"
+import Head from "../layouts/head.vue"
+</script>

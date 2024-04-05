@@ -1,5 +1,6 @@
 <template>
-
+    <Head/>
+ <Header/>
 <div class="mx-auto container px-6 xl:px-0 py-12">
         <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->  
         <div class="flex flex-col">
@@ -195,7 +196,12 @@
     </div>
     </div>
 </div>
-  </template>
-  
-  <script>
-  </script>
+<Footer/>
+</template>
+
+<script setup>
+
+import Header from "../layouts/header.vue"
+import Footer from "../layouts/footer.vue"
+import Head from "../layouts/head.vue"
+</script>

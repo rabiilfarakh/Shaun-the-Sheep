@@ -6,6 +6,7 @@ import blog from './pages/blog.vue';
 import product from './pages/product.vue';
 import register from './pages/register.vue';
 import contact from './pages/contact.vue';
+import service from './pages/service.vue';
 
 const routes = [
   {
@@ -39,6 +40,10 @@ const routes = [
   {
     path: '/contact',
     component: contact
+  },
+  {
+    path: '/service',
+    component: service
   },
 
 ];

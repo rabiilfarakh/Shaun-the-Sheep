@@ -1,4 +1,6 @@
 <template>
+    <Head/>
+    <Header/>
 <div class="">
     <div class="flex justify-center items-center">
     <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
@@ -118,7 +120,12 @@
     </div>
   </div>
 </div>
+<Footer/>
 </template>
   
-  <script>
-  </script>
+<script setup>
+
+import Header from "../layouts/header.vue"
+import Footer from "../layouts/footer.vue"
+import Head from "../layouts/head.vue"
+</script>
