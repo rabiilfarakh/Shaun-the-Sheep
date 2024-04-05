@@ -6,7 +6,7 @@
         <div class="flex flex-col">
         <div class="flex flex-col justify-center">
             <div class="relative flex justify-center">
-            <img class=" hidden sm:block w-full " src="{{ asset('storage/images/capture.png') }}" alt="sofa"/>
+            <img class=" hidden sm:block w-full " src="storage/images/capture.png" alt="sofa"/>
             <img class="sm:hidden w-full" src="https://i.ibb.co/B6qwqPT/jason-wang-Nx-Awry-Abt-Iw-unsplash-1.png" alt="sofa" />
             <div class="absolute sm:bottom-8 bottom-4 pr-10 sm:pr-0 left-4 sm:left-8 flex justify-start items-start">
             </div>
@@ -31,7 +31,7 @@
         <!--   ✅ Product card 1 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/vach4.jpg') }}"
+                <img src="storage/images/vach4.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -57,7 +57,7 @@
         <!--   ✅ Product card 2 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/mouton3.jpg') }}"
+                <img src="storage/images/mouton3.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -83,7 +83,7 @@
         <!--   ✅ Product card 3 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/Capra.jpg') }}"
+                <img src="storage/images/Capra.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -109,7 +109,7 @@
         <!--   ✅ Product card 4 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/mouton9.jpg') }}"
+                <img src="storage/images/mouton9.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -135,7 +135,7 @@
         <!--   ✅ Product card 5 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/vach1.jpg') }}"
+                <img src="storage/images/vach1.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
@@ -161,7 +161,7 @@
         <!--   ✅ Product card 6 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             <a href="#">
-                <img src="{{ asset('storage/images/cabra.jpg') }}"
+                <img src="storage/images/cabra.jpg"
                         alt="Product" class="h-80 w-72 object-cover rounded-t-xl" />
                 <div class="px-4 py-3 w-72">
                     <span class="text-gray-400 mr-3 uppercase text-xs">Brand</span>
