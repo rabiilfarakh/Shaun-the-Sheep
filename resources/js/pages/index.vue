@@ -27,14 +27,14 @@
                     </div>
                 </div>
                 <div class="hidden sm:block sm:w-1/3 lg:w-3/5 relative">
-                    <img src="{{ asset('storage/images/vaches.png') }}" class="max-w-xs md:max-w-sm lg:max-w-full m-auto"/>
+                    <img src="storage/images/vaches.png" class="max-w-xs md:max-w-sm lg:max-w-full m-auto"/>
                 </div>                
             </div>
         </div>
     </main>
     <section class="container w-3/4 mx-auto px-5 md:px-0 py-10 md:py-20 mt-0">
         <section class="flex flex-col md:flex-row items-center justify-between relative transform duration-500 hover:shadow-2xl cursor-pointer hover:-translate-y-1 ">
-            <img class="w-full md:w-auto md:max-w-5xl h-96 object-cover" src="{{ asset('storage/images/mouton1.jpg') }}" alt="">
+            <img class="w-full md:w-auto md:max-w-5xl h-96 object-cover" src="storage/images/mouton1.jpg" alt="">
             <div class="bg-white p-6 md:p-12 lg:max-w-lg w-full">
                 <div class="flex  font-bold text-sm mb-2 md:mb-6">
                     <p>Product Review</p>
@@ -63,7 +63,7 @@
                 <div class="relative">
                     <a href="#">
                         <img class="w-full"
-                            src="{{ asset('storage/images/mouton6.jpg') }}"
+                            src="storage/images/mouton6.jpg"
                             alt="Sunset in the mountains">
                         <div
                             class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
@@ -114,7 +114,7 @@
                 <div class="relative">
                     <a href="#">
                         <img class="w-full"
-                            src="{{ asset('storage/images/vach1.jpg') }}"
+                            src="storage/images/vach1.jpg"
                             alt="Sunset in the mountains">
                         <div
                             class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
@@ -167,7 +167,7 @@
                 <div class="relative">
                     <a href="#">
                         <img class="w-full"
-                            src="{{ asset('storage/images/moutons.jpg') }}"
+                            src="storage/images/moutons.jpg"
                             alt="Sunset in the mountains">
                         <div
                             class="hover:bg-transparent transition duration-300 absolute bottom-0 top-0 right-0 left-0 bg-gray-900 opacity-25">
