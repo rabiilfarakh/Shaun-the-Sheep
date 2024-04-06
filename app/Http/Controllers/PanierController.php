@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\panier;
-use App\Http\Requests\StorepanierRequest;
-use App\Http\Requests\UpdatepanierRequest;
+use App\Models\Panier;
+use App\Http\Requests\StorePanierRequest;
+use App\Http\Requests\UpdatePanierRequest;
 
 class PanierController extends Controller
 {
@@ -27,7 +27,7 @@ class PanierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorepanierRequest $request)
+    public function store(StorePanierRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class PanierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(panier $panier)
+    public function show(Panier $panier)
     {
         //
     }
@@ -43,7 +43,7 @@ class PanierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(panier $panier)
+    public function edit(Panier $panier)
     {
         //
     }
@@ -51,7 +51,7 @@ class PanierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatepanierRequest $request, panier $panier)
+    public function update(UpdatePanierRequest $request, Panier $panier)
     {
         //
     }
@@ -59,7 +59,7 @@ class PanierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(panier $panier)
+    public function destroy(Panier $panier)
     {
         //
     }

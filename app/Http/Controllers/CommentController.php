@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\comment;
-use App\Http\Requests\StorecommentRequest;
-use App\Http\Requests\UpdatecommentRequest;
+use App\Models\Comment;
+use App\Http\Requests\StoreCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
 
 class CommentController extends Controller
 {
@@ -27,7 +27,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorecommentRequest $request)
+    public function store(StoreCommentRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(comment $comment)
+    public function show(Comment $comment)
     {
         //
     }
@@ -43,7 +43,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(comment $comment)
+    public function edit(Comment $comment)
     {
         //
     }
@@ -51,7 +51,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatecommentRequest $request, comment $comment)
+    public function update(UpdateCommentRequest $request, Comment $comment)
     {
         //
     }
@@ -59,7 +59,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(comment $comment)
+    public function destroy(Comment $comment)
     {
         //
     }

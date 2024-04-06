@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
-use App\Http\Requests\StoreClientRequest;
-use App\Http\Requests\UpdateClientRequest;
+use App\Models\client;
+use App\Http\Requests\StoreclientRequest;
+use App\Http\Requests\UpdateclientRequest;
 
 class ClientController extends Controller
 {
@@ -27,7 +27,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClientRequest $request)
+    public function store(StoreclientRequest $request)
     {
         //
     }
@@ -51,7 +51,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateClientRequest $request, Client $client)
+    public function update(UpdateclientRequest $request, Client $client)
     {
         //
     }

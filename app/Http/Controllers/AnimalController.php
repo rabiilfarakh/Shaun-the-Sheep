@@ -11,36 +11,9 @@ class AnimalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function blog()
+    public function index()
     {
-        return view('blog');
-    }
-
-    public function products()
-    {
-        return view('product');
-    }
-
-    public function home()
-    {
-        return view('home');
-    }
-
-    public function contact()
-    {
-        return  view('contact');    
-    }
-
-    public function panier()
-    {
-        return  view('panier');    
-    }
-
-
-
-    public function index(){
-        // $animals = Animal::all();
-        // return response()->json($animals);
+        //
     }
 
     /**
@@ -62,11 +35,10 @@ class AnimalController extends Controller
     /**
      * Display the specified resource.
      */
-    
     public function show(Animal $animal)
     {
-        return response()->json($animal);
-    }    
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
