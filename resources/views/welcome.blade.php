@@ -10,6 +10,9 @@
     <title>Document</title>
 </head>
 <body>
-
+    <div id="app">
+        <App-layouts></App-layouts>
+    </div>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </body>
 </html>

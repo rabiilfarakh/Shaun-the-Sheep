@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Client;
+use App\Models\Admin;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
@@ -66,25 +68,35 @@ class UserController extends Controller
         //
     }
 
-    public function register(Request $request){
-        
-        $this->validate($request,[
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8' 
-        ]);
-        
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ]);
+    public function register(Request $request)
+{
+    $this->validate($request, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required|min:8',
+        'role' => 'required|in:admin,client'
+    ]);
 
-        return response()->json(['message' => 'User registered successfully']);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password)
+    ]);
+
+    if ($request->role === "admin") {
+        $admin = Admin::create([
+            'user_id' => $user->id,
+        ]);
+    }else{
+        $client = Client::create([
+            'user_id' => $user->id,
+        ]);
     }
 
-    public function login(Request $request){
+    return response()->json(['message' => 'User registered successfully']);
+}
 
+    public function login(Request $request){
         $this->validate($request,[
             'email' => 'required|email',
             'password' => 'required|min:8' 
@@ -93,7 +105,7 @@ class UserController extends Controller
         $user = User::where('email', $request->email)->first();
     
         if($user){
-    
+
             if(Hash::check($request->password, $user->password)){
                 $token = $user->createToken('authToken')->plainTextToken;
                 return response()->json([
