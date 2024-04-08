@@ -6,18 +6,18 @@
         <div class="flex flex-col">
         <div class="flex flex-col justify-center">
             <div class="relative flex justify-center">
-            <img class=" hidden sm:block w-full " src="storage/images/capture.png" alt="sofa"/>
-            <img class="sm:hidden w-full" src="https://i.ibb.co/B6qwqPT/jason-wang-Nx-Awry-Abt-Iw-unsplash-1.png" alt="sofa" />
+            <!-- <img class=" hidden sm:block w-96 " src="storage/images/aya.jpg" alt="sofa"/> -->
+            <img class="sm:hidden w-full " src="https://i.ibb.co/B6qwqPT/jason-wang-Nx-Awry-Abt-Iw-unsplash-1.png" alt="sofa" />
             <div class="absolute sm:bottom-8 bottom-4 pr-10 sm:pr-0 left-4 sm:left-8 flex justify-start items-start">
             </div>
             </div>
         </div>
         <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
 
-    <div class="text-center p-10">
-        <h1 class="font-bold text-4xl mb-4">Responsive Product card grid</h1>
-        <h1 class="text-3xl">Tailwind CSS</h1>
-    </div>
+    <!-- <div class="text-center p-10 h-96" style="background-image: url('storage/images/aya.jpg'); background-size: cover; background-position: center;">
+    <h1 class="font-bold text-4xl mb-4 text-white">Responsive Product card grid</h1>
+    <h1 class="text-3xl  text-white">Tailwind CSS</h1>
+    </div> -->
 
     <form class="mt-10 w-full mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
         <input type="text" placeholder="Search anything" class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0" name="topic"><button class="flex flex-row items-center justify-center min-w-[130px] px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white font-medium tracking-wide border-transparent py-1.5 h-[38px] -mr-3" >
@@ -26,7 +26,7 @@
     </form>
     <!-- ✅ Grid Section - Starts Here 👇 -->
     <section id="Projects"
-        class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+        class="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-20 mb-5">
 
         <!--   ✅ Product card 1 - Starts Here 👇 -->
         <div class="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">

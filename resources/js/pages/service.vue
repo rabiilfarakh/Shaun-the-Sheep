@@ -2,13 +2,7 @@
     <div class="">
         <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Document</title>
-</head>
+<Head/>
 <body>
     <Header/>
     <div class="container relative flex flex-col justify-between h-full max-w-6xl px-10 mx-auto xl:px-0 mt-5">
@@ -96,7 +90,7 @@
 
 
 <script setup>
-
+import Head from "../layouts/head.vue"
 import Header from "../layouts/header.vue"
 import Footer from "../layouts/footer.vue"
 

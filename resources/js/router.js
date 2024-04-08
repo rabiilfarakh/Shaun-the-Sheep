@@ -7,6 +7,8 @@ import product from './pages/product.vue';
 import register from './pages/register.vue';
 import contact from './pages/contact.vue';
 import service from './pages/service.vue';
+import panier from './pages/panier.vue';
+import animal from './pages/animal.vue';
 
 const routes = [
   {
@@ -44,6 +46,14 @@ const routes = [
   {
     path: '/service',
     component: service
+  },
+  {
+    path: '/panier',
+    component: panier
+  },
+  {
+    path: '/animal',
+    component: animal
   },
 
 ];

@@ -42,7 +42,7 @@
         if (res.data.token) {
           this.message = res.data.message;
           localStorage.setItem('token', res.data.token); 
-          this.$router.push('/index');
+          this.$router.push('/dashboard');
         } else {
           this.message = res.data.message;
         }

@@ -16,11 +16,11 @@
                     <router-link to="/product" class="py-2 px-6 flex">
                         Product
                     </router-link>
-                    <router-link to="/contact" class="py-2 px-6 flex">
-                        Contact
-                    </router-link>
                     <router-link to="/service" class="py-2 px-6 flex">
                         Services
+                    </router-link>
+                    <router-link to="/contact" class="py-2 px-6 flex">
+                        Contact
                     </router-link>
                     <router-link to="/panier" class="py-2 px-6 flex">
                         <i class="fas fa-shopping-cart mr-1"></i>
