@@ -43,8 +43,8 @@
                     </a>
                 </div>
             </section>
- <!-- Pagination -->
- <div class="flex justify-center mt-8">
+    <!-- Pagination -->
+    <div class="flex justify-center mt-8">
         <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1"
             class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
 
@@ -57,10 +57,9 @@
             </button>
         </div>
 
-        <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage"
+        <button @click="fetchNextPage" :disabled="currentPage === lastPage"
             class="px-3 py-1 ml-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
     </div>
-
             <!-- credit -->
             <div class="text-center py-10 px-10">
                 <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
@@ -96,6 +95,12 @@
             originalAnimals.value = response.data;
         } catch (error) {
             console.error('Erreur lors de la récupération des animaux :', error);
+        }
+    };
+
+    const fetchNextPage = async () => {
+        if (currentPage.value < lastPage.value) {
+            await fetchAnimals(currentPage.value + 1);
         }
     };
 
