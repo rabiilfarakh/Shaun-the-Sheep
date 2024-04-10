@@ -24,11 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('animal', AnimalController::class);
 
 Route::group(['middleware' => ['auth:sanctum']],function(){
-    
-    Route::post('/logout', [UserController::class, 'logout']);
+   
 });
-
+ // Route::post('/logout', [UserController::class, 'logout']);
 // Route::post('/dashboard', [UserController::class, 'register']);
-Route::post('/register', [UserController::class, 'register']);
-Route::post('/login', [UserController::class, 'login']);
+// Route::post('/register', [UserController::class, 'register']);
+// Route::post('/login', [UserController::class, 'login']);
 

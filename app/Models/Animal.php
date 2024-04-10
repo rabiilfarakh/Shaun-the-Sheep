@@ -30,9 +30,13 @@ class Animal extends Model
         return $this->belongsToMany(Nouriture::class, 'animal_nourriture');
     }
 
-    public function images()
+    // public function images()
+    // {
+    //     return $this->morphMany(Image::class, 'imageable');
+    // }
+    public function image()
     {
-        return $this->morphMany(Image::class, 'imageable');
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function comment()
