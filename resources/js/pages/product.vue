@@ -12,17 +12,8 @@
                     </div>
                 </div>
             </div>
-            <!-- source: https://github.com/mfg888/Responsive-Tailwind-CSS-Grid/blob/main/index.html -->
-
-            <!-- <div class="text-center p-10 h-96" style="background-image: url('storage/images/aya.jpg'); background-size: cover; background-position: center;">
-            <h1 class="font-bold text-4xl mb-4 text-white">Responsive Product card grid</h1>
-            <h1 class="text-3xl  text-white">Tailwind CSS</h1>
-            </div> -->
-
             <form class="mt-10 w-full mx-auto max-w-xl py-2 px-6 rounded-full bg-gray-50 border flex focus-within:border-gray-300">
-                <input type="text" placeholder="Search anything" class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0" name="topic"><button class="flex flex-row items-center justify-center min-w-[130px] px-4 rounded-full font-medium tracking-wide border disabled:cursor-not-allowed disabled:opacity-50 transition ease-in-out duration-150 text-base bg-black text-white font-medium tracking-wide border-transparent py-1.5 h-[38px] -mr-3" >
-                    Search
-                </button>
+                <input v-model="searchTerm" type="text" placeholder="Search anything" class="bg-transparent w-full focus:outline-none pr-4 font-semibold border-0 focus:ring-0 px-0 py-0" name="topic">
             </form>
             <!-- Grid Section - Starts Here  -->
             <section id="Projects"
@@ -61,20 +52,76 @@
     </div>
     <Footer/>
 </template>
-
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+    import Header from "../layouts/header.vue"
+    import Footer from "../layouts/footer.vue"
+    import Head from "../layouts/head.vue"
+    import { ref, onMounted, watch } from 'vue';
+    import axios from 'axios';
 
-const animals = ref([]);
+    const searchTerm = ref('');
+    const originalAnimals = ref([]); // Garder une copie des animaux originaux
+    const animals = ref([]);
 
-onMounted(async () => {
-    try {
-        const response = await axios.get('/api/animal');
-        animals.value = response.data;
-    } catch (error) {
-        console.error('Erreur lors de la récupération des animaux :', error);
-    }
-});
+    // Charger tous les animaux lors du montage du composant
+    onMounted(async () => {
+        try {
+            const response = await axios.get('/api/animal');
+            animals.value = response.data;
+            originalAnimals.value = response.data; // Sauvegarder la copie des animaux originaux
+        } catch (error) {
+            console.error('Erreur lors de la récupération des animaux :', error);
+        }
+    });
 
+    // Surveiller les changements de l'input
+    watch(searchTerm, async (newValue) => {
+        try {
+            if (newValue !== '') {
+                const response = await axios.get('/api/animal', {
+                    params: {
+                        searchTerm: newValue // Passer le contenu de l'input comme paramètre de recherche
+                    }
+                });
+                animals.value = response.data;
+            } else {
+                // Si l'input est vide, restaurer tous les animaux originaux
+                animals.value = originalAnimals.value;
+            }
+        } catch (error) {
+            console.error('Erreur lors de la récupération des animaux :', error);
+        }
+    });
 </script>
+
+
+
+<!-- <script setup>
+
+    const searchTerm = ref('');
+    const animals = ref([]);
+
+    const fetchAnimals = async () => {
+        try {
+            const response = await axios.get('/api/animal');
+            animals.value = response.data;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des animaux :', error);
+        }
+    };
+
+    const filteredAnimals = computed(() => {
+        if (!searchTerm.value.trim()) {
+            return animals.value; // Retourner tous les animaux si la recherche est vide
+        } else {
+            const searchLower = searchTerm.value.trim().toLowerCase();
+            return animals.value.filter(animal => {
+                // Filtrer les animaux qui contiennent le mot ou la lettre de recherche
+                return animal.name.toLowerCase().includes(searchLower);
+            });
+        }
+    });
+
+    // Appeler fetchAnimals lors du montage du composant
+    onMounted(fetchAnimals);
+</script> -->
