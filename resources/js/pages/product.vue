@@ -43,6 +43,11 @@
                     </a>
                 </div>
             </section>
+            <!-- Pagination -->
+            <div class="flex justify-center mt-8">
+                <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1" class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
+                <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
+            </div>
             <!-- credit -->
             <div class="text-center py-10 px-10">
                 <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
@@ -50,51 +55,9 @@
             </div>
         </div>
     </div>
-        <!-- Pagination -->
-    <div class="flex justify-center mt-8">
-        <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1" class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
-        <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
-    </div>
     <Footer/>
 </template>
-<!-- <script setup>
-    import Header from "../layouts/header.vue"
-    import Footer from "../layouts/footer.vue"
-    import Head from "../layouts/head.vue"
-    import { ref, onMounted, watch } from 'vue';
-    import axios from 'axios';
 
-    const searchTerm = ref('');
-    const originalAnimals = ref([]);
-    const animals = ref([]);
-
-    onMounted(async () => {
-        try {
-            const response = await axios.get('/api/animal');
-            animals.value = response.data;
-            originalAnimals.value = response.data;
-        } catch (error) {
-            console.error('Erreur lors de la récupération des animaux :', error);
-        }
-    });
-
-    watch(searchTerm, async (newValue) => {
-        try {
-            if (newValue !== '') {
-                const response = await axios.get('/api/animal', {
-                    params: {
-                        searchTerm: newValue
-                    }
-                });
-                animals.value = response.data;
-            } else {
-                animals.value = originalAnimals.value;
-            }
-        } catch (error) {
-            console.error('Erreur lors de la récupération des animaux :', error);
-        }
-    });
-</script> -->
 <script setup>
     import Header from "../layouts/header.vue"
     import Footer from "../layouts/footer.vue"
