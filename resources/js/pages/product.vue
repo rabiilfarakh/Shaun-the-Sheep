@@ -43,23 +43,23 @@
                     </a>
                 </div>
             </section>
-    <!-- Pagination -->
-    <div class="flex justify-center mt-8">
-        <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1"
-            class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
+            <!-- Pagination -->
+            <div class="flex justify-center mt-8">
+                <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1"
+                    class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
 
-        <div class="flex items-center space-x-4">
-            <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
+                <div class="flex items-center space-x-4">
+                    <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
 
-            <button v-for="page in totalPages" :key="page" @click="fetchAnimals(page)"
-                :class="['px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer', { 'bg-blue-500 text-white': page === currentPage }]">
-                {{ page }}
-            </button>
-        </div>
+                    <button v-for="page in totalPages" :key="page" @click="fetchAnimals(page)"
+                        :class="['px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer', { 'bg-blue-500 text-white': page === currentPage }]">
+                        {{ page }}
+                    </button>
+                </div>
 
-        <button @click="fetchNextPage" :disabled="currentPage === lastPage"
-            class="px-3 py-1 ml-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
-    </div>
+                <button @click="fetchNextPage" :disabled="currentPage === lastPage"
+                    class="px-3 py-1 ml-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
+            </div>
             <!-- credit -->
             <div class="text-center py-10 px-10">
                 <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
@@ -71,6 +71,9 @@
 </template>
 
 <script setup>
+  import Header from "../layouts/header.vue"
+  import Footer from "../layouts/footer.vue"
+  import Head from "../layouts/head.vue"
     import { ref, onMounted, watch } from 'vue';
     import axios from 'axios';
 
