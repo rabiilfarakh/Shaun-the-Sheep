@@ -12,33 +12,28 @@ class AnimalController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        // Vérifier si un terme de recherche est fourni dans la requête
-        if ($request->has('searchTerm')) {
-            $searchTerm = $request->input('searchTerm');
-            // Vérifier si le terme de recherche n'est pas vide
-            if ($searchTerm !== '') {
-                // Filtrer les animaux en fonction du terme de recherche
-                $animaux = Animal::with(['image', 'categorie'])
+{
+    if ($request->has('searchTerm')) {
+        $searchTerm = $request->input('searchTerm');
+        if ($searchTerm !== '') {
+            $animaux = Animal::with(['image', 'categorie'])
                 ->where(function ($query) use ($searchTerm) {
                     $query->where('lieu', 'like', '%'.$searchTerm.'%')
                         ->orWhereHas('categorie', function ($query) use ($searchTerm) {
                             $query->where('name', 'like', '%'.$searchTerm.'%');
                         });
                 })
-                ->get();
-            
-            } else {
-                // Si le terme de recherche est vide, récupérer tous les animaux
-                $animaux = Animal::with(['image', 'categorie'])->get();
-            }
+                ->paginate(3); // Paginer les résultats par groupe de 3
         } else {
-            // Si aucun terme de recherche n'est fourni, récupérer tous les animaux
-            $animaux = Animal::with(['image', 'categorie'])->get();
+            $animaux = Animal::with(['image', 'categorie'])->paginate(3);
         }
-    
-        return response()->json($animaux);
+    } else {
+        $animaux = Animal::with(['image', 'categorie'])->paginate(3);
     }
+
+    return response()->json($animaux);
+}
+
     
 
     

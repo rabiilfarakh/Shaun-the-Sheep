@@ -29,7 +29,7 @@
                             <div class="flex items-center">
                                 <p class="text-lg font-semibold text-black cursor-auto my-3">{{ animal.prix }}DH</p>
                                 <del>
-                                    <p class="text-sm text-gray-600 cursor-auto ml-2">$199</p>
+                                    <p class="text-sm text-gray-600 cursor-auto ml-2">{{ animal.prix + animal.prix*20/100 }}DH</p>
                                 </del>
                                 <div class="ml-auto"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                         fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
@@ -50,9 +50,14 @@
             </div>
         </div>
     </div>
+        <!-- Pagination -->
+    <div class="flex justify-center mt-8">
+        <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1" class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
+        <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
+    </div>
     <Footer/>
 </template>
-<script setup>
+<!-- <script setup>
     import Header from "../layouts/header.vue"
     import Footer from "../layouts/footer.vue"
     import Head from "../layouts/head.vue"
@@ -60,68 +65,77 @@
     import axios from 'axios';
 
     const searchTerm = ref('');
-    const originalAnimals = ref([]); // Garder une copie des animaux originaux
+    const originalAnimals = ref([]);
     const animals = ref([]);
 
-    // Charger tous les animaux lors du montage du composant
     onMounted(async () => {
         try {
             const response = await axios.get('/api/animal');
             animals.value = response.data;
-            originalAnimals.value = response.data; // Sauvegarder la copie des animaux originaux
+            originalAnimals.value = response.data;
         } catch (error) {
             console.error('Erreur lors de la récupération des animaux :', error);
         }
     });
 
-    // Surveiller les changements de l'input
     watch(searchTerm, async (newValue) => {
         try {
             if (newValue !== '') {
                 const response = await axios.get('/api/animal', {
                     params: {
-                        searchTerm: newValue // Passer le contenu de l'input comme paramètre de recherche
+                        searchTerm: newValue
                     }
                 });
                 animals.value = response.data;
             } else {
-                // Si l'input est vide, restaurer tous les animaux originaux
                 animals.value = originalAnimals.value;
             }
         } catch (error) {
             console.error('Erreur lors de la récupération des animaux :', error);
         }
     });
+</script> -->
+<script setup>
+    import Header from "../layouts/header.vue"
+    import Footer from "../layouts/footer.vue"
+    import Head from "../layouts/head.vue"
+    import { ref, onMounted, watch } from 'vue';
+    import axios from 'axios';
+
+const searchTerm = ref('');
+const originalAnimals = ref([]); // Initialiser originalAnimals
+const animals = ref([]);
+const currentPage = ref(1);
+
+const fetchAnimals = async (page = 1) => {
+  try {
+    const response = await axios.get('/api/animal', {
+      params: {
+        searchTerm: searchTerm.value,
+        page: page
+      }
+    });
+    animals.value = response.data.data;
+    currentPage.value = response.data.current_page;
+    originalAnimals.value = response.data; // Mettre à jour originalAnimals
+  } catch (error) {
+    console.error('Erreur lors de la récupération des animaux :', error);
+  }
+};
+
+// Watcher pour détecter les changements de la recherche
+watch(searchTerm, async (newValue) => {
+  currentPage.value = 1; // Réinitialiser la page à 1 lors d'une nouvelle recherche
+  await fetchAnimals(); // Appeler fetchAnimals avec la nouvelle recherche
+});
+
+// Watcher pour détecter les changements de la page actuelle
+watch(currentPage, async () => {
+  await fetchAnimals(currentPage.value); // Appeler fetchAnimals avec la nouvelle page
+});
+
+// Appeler fetchAnimals lors du montage du composant
+onMounted(fetchAnimals);
 </script>
 
 
-
-<!-- <script setup>
-
-    const searchTerm = ref('');
-    const animals = ref([]);
-
-    const fetchAnimals = async () => {
-        try {
-            const response = await axios.get('/api/animal');
-            animals.value = response.data;
-        } catch (error) {
-            console.error('Erreur lors de la récupération des animaux :', error);
-        }
-    };
-
-    const filteredAnimals = computed(() => {
-        if (!searchTerm.value.trim()) {
-            return animals.value; // Retourner tous les animaux si la recherche est vide
-        } else {
-            const searchLower = searchTerm.value.trim().toLowerCase();
-            return animals.value.filter(animal => {
-                // Filtrer les animaux qui contiennent le mot ou la lettre de recherche
-                return animal.name.toLowerCase().includes(searchLower);
-            });
-        }
-    });
-
-    // Appeler fetchAnimals lors du montage du composant
-    onMounted(fetchAnimals);
-</script> -->
