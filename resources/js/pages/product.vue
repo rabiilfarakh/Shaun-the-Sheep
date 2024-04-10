@@ -43,11 +43,24 @@
                     </a>
                 </div>
             </section>
-            <!-- Pagination -->
-            <div class="flex justify-center mt-8">
-                <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1" class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
-                <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
-            </div>
+ <!-- Pagination -->
+ <div class="flex justify-center mt-8">
+        <button @click="fetchAnimals(currentPage - 1)" :disabled="currentPage === 1"
+            class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
+
+        <div class="flex items-center space-x-4">
+            <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
+
+            <button v-for="page in totalPages" :key="page" @click="fetchAnimals(page)"
+                :class="['px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer', { 'bg-blue-500 text-white': page === currentPage }]">
+                {{ page }}
+            </button>
+        </div>
+
+        <button @click="fetchAnimals(currentPage + 1)" :disabled="currentPage === lastPage"
+            class="px-3 py-1 ml-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Next</button>
+    </div>
+
             <!-- credit -->
             <div class="text-center py-10 px-10">
                 <h2 class="font-bold text-2xl md:text-4xl mb-4">Thanks to <a href="https://unsplash.com/@nixcreative"
@@ -59,46 +72,43 @@
 </template>
 
 <script setup>
-    import Header from "../layouts/header.vue"
-    import Footer from "../layouts/footer.vue"
-    import Head from "../layouts/head.vue"
     import { ref, onMounted, watch } from 'vue';
     import axios from 'axios';
 
-const searchTerm = ref('');
-const originalAnimals = ref([]); // Initialiser originalAnimals
-const animals = ref([]);
-const currentPage = ref(1);
+    const searchTerm = ref('');
+    const originalAnimals = ref([]);
+    const animals = ref([]);
+    const currentPage = ref(1);
+    const totalPages = ref(1);
 
-const fetchAnimals = async (page = 1) => {
-  try {
-    const response = await axios.get('/api/animal', {
-      params: {
-        searchTerm: searchTerm.value,
-        page: page
-      }
+    const fetchAnimals = async (page = 1) => {
+        try {
+            const response = await axios.get('/api/animal', {
+                params: {
+                    searchTerm: searchTerm.value,
+                    page: page
+                }
+            });
+
+            animals.value = response.data.data;
+            currentPage.value = response.data.current_page;
+            totalPages.value = response.data.last_page;
+            originalAnimals.value = response.data;
+        } catch (error) {
+            console.error('Erreur lors de la récupération des animaux :', error);
+        }
+    };
+
+    watch(searchTerm, async (newValue) => {
+        currentPage.value = 1;
+        await fetchAnimals();
     });
-    animals.value = response.data.data;
-    currentPage.value = response.data.current_page;
-    originalAnimals.value = response.data; // Mettre à jour originalAnimals
-  } catch (error) {
-    console.error('Erreur lors de la récupération des animaux :', error);
-  }
-};
 
-// Watcher pour détecter les changements de la recherche
-watch(searchTerm, async (newValue) => {
-  currentPage.value = 1; // Réinitialiser la page à 1 lors d'une nouvelle recherche
-  await fetchAnimals(); // Appeler fetchAnimals avec la nouvelle recherche
-});
+    watch(currentPage, async () => {
+        await fetchAnimals(currentPage.value);
+    });
 
-// Watcher pour détecter les changements de la page actuelle
-watch(currentPage, async () => {
-  await fetchAnimals(currentPage.value); // Appeler fetchAnimals avec la nouvelle page
-});
-
-// Appeler fetchAnimals lors du montage du composant
-onMounted(fetchAnimals);
+    onMounted(fetchAnimals);
 </script>
 
 
