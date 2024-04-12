@@ -49,7 +49,7 @@
                     class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Previous</button>
 
                 <div class="flex items-center space-x-4">
-                    <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span>
+                    <!-- <span class="text-gray-700">Page {{ currentPage }} of {{ totalPages }}</span> -->
 
                     <button v-for="page in totalPages" :key="page" @click="fetchAnimals(page)"
                         :class="['px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer', { 'bg-blue-500 text-white': page === currentPage }]">
