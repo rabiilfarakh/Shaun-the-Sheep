@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import dashboard from './pages/dashboard.vue';
+import dashboardIndex from './pages/dashboard/dashboardIndex.vue';
 import index from './pages/index.vue';
 import login from './pages/login.vue';
 import blog from './pages/blog.vue';
@@ -12,8 +12,8 @@ import animal from './pages/animal.vue';
 
 const routes = [
   {
-    path: '/dashboard',
-    component: dashboard
+    path: '/dashboard/dashboardIndex',
+    component: dashboardIndex
   },
   {
     path: '/index',
