@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
-        <title>Windmill Dashboard</title>
+        <title>FarmConn Dashboard</title>
       </head>
       <body>
         <div class="h-screen flex">
@@ -19,7 +19,7 @@
                 class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
                 href="#"
               >
-                Windmill
+              Farm<span class="text-gray-500">Conn</span>
               </a>
               <ul class="mt-6">
                 <li class="relative px-6 py-3">
@@ -28,9 +28,9 @@
                     aria-hidden="true"
                   ></span>
                   <router-link
-                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                to="/dashboard/dashboardIndex"
-              >
+                    class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
+                    to="/dashboard/dashboardIndex"
+                  >
                     <svg
                       class="w-5 h-5"
                       aria-hidden="true"
@@ -126,6 +126,65 @@
                           class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                         >
                           <router-link class="w-full" to="/dashboard/animal_delete">Delete Animal</router-link>
+                        </li>
+                      </ul>
+                    </template>
+                </li>
+                <li class="relative px-6 py-3">
+                    <button
+                      class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                      @click="toggleCatMenu"
+                      aria-haspopup="true"
+                    >
+                      <span class="inline-flex items-center">
+                        <svg
+                          class="w-5 h-5"
+                          aria-hidden="true"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                          ></path>
+                        </svg>
+                        <span class="ml-4">Catégorie Crud</span>
+                      </span>
+                      <svg
+                        class="w-4 h-4"
+                        aria-hidden="true"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        ></path>
+                      </svg>
+                    </button>
+                    <template v-if="isCatMenuOpen">
+                      <ul
+                        class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-red dark:text-gray-400 dark:bg-gray-900"
+                        aria-label="submenu"
+                      >
+                        <li
+                          class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        >
+                          <router-link class="w-full" to="/dashboard/animal_add">Add Catégorie</router-link>
+                        </li>
+                        <li
+                          class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        >
+                          <router-link class="w-full" to="/dashboard/animal_update">Update Catégorie</router-link>
+                        </li>
+                        <li
+                          class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                        >
+                          <router-link class="w-full" to="/dashboard/animal_delete">Delete Catégorie</router-link>
                         </li>
                       </ul>
                     </template>
@@ -240,7 +299,7 @@
                     class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                     aria-hidden="true"
                   ></span>
-                  <a
+                  <router
                     class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                     href="index.html"
                   >
@@ -259,7 +318,7 @@
                       ></path>
                     </svg>
                     <span class="ml-4">Dashboard</span>
-                  </a>
+                  </router>
                 </li>
               </ul>
               <ul>
@@ -489,13 +548,13 @@
             <main class="z-10 py-4 bg-gray-200 dark:bg-gray-800 h-full overflow-y-auto">
                 <div class="container px-6 mx-auto grid">
                 <h2
-                  class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+                  class="my-6 text-3xl font-semibold  dark:text-gray-200"
                 >
-                  Dashboard
+                  Forms
                 </h2>
     
-                <!-- form delete -->
-                
+                <!-- form add -->
+                <Form_delete/>
               </div>
             </main>
           </div>
@@ -505,15 +564,15 @@
     </template>
     
     <script setup>
-      import Statistique from "../../layouts/dashboard/statistique.vue"
-      import Tableau from "../../layouts/dashboard/tableau.vue"
+      import Form_delete from "../../layouts/dashboard/form_delete.vue"
     </script>
     <script>
     export default {
         data() {
             return {
                 isFormsMenuOpen: false,
-                isAuthMenuOpen: false
+                isAuthMenuOpen: false,
+                isCatMenuOpen: false
             };
         },
         methods: {
@@ -522,6 +581,9 @@
             },
             toggleAuthMenu() {
                 this.isAuthMenuOpen = !this.isAuthMenuOpen;
+            },
+            toggleCatMenu() {
+                this.isCatMenuOpen = !this.isCatMenuOpen;
             }
         }
     }

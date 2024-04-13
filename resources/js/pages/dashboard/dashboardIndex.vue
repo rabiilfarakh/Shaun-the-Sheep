@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/>
-    <title>Windmill Dashboard</title>
+    <title>FarmConn Dashboard</title>
   </head>
   <body>
     <div class="h-screen flex">
@@ -19,7 +19,7 @@
             class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
             href="#"
           >
-            Windmill
+          Farm<span class="text-gray-500">Conn</span>
           </a>
           <ul class="mt-6">
             <li class="relative px-6 py-3">
