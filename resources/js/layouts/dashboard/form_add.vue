@@ -1,101 +1,104 @@
 <template>
-                <!-- General elements -->
-                <h4
-              class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300"
-            >
-              Elements
-            </h4>
-            <div
-              class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
-            >
-              <label class="block text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Name</span>
-                <input
-                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                  placeholder="Jane Doe"
-                />
-              </label>
+    <!-- General elements -->
+    <h4 class="mb-4 text-lg font-semibold text-gray-600 dark:text-gray-300">
+      Elements
+    </h4>
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+      <!-- Status -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Status</span>
+        <div class="mt-2">
+          <button 
+            class="px-4 py-2 bg-gray-200 rounded-lg dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-green-500 hover:text-white"
+            @click="status = 'Available'"
+            :class="{ 'bg-green-500 text-white': status === 'Available' }"
+          >
+            Available
+          </button>
+          <button 
+            class="px-4 py-2 ml-2 bg-gray-200 rounded-lg dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-red-500 hover:text-white"
+            @click="status = 'Not Available'"
+            :class="{ 'bg-red-500 text-white': status === 'Not Available' }"
+          >
+            Not Available
+          </button>
+        </div>
+      </label>
+  
+      <!-- Ville -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Ville</span>
+        <select
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        >
+          <!-- Liste des villes du Maroc -->
+          <option>Casablanca</option>
+          <option>Rabat</option>
+          <option>Marrakech</option>
+          <!-- Ajoutez d'autres villes ici -->
+        </select>
+      </label>
+  
+      <!-- Catégorie -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Catégorie</span>
+        <select
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        >
+          <!-- Liste des catégories d'animaux -->
+          <option>Chien</option>
+          <option>Chat</option>
+          <option>Oiseau</option>
+          <!-- Ajoutez d'autres catégories ici -->
+        </select>
+      </label>
+        
+      <!-- Prix -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">Prix</span>
+        <div class="flex items-center">
+          <input
+            v-model="price"
+            type="number"
+            step="1" 
+            class="block w-full mt-1 mr-2 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+            placeholder="Prix de l'animal en Dhs"
+          />
+          <button 
+            class="px-2 py-1 bg-gray-200 w-8 rounded-md dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-gray-400 hover:text-white"
+            @click="decrementPrice"
+          >
+            -
+          </button>
+          <button 
+            class="px-2 py-1 bg-gray-200 ml-1 w-8 rounded-md dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-gray-400 hover:text-white"
+            @click="incrementPrice"
+          >
+            +
+          </button>
+        </div>
+      </label>
 
-              <div class="mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Account Type
-                </span>
-                <div class="mt-2">
-                  <label
-                    class="inline-flex items-center text-gray-600 dark:text-gray-400"
-                  >
-                    <input
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="accountType"
-                      value="personal"
-                    />
-                    <span class="ml-2">Personal</span>
-                  </label>
-                  <label
-                    class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400"
-                  >
-                    <input
-                      type="radio"
-                      class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                      name="accountType"
-                      value="busines"
-                    />
-                    <span class="ml-2">Business</span>
-                  </label>
-                </div>
-              </div>
-
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Requested Limit
-                </span>
-                <select
-                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                >
-                  <option>$1,000</option>
-                  <option>$5,000</option>
-                  <option>$10,000</option>
-                  <option>$25,000</option>
-                </select>
-              </label>
-
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">
-                  Multiselect
-                </span>
-                <select
-                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                  multiple
-                >
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
-                  <option>Option 4</option>
-                  <option>Option 5</option>
-                </select>
-              </label>
-
-              <label class="block mt-4 text-sm">
-                <span class="text-gray-700 dark:text-gray-400">Message</span>
-                <textarea
-                  class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                  rows="3"
-                  placeholder="Enter some long form content."
-                ></textarea>
-              </label>
-
-              <div class="flex mt-6 text-sm">
-                <label class="flex items-center dark:text-gray-400">
-                  <input
-                    type="checkbox"
-                    class="text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-                  />
-                  <span class="ml-2">
-                    I agree to the
-                    <span class="underline">privacy policy</span>
-                  </span>
-                </label>
-              </div>
-            </div>
-</template>
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    data() {
+      return {
+        status: 'Available',
+        price: 0 
+      };
+    },
+    methods: {
+      incrementPrice() {
+        this.price += 100;
+      },
+      decrementPrice() {
+        if(this.price >= 100)
+        this.price -= 100; 
+      }
+    }
+  };
+  </script>
+  
