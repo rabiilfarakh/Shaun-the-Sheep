@@ -43,14 +43,11 @@
       <label class="block mt-4 text-sm">
         <span class="text-gray-700 dark:text-gray-400">Catégorie</span>
         <select
-          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-        >
-          <!-- Liste des catégories d'animaux -->
-          <option>Chien</option>
-          <option>Chat</option>
-          <option>Oiseau</option>
-          <!-- Ajoutez d'autres catégories ici -->
-        </select>
+        v-model="selectedCategorie"
+        class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+      >
+        <option v-for="categorie in categories" :key="categorie.id" :value="categorie.id">{{ categorie.name }}</option>
+      </select>
       </label>
         
       <!-- Prix -->
@@ -83,22 +80,40 @@
   </template>
   
   <script>
-  export default {
-    data() {
-      return {
-        status: 'Available',
-        price: 0 
-      };
+export default {
+  data() {
+    return {
+      status: 'Available',
+      price: 0 ,
+      categories: [], 
+      selectedCategorie: null
+    };
+  },
+
+  mounted() {
+    this.fetchCategories();
+  },
+
+  methods: {
+    incrementPrice() {
+      this.price += 100;
     },
-    methods: {
-      incrementPrice() {
-        this.price += 100;
-      },
-      decrementPrice() {
-        if(this.price >= 100)
+    decrementPrice() {
+      if(this.price >= 100)
         this.price -= 100; 
+    },
+    async fetchCategories() {
+      try {
+        const response = await axios.get('/api/categorie');
+        console.log(response.data); 
+        this.categories = response.data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des catégories :', error);
       }
     }
-  };
+  }
+}
+
+
   </script>
   

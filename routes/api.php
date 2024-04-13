@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\CategorieController;
+use App\Models\Categorie;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('animal', AnimalController::class);
+Route::apiResource('categorie', CategorieController::class);
 
 Route::group(['middleware' => ['auth:sanctum']],function(){
    

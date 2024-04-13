@@ -15,7 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
     <script src="./assets/js/init-alpine.js"></script>
      --}}
-     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script>
+     {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script> --}}
 
 
     <title>Document</title>
