@@ -27,9 +27,9 @@
                 class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                 aria-hidden="true"
               ></span>
-              <a
+              <router-link
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                href="index.html"
+                to="/dashboard/dashboardIndex"
               >
                 <svg
                   class="w-5 h-5"
@@ -46,7 +46,7 @@
                   ></path>
                 </svg>
                 <span class="ml-4">Dashboard</span>
-              </a>
+              </router-link>
             </li>
           </ul>
           <ul>
@@ -115,21 +115,17 @@
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <a class="w-full" href="pages/login.html">Add Animal</a>
+                      <router-link class="w-full" to="/dashboard/animal_add">Add Animal</router-link>
                     </li>
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <a class="w-full" href="pages/create-account.html">
-                        Update Animal
-                      </a>
+                      <router-link class="w-full" to="/dashboard/animal_update">Update Animal</router-link>
                     </li>
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <a class="w-full" href="pages/forgot-password.html">
-                        Delete Animal
-                      </a>
+                      <router-link class="w-full" to="/dashboard/animal_delete">Delete Animal</router-link>
                     </li>
                   </ul>
                 </template>
@@ -244,7 +240,7 @@
                 class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
                 aria-hidden="true"
               ></span>
-              <a
+              <router
                 class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
                 href="index.html"
               >
@@ -263,7 +259,7 @@
                   ></path>
                 </svg>
                 <span class="ml-4">Dashboard</span>
-              </a>
+              </router>
             </li>
           </ul>
           <ul>
