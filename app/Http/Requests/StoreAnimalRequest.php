@@ -27,7 +27,6 @@ class StoreAnimalRequest extends FormRequest
             'categorie_id' => 'required',
             'prix' => 'required',
             'image' => 'required',
-            'id' => 'required'
         ];
     }
 }

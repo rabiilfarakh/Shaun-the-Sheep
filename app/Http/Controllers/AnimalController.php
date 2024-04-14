@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
+use App\Models\Image;
 
 class AnimalController extends Controller
 {
@@ -52,18 +53,27 @@ class AnimalController extends Controller
     public function store(StoreAnimalRequest $request)
     {
         $validatedData = $request->validated();
+        
 
         $user_id = 1;
         //  Auth::id();
-
+        $image=new Image();
         $animal = Animal::create([
-            'user_id' => $user_id,
+            
             'lieu' => $validatedData['lieu'],
-            'status' => $validatedData['status'],
+            'status' => $validatedData['status'] = (bool) $validatedData['status'],
             'categorie_id' => $validatedData['categorie_id'],
             'prix' => $validatedData['prix'],
         ]);
-
+        if(isset($validatedData["image"])){
+          
+            $file = $validatedData["image"];
+           $nameImage=$file->getClientOriginalName();
+            $file->store('images', 'public');
+            $image->url=$nameImage ;
+        }
+        $image->imageable()->associate($animal)->save();
+        
         return response()->json(['message' => 'animal created successfully']);
     }
 
