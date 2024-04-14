@@ -24,12 +24,12 @@ class AnimalController extends Controller
                             $query->where('name', 'like', '%'.$searchTerm.'%');
                         });
                 })
-                ->paginate(3); // Paginer les résultats par groupe de 3
+                ->paginate(6);
         } else {
-            $animaux = Animal::with(['image', 'categorie'])->paginate(3);
+            $animaux = Animal::with(['image', 'categorie'])->paginate(6);
         }
     } else {
-        $animaux = Animal::with(['image', 'categorie'])->paginate(3);
+        $animaux = Animal::with(['image', 'categorie'])->paginate(6);
     }
 
     return response()->json($animaux);

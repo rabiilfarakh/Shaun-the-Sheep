@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ClientController;
 use App\Models\Categorie;
 
 /*
@@ -23,13 +24,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::apiResource('client', ClientController::class);
 Route::apiResource('animal', AnimalController::class);
 Route::apiResource('categorie', CategorieController::class);
 
 Route::group(['middleware' => ['auth:sanctum']],function(){
    
 });
- // Route::post('/logout', [UserController::class, 'logout']);
+// Route::post('/logout', [UserController::class, 'logout']);
 // Route::post('/dashboard', [UserController::class, 'register']);
 // Route::post('/register', [UserController::class, 'register']);
 // Route::post('/login', [UserController::class, 'login']);

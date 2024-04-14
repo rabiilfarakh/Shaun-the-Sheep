@@ -38,11 +38,12 @@
     <!-- Catégorie -->
     <label class="block mt-4 text-sm">
       <span class="text-gray-700 dark:text-gray-400">Catégorie</span>
-      <select v-model="selectedCategorie"block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray
-    class="">
-    <option disabled value="">Select a category</option>
-    <option v-for="categorie in categories" :key="categorie.id" :value="categorie.id">{{ categorie.name }}</option>
-</select>
+      <select v-model="selectedCategorie" block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600
+        dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple
+        dark:focus:shadow-outline-gray class="">
+        <option disabled value="">Select a category</option>
+        <option v-for="categorie in categories" :key="categorie.id" :value="categorie.id">{{ categorie.name }}</option>
+      </select>
     </label>
 
     <!-- Prix -->
@@ -73,15 +74,18 @@
 
 <script>
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
     return {
       status: true,
-      prix: 0, // Modifier la référence de price à prix
+      prix: 0,
       categories: [],
       selectedCategorie: 'defaultCategoryId',
-      image: null
+      image: null,
+      lieu: '',
+      showSuccessMessage: false // Variable pour contrôler l'affichage du message de succès
     };
   },
 
@@ -103,50 +107,66 @@ export default {
     handleFileUpload(event) {
       this.image = event.target.files[0];
       console.log('Image uploaded:', this.image);
-      // Vous pouvez traiter l'image téléchargée ici si nécessaire
     },
 
     incrementPrice() {
-      this.prix += 100; // Modifier la référence de price à prix
+      this.prix += 100;
     },
 
     decrementPrice() {
       if (this.prix >= 100)
-        this.prix -= 100; // Modifier la référence de price à prix
+        this.prix -= 100;
     },
     async submitForm() {
-      // Rassemblez toutes les données du formulaire
 
       const formData = new FormData();
-      formData.append('status', this.status === 'true' ? true : false);
+      formData.append('status', this.status === true ? true : false);
       formData.append('prix', this.prix);
       formData.append('categorie_id', this.selectedCategorie);
       formData.append('image', this.image);
       formData.append('lieu', this.lieu);
 
       try {
-
         const response = await axios.post('/api/animal', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         });
-        console.log('Réponse du serveur :', response.data);
 
-        // Réinitialisez les champs du formulaire après la soumission réussie
+        await Swal.fire({
+          icon: 'success',
+          title: 'Succès!',
+          text: 'Animal ajouté avec succès!',
+          showConfirmButton: false,
+          timer: 2000 
+        });
+
+        // Réinitialisation des données après l'ajout réussi
         this.status = true;
         this.prix = 0;
-        this.selectedCategorie = null;
+        this.selectedCategorie = 'defaultCategoryId';
         this.image = null;
-        this.lieu = ''; // Réinitialisez le champ "lieu"
+        this.lieu = '';
 
-        // Affichez un message de succès à l'utilisateur si nécessaire
+        // Masquer le message de succès après un certain temps
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+        }, 5000); // Cacher après 5 secondes
+
       } catch (error) {
         console.error('Erreur lors de la soumission du formulaire :', error);
-        // Gérez les erreurs de soumission du formulaire ici
       }
     }
 
   }
 }
 </script>
+
+<style>
+.success-message {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+</style>
