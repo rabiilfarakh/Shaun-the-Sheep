@@ -23,7 +23,7 @@
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                    6389
+                  {{ totalClients }}
                   </p>
                 </div>
               </div>
@@ -46,12 +46,12 @@
                   <p
                     class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
                   >
-                    Account balance
+                  Total animals
                   </p>
                   <p
                     class="text-lg font-semibold text-gray-700 dark:text-gray-200"
                   >
-                    $ 46,760.89
+                  {{ totalAnimals }}
                   </p>
                 </div>
               </div>
@@ -111,3 +111,41 @@
               </div>
             </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      totalClients: 0,
+      totalAnimals: 0,
+    };
+  },
+  mounted() {
+    this.fetchTotalClients();
+    this.fetchTotalAnimals();
+  },
+  methods: {
+
+    async fetchTotalClients() {
+      try {
+        const response = await axios.get('/api/client');
+        this.totalClients = response.data.length; 
+      } catch (error) {
+        console.error('Erreur lors de la récupération des statistiques des clients:', error);
+      }
+    },
+
+    async fetchTotalAnimals(){
+      try{
+        const response = await axios.get('/api/getAnimals');
+        this.totalAnimals = response.data.length;
+      }catch(error){
+        console.error('Erreur lors de la récupération des statistiques des animals:', error);
+      }
+    }
+
+  },
+};
+</script>

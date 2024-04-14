@@ -36,7 +36,10 @@ class AnimalController extends Controller
 }
 
     
-
+public function getAll(){
+    $animals = Animal::all();
+    return response()->json($animals);
+}
     
 
     /**

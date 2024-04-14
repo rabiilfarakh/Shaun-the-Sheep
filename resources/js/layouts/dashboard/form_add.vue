@@ -85,7 +85,7 @@ export default {
       selectedCategorie: 'defaultCategoryId',
       image: null,
       lieu: '',
-      showSuccessMessage: false // Variable pour contrôler l'affichage du message de succès
+      showSuccessMessage: false 
     };
   },
 
@@ -141,17 +141,15 @@ export default {
           timer: 2000 
         });
 
-        // Réinitialisation des données après l'ajout réussi
         this.status = true;
         this.prix = 0;
         this.selectedCategorie = 'defaultCategoryId';
         this.image = null;
         this.lieu = '';
 
-        // Masquer le message de succès après un certain temps
         setTimeout(() => {
           this.showSuccessMessage = false;
-        }, 5000); // Cacher après 5 secondes
+        }, 5000); 
 
       } catch (error) {
         console.error('Erreur lors de la soumission du formulaire :', error);
