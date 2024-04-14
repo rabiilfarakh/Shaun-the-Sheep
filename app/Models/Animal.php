@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Animal extends Model
 {
     use HasFactory;
+    
     protected $table = 'animals';
+    protected $fillable = [
+        'id',
+        'status',
+        'prix',
+        'lieu',
+        'categorie_id',
+    ];
 
     public function client()
     {

@@ -11,7 +11,7 @@ class StoreAnimalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreAnimalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'lieu' => 'required',
+            'status' => 'required',
+            'categorie_id' => 'required',
+            'prix' => 'required',
+            'image' => 'required',
+            'id' => 'required'
         ];
     }
 }

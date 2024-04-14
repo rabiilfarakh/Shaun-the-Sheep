@@ -51,7 +51,20 @@ class AnimalController extends Controller
      */
     public function store(StoreAnimalRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $user_id = 1;
+        //  Auth::id();
+
+        $animal = Animal::create([
+            'user_id' => $user_id,
+            'lieu' => $validatedData['lieu'],
+            'status' => $validatedData['status'],
+            'categorie_id' => $validatedData['categorie_id'],
+            'prix' => $validatedData['prix'],
+        ]);
+
+        return response()->json(['message' => 'animal created successfully']);
     }
 
     /**
