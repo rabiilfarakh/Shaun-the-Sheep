@@ -7,7 +7,7 @@
             <th class="px-6 py-3">Image</th>
             <th class="px-6 py-3">Lieu</th>
             <th class="px-6 py-3">Catégorie</th>
-            <th class="px-6 py-3">Status</th>
+            <th class="px-6 py-3"></th>
 
           </tr>
         </thead>

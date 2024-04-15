@@ -102,9 +102,17 @@ public function getAll()
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAnimalRequest $request, Animal $animal)
+    public function update(Request $request, $id)
     {
-        //
+        $animal = Animal::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|boolean',
+        ]);
+
+        $animal->update(['status' => $request->input('status')]);
+
+        return response()->json(['message' =>"updated", $request->input('status')], 200);
     }
 
     /**
