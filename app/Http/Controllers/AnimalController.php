@@ -121,6 +121,8 @@ public function getAll()
      */
     public function destroy(Animal $animal)
     {
-        //
+        $animal->delete();
+        return response()->json(['message' => 'animal supprime avec succès']);
     }
+    
 }

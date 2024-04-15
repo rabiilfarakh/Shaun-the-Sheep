@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import dashboardIndex from './pages/dashboard/dashboardIndex.vue';
 import animal_add from './pages/dashboard/animal_add.vue';
 import animal_update from './pages/dashboard/animal_update.vue';
-import animal_delete from './pages/dashboard/animal_delete.vue';
 //-------------------------- fin--------------------------------
 
 import index from './pages/index.vue';
@@ -31,10 +30,6 @@ const routes = [
   {
     path: '/dashboard/animal_update',
     component: animal_update
-  },
-  {
-    path: '/dashboard/animal_delete',
-    component: animal_delete
   },
   // --------------------------fin---------------------------------
 

@@ -64,7 +64,7 @@
 
 <script>
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 export default {
   data() {
     return {
@@ -110,13 +110,27 @@ export default {
       }
     },
     async deleteAnimal(animalId) {
-      try {
-        await axios.delete(`/api/animal/${animalId}`);
-        this.fetchAnimals(this.currentPage); 
-      } catch (error) {
-        console.error('Erreur lors de la suppression de l\'animal:', error);
-      }
-    },
+    try {
+      await axios.delete(`/api/animal/${animalId}`);
+      // Afficher une alerte de succès
+      await Swal.fire({
+          icon: 'success',
+          title: 'Succès!',
+          text: 'Animal supprimé avec succès!',
+          showConfirmButton: false,
+          timer: 2000 
+        });
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+        }, 5000);
+      // Actualiser la liste des animaux après la suppression
+      this.fetchAnimals();
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'animal:', error);
+    }
+  },
+
+
     async updateAnimal(animalId) {
       //
     }
