@@ -17,7 +17,7 @@
             <td class="px-6 py-4">
               <div class="flex items-center">
                 <div class="h-12 w-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
-                  <img v-if="animal.image" :src="'storage/images/vache' + animal.image.url" alt="Product" class="h-full w-full object-cover rounded-full" />
+                  <img v-if="animal.image" :src="'../storage/images/' + animal.image.url" alt="Product" class="h-full w-full object-cover rounded-full" />
                 </div>
               </div>
             </td>
@@ -30,9 +30,11 @@
               </label>
             </td>
             <td class="px-6 py-4">
-              <button @click="deleteAnimal(animal.id)">
+              <!-- Bouton Supprimer -->
+              <button @click="deleteAnimal(animal.id)" class="mr-2">
                 <ion-icon name="trash-outline" class="text-red-500 text-xl"></ion-icon>
               </button>
+              <!-- Bouton Modifier -->
               <button @click="updateAnimal(animal.id)">
                 <ion-icon name="create-outline" class="text-blue-500 text-xl"></ion-icon>
               </button>
@@ -43,11 +45,19 @@
     </div>
     <!-- Pagination -->
     <div class="flex justify-end mt-4">
-      <button :disabled="animals.current_page === 1" @click="prevPage">Précédent</button>
-      <div class="flex">
-        <span class="mr-2">Page {{ animals.current_page }} de {{ animals.last_page }}</span>
+      <button @click="prevPage" :disabled="animals.current_page === 1"
+        class="px-3 py-1 mr-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Précédent</button>
+
+      <div class="flex items-center space-x-4">
+        <!-- Affichage des boutons de page -->
+        <button v-for="page in totalPages" :key="page" @click="fetchPage(page)"
+          :class="['px-3 py-1 bg-gray-200 text-gray-700 rounded-md cursor-pointer', { 'bg-blue-500 text-white': page === animals.current_page }]">
+          {{ page }}
+        </button>
       </div>
-      <button :disabled="animals.current_page === animals.last_page" @click="nextPage">Suivant</button>
+
+      <button @click="nextPage" :disabled="animals.current_page === animals.last_page"
+        class="px-3 py-1 ml-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer">Suivant</button>
     </div>
   </div>
 </template>
@@ -91,6 +101,30 @@ export default {
         console.error('Erreur lors de la récupération des données des animaux:', error);
       }
     },
+    async toggleStatus(animal) {
+      try {
+        await axios.put(`/api/animal/${animal.id}`, { status: animal.status });
+        this.fetchAnimals(this.currentPage);
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut de l\'animal:', error);
+      }
+    },
+    async deleteAnimal(animalId) {
+      try {
+        await axios.delete(`/api/animal/${animalId}`);
+        this.fetchAnimals(this.currentPage); 
+      } catch (error) {
+        console.error('Erreur lors de la suppression de l\'animal:', error);
+      }
+    },
+    async updateAnimal(animalId) {
+      //
+    }
+  },
+  computed: {
+    totalPages() {
+      return this.animals.last_page ? Array.from({ length: this.animals.last_page }, (_, i) => i + 1) : [];
+    }
   }
 };
 </script>
