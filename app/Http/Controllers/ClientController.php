@@ -16,7 +16,7 @@ class ClientController extends Controller
     {
         $clients = DB::table('clients')
                     ->join('users', 'clients.user_id', '=', 'users.id')
-                    ->select('clients.id', 'users.name', 'users.email', 'clients.status')
+                    ->select('clients.id','clients.user_id','users.name', 'users.email', 'clients.status')
                     ->get();
 
         return response()->json($clients);
@@ -81,7 +81,6 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
-        return response()->json(["message" => "client deleted"]);
+        //
     }
 }

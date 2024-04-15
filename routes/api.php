@@ -31,7 +31,7 @@ Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);
 
 Route::apiResource('categorie', CategorieController::class);
-
+Route::apiResource('user', UserController::class);
 Route::group(['middleware' => ['auth:sanctum']],function(){
    
 });

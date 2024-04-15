@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Animal;
 use App\Http\Requests\StoreAnimalRequest;
 use App\Http\Requests\UpdateAnimalRequest;
+use App\Models\Categorie;
 use App\Models\Image;
 
 class AnimalController extends Controller
@@ -36,10 +37,12 @@ class AnimalController extends Controller
 }
 
     
-public function getAll(){
-    $animals = Animal::all();
+public function getAll()
+{
+    $animals = Animal::with('categorie')->get();
     return response()->json($animals);
 }
+
     
 
     /**

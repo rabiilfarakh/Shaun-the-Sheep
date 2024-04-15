@@ -8,7 +8,7 @@
             <th class="px-6 py-3">Name</th>
             <th class="px-6 py-3">Email</th>
             <th class="px-6 py-3">Status</th>
-            <th class="px-6 py-3">Actions</th> <!-- Ajout de la colonne Actions -->
+
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
@@ -25,13 +25,7 @@
               </label>
             </td>
 
-            <td class="px-6 py-4">
-              <!-- Ajout des icônes pour les actions -->
-              <button @click="deleteClient(client.id)" class="text-red-500 hover:text-red-700">
-                <!-- Icône pour la suppression -->
-                <ion-icon name="trash-outline" ></ion-icon>
-              </button>
-            </td>
+
           </tr>
         </tbody>
       </table>
@@ -62,15 +56,6 @@ export default {
         }));
       } catch (error) {
         console.error('Erreur lors de la récupération des données des clients:', error);
-      }
-    },
-
-    async deleteClient(id) {
-      try {
-        await axios.delete(`/api/client/${id}`);
-        this.fetchClients();
-      } catch (error) {
-        console.error('Erreur lors de la suppression du client:', error);
       }
     },
 
