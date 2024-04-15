@@ -16,14 +16,16 @@
     <script src="./assets/js/init-alpine.js"></script>
      --}}
      {{-- <script src="https://cdn.jsdelivr.net/npm/alpinejs@2"></script> --}}
-
-
-    <title>Document</title>
 </head>
 <body>
     <div id="app">
         <App-layouts></App-layouts>
     </div>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
