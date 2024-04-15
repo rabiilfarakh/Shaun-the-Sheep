@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     async fetchClients() {
-      try {
+      try { 
         const response = await axios.get('/api/client');
         this.clients = response.data.map(client => ({
           ...client,
@@ -86,9 +86,6 @@ export default {
       
     }
   },
-
-
-
 
   },
 };
