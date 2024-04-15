@@ -12,7 +12,7 @@ class Client extends Model
     protected $table = 'clients';
     
     protected $fillable = [
-        'user_id',
+        'user_id', "status"
     ];
 
     public function user()

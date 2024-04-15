@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\client;
 use App\Http\Requests\StoreclientRequest;
 use App\Http\Requests\UpdateclientRequest;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -62,9 +63,17 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateclientRequest $request, Client $client)
+    public function update(Request $request, $id)
     {
-        //
+        $client = Client::findOrFail($id);
+
+        $request->validate([
+            'status' => 'required|boolean',
+        ]);
+
+        $client->update(['status' => $request->input('status')]);
+
+        return response()->json(['message' =>"updated", $request->input('status')], 200);
     }
 
     /**
