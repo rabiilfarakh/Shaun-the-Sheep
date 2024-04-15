@@ -7,30 +7,48 @@
             <th class="px-6 py-3">Image</th>
             <th class="px-6 py-3">Lieu</th>
             <th class="px-6 py-3">Catégorie</th>
-            <th class="px-6 py-3"></th>
-
+            <th class="px-6 py-3">Statut</th>
+            <th class="px-6 py-3">Actions</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-          <tr v-for="animal in animals" :key="animal.id" class="text-gray-700 dark:text-gray-400">
-            <td class="px-6 py-4">{{ animal.id }}</td>
+          <!-- Boucle sur les animaux paginés -->
+          <tr v-for="animal in animals.data" :key="animal.id" class="text-gray-700 dark:text-gray-400">
+            <td class="px-6 py-4">
+              <div class="flex items-center">
+                <div class="h-12 w-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
+                  <img v-if="animal.image" :src="'storage/images/vache' + animal.image.url" alt="Product" class="h-full w-full object-cover rounded-full" />
+                </div>
+              </div>
+            </td>
             <td class="px-6 py-4">{{ animal.lieu }}</td>
             <td class="px-6 py-4">{{ animal.categorie.name }}</td>
             <td class="px-6 py-4">
-              
-              <!-- Utilisation d'une condition pour afficher un switch button -->
               <label class="switch">
-                <input type="checkbox" v-model="animal.status" @change="toggleStatus(animal)">
+                <input type="checkbox" :checked="animal.status" @change="toggleStatus(animal)">
                 <span class="slider"></span>
               </label>
             </td>
-
-
+            <td class="px-6 py-4">
+              <button @click="deleteAnimal(animal.id)">
+                <ion-icon name="trash-outline" class="text-red-500 text-xl"></ion-icon>
+              </button>
+              <button @click="updateAnimal(animal.id)">
+                <ion-icon name="create-outline" class="text-blue-500 text-xl"></ion-icon>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <!-- Pagination et autres éléments -->
+    <!-- Pagination -->
+    <div class="flex justify-end mt-4">
+      <button :disabled="animals.current_page === 1" @click="prevPage">Précédent</button>
+      <div class="flex">
+        <span class="mr-2">Page {{ animals.current_page }} de {{ animals.last_page }}</span>
+      </div>
+      <button :disabled="animals.current_page === animals.last_page" @click="nextPage">Suivant</button>
+    </div>
   </div>
 </template>
 
@@ -44,87 +62,35 @@ export default {
     };
   },
   mounted() {
-    this.fetchClients();
+    this.fetchAnimals();
   },
   methods: {
-    async fetchClients() {
+    async fetchAnimals() {
       try { 
         const response = await axios.get('/api/getAnimals');
         this.animals = response.data;
       } catch (error) {
-        console.error('Erreur lors de la récupération des données des animals:', error);
+        console.error('Erreur lors de la récupération des données des animaux:', error);
       }
     },
-
-    async toggleStatus(animal) {
-    try {
-    
-
-      await axios.put(`/api/animal/${animal.id}`, { status: animal.status });
-      this.fetchClients()
-     
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du statut du animal:', error);
-      
-    }
-  },
-
-  },
+    prevPage() {
+      if (this.animals.current_page > 1) {
+        this.fetchPage(this.animals.current_page - 1);
+      }
+    },
+    nextPage() {
+      if (this.animals.current_page < this.animals.last_page) {
+        this.fetchPage(this.animals.current_page + 1);
+      }
+    },
+    async fetchPage(page) {
+      try {
+        const response = await axios.get(`/api/getAnimals?page=${page}`);
+        this.animals = response.data;
+      } catch (error) {
+        console.error('Erreur lors de la récupération des données des animaux:', error);
+      }
+    },
+  }
 };
 </script>
-
-<style>
-/* Styles pour le switch button */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
-}
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
-  left: 2px;
-  bottom: 2px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: #4CAF50;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(20px);
-  -ms-transform: translateX(20px);
-  transform: translateX(20px);
-}
-</style>

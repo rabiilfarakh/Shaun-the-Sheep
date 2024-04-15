@@ -39,9 +39,10 @@ class AnimalController extends Controller
     
 public function getAll()
 {
-    $animals = Animal::with('categorie')->get();
+    $animals = Animal::with(['image', 'categorie'])->paginate(4);
     return response()->json($animals);
 }
+
 
     
 
