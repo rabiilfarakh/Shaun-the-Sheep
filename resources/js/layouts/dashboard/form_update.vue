@@ -7,40 +7,44 @@
             <th class="px-6 py-3">Image</th>
             <th class="px-6 py-3">Lieu</th>
             <th class="px-6 py-3">Catégorie</th>
-            <th class="px-6 py-3">Statut</th>
-            <th class="px-6 py-3">Actions</th>
+            <th class="px-6 py-3">Available</th>
+            <th class="px-6 py-3">Delete</th>
+            <th class="px-6 py-3">Update</th>
           </tr>
         </thead>
         <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-          <!-- Boucle sur les animaux paginés -->
-          <tr v-for="animal in animals.data" :key="animal.id" class="text-gray-700 dark:text-gray-400">
-            <td class="px-6 py-4">
-              <div class="flex items-center">
-                <div class="h-12 w-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
-                  <img v-if="animal.image" :src="'../storage/images/' + animal.image.url" alt="Product" class="h-full w-full object-cover rounded-full" />
-                </div>
+        <!-- Boucle sur les animaux paginés -->
+        <tr v-for="animal in animals.data" :key="animal.id" class="text-gray-700 dark:text-gray-400">
+          <td class="px-6 py-4">
+            <div class="flex items-center">
+              <div class="h-12 w-12 flex items-center justify-center bg-gray-200 rounded-full overflow-hidden">
+                <img v-if="animal.image" :src="'../storage/images/' + animal.image.url" alt="Product" class="h-full w-full object-cover rounded-full" />
               </div>
-            </td>
-            <td class="px-6 py-4">{{ animal.lieu }}</td>
-            <td class="px-6 py-4">{{ animal.categorie.name }}</td>
-            <td class="px-6 py-4">
-              <label class="switch">
-                <input type="checkbox" :checked="animal.status" @change="toggleStatus(animal)">
-                <span class="slider"></span>
-              </label>
-            </td>
-            <td class="px-6 py-4">
-              <!-- Bouton Supprimer -->
-              <button @click="deleteAnimal(animal.id)" class="mr-2">
-                <ion-icon name="trash-outline" class="text-red-500 text-xl"></ion-icon>
-              </button>
-              <!-- Bouton Modifier -->
-              <button @click="updateAnimal(animal.id)">
-                <ion-icon name="create-outline" class="text-blue-500 text-xl"></ion-icon>
-              </button>
-            </td>
-          </tr>
-        </tbody>
+            </div>
+          </td>
+          <td class="px-6 py-4">{{ animal.lieu }}</td>
+          <td class="px-6 py-4">{{ animal.categorie.name }}</td>
+          <td class="px-6 py-4">
+            <label class="switch">
+              <input type="checkbox" :checked="animal.status" @change="toggleStatus(animal)">
+              <span class="slider"></span>
+            </label>
+          </td>
+          <td class="px-6 py-4">
+            <!-- Bouton Supprimer -->
+            <button @click="deleteAnimal(animal.id)" class="mr-2">
+              <ion-icon name="trash-outline" class="text-red-500 text-xl"></ion-icon>
+            </button>
+          </td>
+          <td class="px-6 py-4">
+            <!-- Bouton Modifier -->
+            <button @click="updateAnimal(animal.id)">
+              <ion-icon name="create-outline" class="text-blue-500 text-xl"></ion-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+
       </table>
     </div>
     <!-- Pagination -->
