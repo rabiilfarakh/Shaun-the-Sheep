@@ -120,12 +120,7 @@
                         <li
                           class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                         >
-                          <router-link class="w-full" to="/dashboard/animal_update">Update Animal</router-link>
-                        </li>
-                        <li
-                          class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                        >
-                          <router-link class="w-full" to="/dashboard/animal_delete">Delete Animal</router-link>
+                          <router-link class="w-full" to="/dashboard/animal_update">Update && Delete</router-link>
                         </li>
                       </ul>
                     </template>
