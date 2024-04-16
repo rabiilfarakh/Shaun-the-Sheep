@@ -43,6 +43,11 @@ public function getAll()
     return response()->json($animals);
 }
 
+public function getAnimal($id){
+    $animal = Animal::with(['image', 'categorie'])->findOrFail($id);
+    return response()->json($animal);
+}
+
 
     
 

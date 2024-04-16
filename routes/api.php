@@ -29,6 +29,7 @@ Route::get('/getClients', [ClientController::class, 'getAll']);
 
 Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);
+Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);
 
 Route::apiResource('categorie', CategorieController::class);
 Route::apiResource('user', UserController::class);
