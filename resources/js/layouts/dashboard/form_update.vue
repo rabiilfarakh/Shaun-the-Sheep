@@ -7,6 +7,7 @@
             <th class="px-6 py-3">Image</th>
             <th class="px-6 py-3">Lieu</th>
             <th class="px-6 py-3">Catégorie</th>
+            <th class="px-6 py-3">Prix</th>
             <th class="px-6 py-3">Available</th>
             <th class="px-6 py-3">Delete</th>
             <th class="px-6 py-3">Update</th>
@@ -24,6 +25,7 @@
             </td>
             <td class="px-6 py-4">{{ animal.lieu }}</td>
             <td class="px-6 py-4">{{ animal.categorie.name }}</td>
+            <td class="px-6 py-4">{{ animal.prix }}</td>
             <td class="px-6 py-4">
               <label class="switch">
                 <input type="checkbox" :checked="animal.status" @change="toggleStatus(animal)">
@@ -65,11 +67,16 @@
             <label for="lieu" class="block mb-2">Lieu</label>
             <input type="text" v-model="selectedAnimal.lieu" id="lieu" class="w-full border-gray-300 rounded-md">
           </div>
+          <!-- Champ pour le lieu -->
+          <div class="mb-4">
+            <label for="lieu" class="block mb-2">Prix</label>
+            <input type="text" v-model="selectedAnimal.prix" id="lieu" class="w-full border-gray-300 rounded-md">
+          </div>
           <!-- Champ pour la catégorie -->
           <div class="mb-4">
             <label for="categorie" class="block mb-2">Catégorie</label>
-            <select v-model="selectedAnimal.categorie.id" id="categorie" class="w-full border-gray-300 rounded-md">
-              <option v-for="category in categories" :value="category.id">{{ category.name }}</option>
+            <select v-model="selectedAnimal.categorie_id" id="categorie" class="w-full border-gray-300 rounded-md">
+              <option  v-for="category in categories" :value="category.id" >{{ category.name }}</option>
             </select>
           </div>
           <!-- Bouton de soumission -->
@@ -161,6 +168,7 @@ export default {
     },
     async updateAnimal() {
       try {
+        console.log(this.selectedAnimal);
         await axios.put(`/api/animal/${this.selectedAnimal.id}`, this.selectedAnimal);
         await Swal.fire({
           icon: 'success',
@@ -179,7 +187,6 @@ export default {
       axios.get(`/api/getAnimal/${animalId}`,)
         .then(response => {
           this.selectedAnimal = response.data;
-          console.log(this.selectedAnimal);
         })
         .catch(error => {
           console.error('Erreur lors de la récupération des détails de l\'animal:', error);

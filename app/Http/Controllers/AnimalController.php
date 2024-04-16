@@ -111,15 +111,24 @@ public function getAnimal($id){
     public function update(Request $request, $id)
     {
         $animal = Animal::findOrFail($id);
-
+    
         $request->validate([
+            'lieu' => 'required',
+            'categorie_id' => 'required',
+            'prix' => 'required',
             'status' => 'required|boolean',
         ]);
-
-        $animal->update(['status' => $request->input('status')]);
-
-        return response()->json(['message' =>"updated", $request->input('status')], 200);
+    
+        $animal->update([
+            'lieu' => $request->input('lieu'),
+            'categorie_id' => $request->input('categorie_id'),
+            'prix' => $request->input('prix'),
+            'status' => $request->input('status'),
+        ]);
+    
+        return response()->json(['message' => 'Animal mis à jour avec succès'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
