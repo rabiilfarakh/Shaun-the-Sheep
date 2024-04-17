@@ -3,8 +3,9 @@
     <Header/>
 <div class="">
     <div class="flex justify-center items-center">
+    <div v-if="isLoading" class="text-center">Loading...</div>
     <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
-    <div class="2xl:mx-auto 2xl:container lg:px-20 lg:py-16 md:py-12 md:px-6 py-9 px-4 w-96 sm:w-auto">
+    <div v-else  class="2xl:mx-auto 2xl:container lg:px-20 lg:py-16 md:py-12 md:px-6 py-9 px-4 w-96 sm:w-auto">
       <div role="main" class="flex flex-col items-center justify-center">
         <h1 class="text-4xl font-semibold leading-9 text-center text-gray-800 dark:text-gray-50">This Week Blogs</h1>
         <p class="text-base leading-normal text-center text-gray-600 dark:text-white mt-4 lg:w-1/2 md:w-10/12 w-11/12">If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough</p>
@@ -26,7 +27,7 @@
                   </router-link>
                 </div>
               </div>
-              <img :src="'' + urls[0]" class="w-full" alt="Blog Image" />
+              <img :src="'storage/images/' + blogs[0]?.image.url" class="w-full" alt="Blog Image" />
             </div>
             <div class="sm:w-1/2 sm:mt-0 mt-4 relative">
               <div>
@@ -42,7 +43,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'' + urls[1]" class="w-full" alt="wall design" />
+              <img :src="'storage/images/' + blogs[1]?.image.url" class="w-full" alt="wall design" />
             </div>
           </div>
           <div class="relative">
@@ -59,7 +60,7 @@
                 </a>
               </div>
             </div>
-            <img :src="'' + urls[2]" alt="sitting place" class="w-full mt-8 md:mt-6 hidden sm:block" />
+            <img :src="'storage/images/' + blogs[2]?.image.url" alt="sitting place" class="w-full mt-8 md:mt-6 hidden sm:block" />
             <img class="w-full mt-4 sm:hidden" src="https://i.ibb.co/6XYbN7f/Rectangle-29.png" alt="sitting place" />
           </div>
         </div>
@@ -78,7 +79,7 @@
                 </a>
               </div>
             </div>
-            <img :src="'' + urls[3]" alt="sitting place" class="w-full sm:block hidden" />
+            <img :src="'storage/images/' + blogs[3]?.image.url" alt="sitting place" class="w-full sm:block hidden" />
             <img class="w-full sm:hidden" src="https://i.ibb.co/dpXStJk/Rectangle-29.png" alt="sitting place" />
           </div>
           <div class="sm:flex items-center justify-between xl:gap-x-8 gap-x-6 md:mt-6 mt-4">
@@ -96,7 +97,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'' + urls[4]" class="w-full" alt="chair" />
+              <img :src="'storage/images/' + blogs[4]?.image.url" class="w-full" alt="chair" />
             </div>
             <div class="relative w-full sm:mt-0 mt-4">
               <div>
@@ -112,7 +113,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'' + urls[5]" class="w-full" alt="wall design" />
+              <img  :src="'storage/images/'+blogs[0]?.image.url " class="w-full" alt="wall design" />
             </div>
           </div>
         </div>
@@ -130,21 +131,17 @@ import Header from "../layouts/header.vue";
 import Footer from "../layouts/footer.vue";
 import Head from "../layouts/head.vue";
 
-  const blogs = ref([]);
-  let urls = [];
-
-  onMounted(async () => {
-    try { 
-      const response = await axios.get('/api/blog');
-      blogs.value = response.data;
-      blogs.value.forEach(blog => {
-      if (blog.image && blog.image.url) {
-        urls.push('/storage/images/' + blog.image.url);
-      }
-    });
-    console.log(urls);
+let blogs = [];
+let isLoading = ref(true);
+onMounted(async () => {
+  try { 
+    const response = await axios.get('/api/blog');
+    blogs=response.data;
+    isLoading.value = false;
+ 
   } catch (error) {
     console.error('Error fetching blog data:', error);
+    isLoading.value = false;
   }
 });
 </script>
