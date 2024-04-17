@@ -15,18 +15,13 @@
                         />
                     </div>
             <div class="w-full sm:w-[70%] md:w-[60%] lg:w-[50%]">
-                <h1 class="text-white font-bold text-3xl mt-6 mb-8">
-                    Hey it's me, Aydin Vesali Moghaddam
+                <h1 class="text-black font-bold text-3xl mt-6 mb-8">
+                    {{ blog.title.toUpperCase() }}
                 </h1>
+
     
                 <p class=" w-full sm:w-[35rem] md:w-[30rem] lg:w-[25rem] mb-10">
-                    I'm Aydin, a 18-year-old high schooler with a passion for web
-                    development. My tech journey started with HTML, CSS, and JavaScript,
-                    and I was hooked by the thrill of crafting dynamic, interactive
-                    websites. As I grew, Node.js and ReactJS became my go-to tools for
-                    building scalable applications. Feel free
-                    to connect if you have questions, collaboration ideas, or just want to
-                    discuss the latest in web development!
+                    {{ blog.content }}
                 </p>
     
                 <div id="social" class="flex flex-wrap justify-start items-center gap-4">
