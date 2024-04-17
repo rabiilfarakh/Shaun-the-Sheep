@@ -70,10 +70,10 @@ const routes = [
     component: panier
   },
   {
-    path: '/animal',
+    path: '/blog/:id/animal',
     component: animal
-  },
-
+  }
+  
 ];
 
 const router = createRouter({

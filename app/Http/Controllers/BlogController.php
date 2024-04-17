@@ -38,8 +38,10 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        //
+        $blog->load('image');
+        return response()->json($blog);
     }
+    
 
     /**
      * Show the form for editing the specified resource.

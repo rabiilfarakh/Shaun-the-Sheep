@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource('blog', BlogController::class);
+Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 
 Route::apiResource('client', ClientController::class);
 Route::get('/getClients', [ClientController::class, 'getAll']);
