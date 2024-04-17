@@ -9,9 +9,9 @@ class Comment extends Model
 {
     use HasFactory;
 
-    public function animals()
+    public function blog()
     {
-        return $this->hasMany(Animal::class);
+        return $this->hasMany(blog::class);
     }
 
     public function clients()

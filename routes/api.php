@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\BlogController;
 use App\Models\Categorie;
 
 /*
@@ -23,6 +24,7 @@ use App\Models\Categorie;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('blog', BlogController::class);
 
 Route::apiResource('client', ClientController::class);
 Route::get('/getClients', [ClientController::class, 'getAll']);

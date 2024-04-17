@@ -26,7 +26,7 @@
                   </router-link>
                 </div>
               </div>
-              <img :src="'storage/images/mouton7.jpg'" class="w-full" alt="chair" />
+              <img :src="'' + urls[0]" class="w-full" alt="Blog Image" />
             </div>
             <div class="sm:w-1/2 sm:mt-0 mt-4 relative">
               <div>
@@ -42,7 +42,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'storage/images/vv.jpg'" class="w-full" alt="wall design" />
+              <img :src="'' + urls[1]" class="w-full" alt="wall design" />
             </div>
           </div>
           <div class="relative">
@@ -59,7 +59,7 @@
                 </a>
               </div>
             </div>
-            <img :src="'storage/images/caprs.jpg'" alt="sitting place" class="w-full mt-8 md:mt-6 hidden sm:block" />
+            <img :src="'' + urls[2]" alt="sitting place" class="w-full mt-8 md:mt-6 hidden sm:block" />
             <img class="w-full mt-4 sm:hidden" src="https://i.ibb.co/6XYbN7f/Rectangle-29.png" alt="sitting place" />
           </div>
         </div>
@@ -78,7 +78,7 @@
                 </a>
               </div>
             </div>
-            <img :src="'storage/images/aya.jpg'" alt="sitting place" class="w-full sm:block hidden" />
+            <img :src="'' + urls[3]" alt="sitting place" class="w-full sm:block hidden" />
             <img class="w-full sm:hidden" src="https://i.ibb.co/dpXStJk/Rectangle-29.png" alt="sitting place" />
           </div>
           <div class="sm:flex items-center justify-between xl:gap-x-8 gap-x-6 md:mt-6 mt-4">
@@ -96,7 +96,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'storage/images/vach4.jpg'" class="w-full" alt="chair" />
+              <img :src="'' + urls[4]" class="w-full" alt="chair" />
             </div>
             <div class="relative w-full sm:mt-0 mt-4">
               <div>
@@ -112,7 +112,7 @@
                   </a>
                 </div>
               </div>
-              <img :src="'storage/images/cabra.jpg'" class="w-full" alt="wall design" />
+              <img :src="'' + urls[5]" class="w-full" alt="wall design" />
             </div>
           </div>
         </div>
@@ -124,8 +124,27 @@
 </template>
   
 <script setup>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import Header from "../layouts/header.vue";
+import Footer from "../layouts/footer.vue";
+import Head from "../layouts/head.vue";
 
-import Header from "../layouts/header.vue"
-import Footer from "../layouts/footer.vue"
-import Head from "../layouts/head.vue"
+  const blogs = ref([]);
+  let urls = [];
+
+  onMounted(async () => {
+    try { 
+      const response = await axios.get('/api/blog');
+      blogs.value = response.data;
+      blogs.value.forEach(blog => {
+      if (blog.image && blog.image.url) {
+        urls.push('/storage/images/' + blog.image.url);
+      }
+    });
+    console.log(urls);
+  } catch (error) {
+    console.error('Error fetching blog data:', error);
+  }
+});
 </script>

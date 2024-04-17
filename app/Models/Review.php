@@ -9,9 +9,9 @@ class Review extends Model
 {
     use HasFactory;
 
-    public function review()
+    public function blog()
     {
-        return $this->hasMany(Review::class);
+        return $this->hasMany(blog::class);
     }
 
     public function client()

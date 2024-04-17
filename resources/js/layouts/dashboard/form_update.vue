@@ -8,7 +8,6 @@
             <th class="px-6 py-3">Lieu</th>
             <th class="px-6 py-3">Catégorie</th>
             <th class="px-6 py-3">Prix</th>
-            <th class="px-6 py-3">Available</th>
             <th class="px-6 py-3">Delete</th>
             <th class="px-6 py-3">Update</th>
           </tr>
@@ -26,12 +25,6 @@
             <td class="px-6 py-4">{{ animal.lieu }}</td>
             <td class="px-6 py-4">{{ animal.categorie.name }}</td>
             <td class="px-6 py-4">{{ animal.prix }}</td>
-            <td class="px-6 py-4">
-              <label class="switch">
-                <input type="checkbox" :checked="animal.status" @change="toggleStatus(animal)">
-                <span class="slider"></span>
-              </label>
-            </td>
             <td class="px-6 py-4">
               <!-- Bouton Supprimer -->
               <button @click="deleteAnimal(animal.id)" class="mr-2">
@@ -142,14 +135,7 @@ export default {
         console.error('Erreur lors de la récupération des données des animaux:', error);
       }
     },
-    async toggleStatus(animal) {
-      try {
-        await axios.put(`/api/animal/${animal.id}`, { status: animal.status });
-        this.fetchAnimals(this.currentPage);
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour du statut de l\'animal:', error);
-      }
-    },
+
     async deleteAnimal(animalId) {
       try {
         await axios.delete(`/api/animal/${animalId}`);
@@ -168,7 +154,6 @@ export default {
     },
     async updateAnimal() {
       try {
-        console.log(this.selectedAnimal);
         await axios.put(`/api/animal/${this.selectedAnimal.id}`, this.selectedAnimal);
         await Swal.fire({
           icon: 'success',

@@ -38,23 +38,9 @@ class Animal extends Model
         return $this->belongsToMany(Nouriture::class, 'animal_nourriture');
     }
 
-    // public function images()
-    // {
-    //     return $this->morphMany(Image::class, 'imageable');
-    // }
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
-    }
-
-    public function comment()
-    {
-        return $this->belongsTo(Comment::class);
-    }
-
-    public function review()
-    {
-        return $this->belongsTo(Review::class);
     }
 
     public function panier()
