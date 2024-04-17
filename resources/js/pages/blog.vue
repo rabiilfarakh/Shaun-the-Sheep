@@ -113,7 +113,7 @@
                   </router-link>
                 </div>
               </div>
-              <img  :src="'storage/images/'+blogs[0]?.image.url " class="w-full" alt="wall design" />
+              <img  :src="'storage/images/'+blogs[5]?.image.url " class="w-full" alt="wall design" />
             </div>
           </div>
         </div>
