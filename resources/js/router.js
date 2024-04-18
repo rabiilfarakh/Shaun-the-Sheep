@@ -17,68 +17,87 @@ import panier from './pages/panier.vue';
 import animal from './pages/animal.vue';
 
 const routes = [
-
   //----------------- gestion_routes_dashboard--------------------
   {
     path: '/dashboard/dashboardIndex',
-    component: dashboardIndex
+    component: dashboardIndex,
+    meta: { requiresAuth: true } // Cette route nécessite une authentification
   },
   {
     path: '/dashboard/animal_add',
-    component: animal_add
+    component: animal_add,
+    meta: { requiresAuth: true } // Cette route nécessite une authentification
   },
   {
     path: '/dashboard/animal_update',
-    component: animal_update
+    component: animal_update,
+    meta: { requiresAuth: true } // Cette route nécessite une authentification
   },
   // --------------------------fin---------------------------------
-
   {
     path: '/index',
-    component: index
+    component: index,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/blog',
-    component: blog
+    component: blog,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/product',
-    component: product
-  },
-  {
-    path: '/index',
-    component: index
+    component: product,
+    meta: { requiresAuth: true } // Cette route nécessite une authentification
   },
   {
     path: '/login',
-    component: login
+    component: login,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/register',
-    component: register
+    component: register,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/contact',
-    component: contact
+    component: contact,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/service',
-    component: service
+    component: service,
+    meta: { requiresAuth: true } // Cette route ne nécessite pas d'authentification
   },
   {
     path: '/panier',
-    component: panier
+    component: panier,
+    meta: { requiresAuth: true } // Cette route nécessite une authentification
   },
   {
     path: '/blog/:id/animal',
-    component: animal
+    component: animal,
+    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
   }
-  
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem('token');
+  
+  console.log('Token :', isAuthenticated);
+
+  if (!isAuthenticated && to.meta.requiresAuth) {
+    console.log("Vous n'êtes pas connecté");
+    next('/login');
+  } else {
+    console.log('Autorisation d\'accéder à la route.');
+    next(); 
+  }
 });
 
 export default router;

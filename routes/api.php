@@ -24,6 +24,9 @@ use App\Models\Categorie;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['auth:sanctum']],function(){
+
 Route::apiResource('blog', BlogController::class);
 Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 
@@ -32,13 +35,13 @@ Route::get('/getClients', [ClientController::class, 'getAll']);
 
 Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);
-Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);
+Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);  
 
 Route::apiResource('categorie', CategorieController::class);
 Route::apiResource('user', UserController::class);
-Route::group(['middleware' => ['auth:sanctum']],function(){
    
 });
+
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
