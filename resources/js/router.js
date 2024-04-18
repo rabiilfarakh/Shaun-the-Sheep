@@ -21,63 +21,63 @@ const routes = [
   {
     path: '/dashboard/dashboardIndex',
     component: dashboardIndex,
-    meta: { requiresAuth: true } // Cette route nécessite une authentification
+    meta: { requiresAuth: true } 
   },
   {
     path: '/dashboard/animal_add',
     component: animal_add,
-    meta: { requiresAuth: true } // Cette route nécessite une authentification
+    meta: { requiresAuth: true } 
   },
   {
     path: '/dashboard/animal_update',
     component: animal_update,
-    meta: { requiresAuth: true } // Cette route nécessite une authentification
+    meta: { requiresAuth: true } 
   },
   // --------------------------fin---------------------------------
   {
     path: '/index',
     component: index,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   },
   {
     path: '/blog',
     component: blog,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   },
   {
     path: '/product',
     component: product,
-    meta: { requiresAuth: true } // Cette route nécessite une authentification
+    meta: { requiresAuth: true } 
   },
   {
     path: '/login',
     component: login,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   },
   {
     path: '/register',
     component: register,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   },
   {
     path: '/contact',
     component: contact,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   },
   {
     path: '/service',
     component: service,
-    meta: { requiresAuth: true } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: true } 
   },
   {
     path: '/panier',
     component: panier,
-    meta: { requiresAuth: true } // Cette route nécessite une authentification
+    meta: { requiresAuth: true } 
   },
   {
     path: '/blog/:id/animal',
     component: animal,
-    meta: { requiresAuth: false } // Cette route ne nécessite pas d'authentification
+    meta: { requiresAuth: false } 
   }
 ];
 
