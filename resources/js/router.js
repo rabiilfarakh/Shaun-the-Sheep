@@ -8,6 +8,7 @@ import animal_update from './pages/dashboard/animal_update.vue';
 
 import index from './pages/index.vue';
 import login from './pages/login.vue';
+import loginA from './pages/loginA.vue';
 import blog from './pages/blog.vue';
 import product from './pages/product.vue';
 import register from './pages/register.vue';
@@ -55,6 +56,11 @@ const routes = [
     meta: { requiresAuth: false } 
   },
   {
+    path: '/loginA',
+    component: loginA,
+    meta: { requiresAuth: false } 
+  },
+  {
     path: '/register',
     component: register,
     meta: { requiresAuth: false } 
@@ -78,6 +84,16 @@ const routes = [
     path: '/blog/:id/animal',
     component: animal,
     meta: { requiresAuth: false } 
+  },
+
+  {
+    path: '/logout',
+    name: 'logout',
+    meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      localStorage.removeItem('token');
+      next('/login');
+    }
   }
 ];
 

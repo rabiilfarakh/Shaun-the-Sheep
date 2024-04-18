@@ -1,8 +1,7 @@
-<template>
-
+<template >
 <div class="py-16">
-    <div class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
-        <img class="hidden lg:block lg:w-1/2 bg-cover" src="storage/images/capture.png">
+    <div class="flex rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+        <img class="hidden lg:block lg:w-1/2 bg-cover" src="storage/images/log2.jpg">
         <div class="w-full p-8 lg:w-1/2">
             <h2 class="text-2xl font-semibold text-gray-700 text-center"></h2>
             <div class="bg-red" v-if="message">{{ message }}</div>
