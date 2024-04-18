@@ -1,5 +1,5 @@
 <template >
-<div class="py-16">
+<div class="py-16 bg-black">
     <div class="flex rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
         <img class="hidden lg:block lg:w-1/2 bg-cover" src="storage/images/log2.jpg">
         <div class="w-full p-8 lg:w-1/2">
