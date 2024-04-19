@@ -45,7 +45,7 @@
                     Admin <input value="admin" class="form-radio h-4 w-4 text-indigo-600" v-model="user.role" type="radio" name="role">
                 </div>
                 <div class="mt-5">
-                    <button class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Sign up</button>
+                    <button @click="registerUser" class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Sign up</button>
                 </div>
             </form>
             <div class="mt-4 flex items-center justify-between">
@@ -59,27 +59,34 @@
   </div>
 </template>
 
-  
 <script>
-import axios from 'axios';
+import { AuthStore } from '../store/AuthStore';
 
 export default {
+    setup() {
+        const auth = AuthStore(); 
+        return { auth };
+    },
     data() {
         return {
             users: [],
-            user: {name: "", email: "", role: "", password: "" },
+            user: { name: "", email: "", role: "", password: "" },
         }
     },
     methods: {
-        register() {
-            
-        axios.post('/api/register', this.user)
-            .then(res => {
-                this.user = {name: "", email: "", role: "", password: "" };
-                this.$router.push('/login');
-            })
-            .catch(err => console.error(err));
+       
+        async registerUser() {
+           
+            try {
+                console.log(this.user);
+                await this.auth.signUp(this.user);
+              
+            } catch (error) {
+                console.error(error);
+                // Gérer les erreurs d'inscription
+            }
         }
     }
 }
 </script>
+

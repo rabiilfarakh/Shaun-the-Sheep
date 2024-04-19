@@ -16,16 +16,16 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
+        'password',"role"
     ];
 
     public function client()
     {
-        return $this->hasOne(Client::class);
+        return $this->hasMany(Client::class);
     }
 
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->hasMany(Admin::class);
     }
 }

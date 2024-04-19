@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-
+import { AuthStore } from "@/store/AuthStore";
 //----------------- gestion_routes_dashboard--------------------
 import dashboardIndex from './pages/dashboard/dashboardIndex.vue';
 import animal_add from './pages/dashboard/animal_add.vue';
@@ -16,6 +16,9 @@ import contact from './pages/contact.vue';
 import service from './pages/service.vue';
 import panier from './pages/panier.vue';
 import animal from './pages/animal.vue';
+import { computed } from 'vue';
+
+
 
 const routes = [
   //----------------- gestion_routes_dashboard--------------------
@@ -38,7 +41,7 @@ const routes = [
   {
     path: '/index',
     component: index,
-    meta: { requiresAuth: false } 
+    meta: { requiresAuth: true, role: "admin" }
   },
   {
     path: '/blog',
@@ -97,22 +100,41 @@ const routes = [
   }
 ];
 
+
 const router = createRouter({
   history: createWebHistory(),
   routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const isAuthenticated = localStorage.getItem('token');
-  
-  console.log('Token :', isAuthenticated);
+  console.log('Token:', isAuthenticated);
 
-  if (!isAuthenticated && to.meta.requiresAuth) {
-    console.log("Vous n'êtes pas connecté");
-    next('/login');
+  // Access the AuthStore instance
+  const authStore = AuthStore();
+
+  // Call fetchUserData to get the user data
+  await authStore.fetchUserData();
+
+  // Access the user data using the user property
+  const user = authStore.user;
+
+  console.log('User:', user.role);
+
+  if (to.meta.requiresAuth) {
+    if (!isAuthenticated || !user) {
+ 
+      next("/login");
+    } else if (to.meta.role && user.role !== to.meta.role) {
+    
+      next("/unauthorized");
+    } else {
+    
+      next();
+    }
   } else {
-    console.log('Autorisation d\'accéder à la route.');
-    next(); 
+    
+    next();
   }
 });
 

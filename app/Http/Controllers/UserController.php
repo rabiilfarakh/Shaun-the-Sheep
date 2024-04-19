@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash; 
 
 class UserController extends Controller
@@ -17,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user=Auth::user();
+        return response()->json(['user'=>$user]);
     }
 
     /**
@@ -41,7 +43,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        
     }
 
     /**
@@ -80,7 +82,8 @@ class UserController extends Controller
     $user = User::create([
         'name' => $request->name,
         'email' => $request->email,
-        'password' => Hash::make($request->password)
+        'password' => Hash::make($request->password),
+        'role' => $request->role
     ]);
 
     if ($request->role === "admin") {
@@ -93,7 +96,7 @@ class UserController extends Controller
         ]);
     }
 
-    return response()->json(['message' => 'User registered successfully']);
+    return response()->json(['message' => 'User registered successfully',$request->all()]);
 }
 
     public function login(Request $request){
@@ -110,7 +113,7 @@ class UserController extends Controller
                 $token = $user->createToken('authToken')->plainTextToken;
                 return response()->json([
                     'message' => 'Connected Successfully',
-                    'token' => $token
+                    'token' => $token,'user'=>$user
                 ]);
             }else{
                 return response()->json([

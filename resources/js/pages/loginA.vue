@@ -69,7 +69,6 @@
           if (res.data.token) {
             this.message = res.data.message;
             localStorage.setItem('token', res.data.token); 
-            localStorage.setItem('role', "admin");
             this.$router.push('/dashboard/dashboardIndex');
           } else {
             this.message = res.data.message;

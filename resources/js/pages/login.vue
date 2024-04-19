@@ -38,7 +38,7 @@
                   <input v-model="user.password" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password" />
               </div>
               <div class="mt-8">
-                  <button type="submit" class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
+                  <button @click="login" type="submit" class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
               </div>
               <div class="mt-4 flex items-center justify-between">
                   <span class="border-b w-1/5 md:w-1/4"></span>
@@ -51,34 +51,33 @@
 </div>
 
 </template>
-
 <script>
-import axios from 'axios';
+import { AuthStore } from '../store/AuthStore';
+import { useRouter } from 'vue-router'; 
 
 export default {
-  data() {
-    return {
-      user: { email: "", password: "" },
-      message: ''
-    };
-  },
-  methods: {
-    login() {
-    axios.post('/api/login', this.user)
-    .then(res => {
-      if (res.data.token) {
-        this.message = res.data.message;
-        localStorage.setItem('token', res.data.token); 
-        this.$router.push('/index');
-      } else {
-        this.message = res.data.message;
-      }
-    })
-    .catch(error => {
-      console.error('Error during login:', error);
-    });
-}
+    setup() {
+        const auth = AuthStore();
+        const router = useRouter(); 
 
-  }
+        return { auth, router }; 
+    },
+    data() {
+        return {
+            user: { email: "", password: "" },
+            message: ''
+        };
+    },
+    methods: {
+        async login() {
+            try {
+                await this.auth.signIn(this.user, this.router); 
+         
+            } catch (error) {
+                console.error("Error during login:", error);
+            }
+        }
+    }
 }
 </script>
+
