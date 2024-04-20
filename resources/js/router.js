@@ -30,12 +30,12 @@ const routes = [
   {
     path: '/dashboard/animal_add',
     component: animal_add,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "admin"} 
   },
   {
     path: '/dashboard/animal_update',
     component: animal_update,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "admin"} 
   },
   // --------------------------fin---------------------------------
   {
@@ -46,12 +46,12 @@ const routes = [
   {
     path: '/blog',
     component: blog,
-    meta: { requiresAuth: false } 
+    meta: { requiresAuth: true , role: "client"} 
   },
   {
     path: '/product',
     component: product,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "client"} 
   },
   {
     path: '/login',
@@ -71,22 +71,22 @@ const routes = [
   {
     path: '/contact',
     component: contact,
-    meta: { requiresAuth: false } 
+    meta: { requiresAuth: true , role: "client"} 
   },
   {
     path: '/service',
     component: service,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "client"} 
   },
   {
     path: '/panier',
     component: panier,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "client"} 
   },
   {
     path: '/blog/:id/animal',
     component: animal,
-    meta: { requiresAuth: false } 
+    meta: { requiresAuth: true , role: "client"} 
   },
 
   {

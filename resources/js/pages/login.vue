@@ -72,7 +72,12 @@ export default {
         async login() {
             try {
                 await this.auth.signIn(this.user, this.router); 
-                this.$router.push('/index');
+                if(this.user.role == "client"){
+                    this.$router.push('/index');
+                }else{
+                    this.$router.push('/dashboard/dashboardIndex');
+                }
+                
          
             } catch (error) {
                 console.error("Error during login:", error);
