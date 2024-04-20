@@ -4,7 +4,7 @@
         <img class="hidden lg:block lg:w-1/2 bg-cover" src="storage/images/log2.jpg">
         <div class="w-full p-8 lg:w-1/2">
           <h2 class="text-2xl font-semibold text-gray-700 text-center"></h2>
-          <div class="bg-red" v-if="message">{{ message }}</div>
+          <!-- <div class="bg-red" v-if="message">{{ message }}</div> -->
           <p class="text-xl text-gray-600 text-center">Login</p>
           <a href="#" class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
             <div class="px-4 py-3">
@@ -46,46 +46,53 @@
   
   <script>
   import { AuthStore } from '../store/AuthStore';
-  import { useRouter } from 'vue-router'; 
-  
-  export default {
-    setup() {
-      const auth = AuthStore();
-      const router = useRouter(); 
-  
-      return { auth, router }; 
-    },
-    data() {
-      return {
-        user: { email: "", password: "" },
-        message: '',
-        emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-        passwordRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-      };
-    },
-    methods: {
-      async login() {
-        if (!this.user.email || !this.emailRegex.test(this.user.email)) {
-          this.message = "Please enter a valid email address.";
-          return;
-        }
-  
-        if (!this.user.password || !this.passwordRegex.test(this.user.password)) {
-          this.message = "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.";
-          return;
-        }
-        try {
-          await this.auth.signIn(this.user, this.router); 
-          if(this.user.role == "client"){
-            this.$router.push('/index');
-          } else if(this.user.role == "admin"){
-            this.$router.push('/dashboard/dashboardIndex');
-          }
-        } catch (error) {
-          console.error("Error during login:", error);
-        }
-      }
+import { useRouter } from 'vue-router'; 
+
+export default {
+  setup() {
+    const auth = AuthStore();
+    const router = useRouter(); 
+
+    return { auth, router }; 
+  },
+  data() {
+    return {
+      user: { email: "", password: "" , role:""},
+      message: '',
+      emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      passwordRegex:/^(?=.*[a-z])(?=.*[@$!%*?&])[^A-Z0-9\s]{8,}$/
+    };
+  },
+  methods: {
+    async login() {
+    if (!this.user.email || !this.emailRegex.test(this.user.email)) {
+        this.message = "Please enter a valid email address.";
+        return;
     }
+
+    if (!this.user.password || !this.passwordRegex.test(this.user.password)) {
+        this.message = "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.";
+        return;
+    }
+    
+    try {
+        const userData = await this.auth.signIn(this.user, this.router); 
+        
+        this.user = userData;
+        if(this.user.role == "client"){
+            console.log("client");
+            this.router.push('/index');
+        } else if(this.user.role == "admin"){
+            console.log("admin");
+            this.router.push('/dashboard/dashboardIndex');
+        }
+    } catch (error) {
+        console.error("Error during login:", error);
+    }
+}
+
   }
+}
+
   </script>
   
