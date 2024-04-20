@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const AuthStore = defineStore("AuthStore", {
   state: () => ({
-    user: "nnnull",
+    user: "null",
   }),
   
   actions: {

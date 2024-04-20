@@ -1,6 +1,6 @@
 <template >
-<div class="py-16 bg-black">
-    <div class="flex rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
+<div class="py-16">
+    <div class="flex rounded-lg bg-gray-200 shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
         <img class="hidden lg:block lg:w-1/2 bg-cover" src="storage/images/log2.jpg">
         <div class="w-full p-8 lg:w-1/2">
             <h2 class="text-2xl font-semibold text-gray-700 text-center"></h2>
@@ -72,6 +72,7 @@ export default {
         async login() {
             try {
                 await this.auth.signIn(this.user, this.router); 
+                this.$router.push('/index');
          
             } catch (error) {
                 console.error("Error during login:", error);

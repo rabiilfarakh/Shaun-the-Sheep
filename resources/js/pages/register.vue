@@ -80,6 +80,7 @@ export default {
             try {
                 console.log(this.user);
                 await this.auth.signUp(this.user);
+                this.$router.push('/login');
               
             } catch (error) {
                 console.error(error);

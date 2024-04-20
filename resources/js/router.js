@@ -25,7 +25,7 @@ const routes = [
   {
     path: '/dashboard/dashboardIndex',
     component: dashboardIndex,
-    meta: { requiresAuth: true } 
+    meta: { requiresAuth: true , role: "admin"} 
   },
   {
     path: '/dashboard/animal_add',
@@ -41,7 +41,7 @@ const routes = [
   {
     path: '/index',
     component: index,
-    meta: { requiresAuth: true, role: "admin" }
+    meta: { requiresAuth: true, role: "client" }
   },
   {
     path: '/blog',
@@ -58,11 +58,11 @@ const routes = [
     component: login,
     meta: { requiresAuth: false } 
   },
-  {
-    path: '/loginA',
-    component: loginA,
-    meta: { requiresAuth: false } 
-  },
+  // {
+  //   path: '/loginA',
+  //   component: loginA,
+  //   meta: { requiresAuth: false } 
+  // },
   {
     path: '/register',
     component: register,
