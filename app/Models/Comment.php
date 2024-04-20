@@ -11,11 +11,11 @@ class Comment extends Model
 
     public function blog()
     {
-        return $this->hasMany(blog::class);
+        return $this->belongsTo(Blog::class);
     }
 
-    public function clients()
+    public function client()
     {
-        return $this->hasMany(Client::class);
+        return $this->belongsTo(Client::class);
     }
 }

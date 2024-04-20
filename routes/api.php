@@ -8,6 +8,7 @@ use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CommentController;
 use App\Models\Categorie;
 
 /*
@@ -29,6 +30,8 @@ Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 
 Route::apiResource('client', ClientController::class);
 Route::get('/getClients', [ClientController::class, 'getAll']);
+
+Route::apiResource('comment', CommentController::class);
 
 Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);

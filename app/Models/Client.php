@@ -30,9 +30,9 @@ class Client extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function comment()
+    public function comments()
     {
-        return $this->belongsTo(Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function review()
