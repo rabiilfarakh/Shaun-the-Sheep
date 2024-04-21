@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
+use App\Models\Comment;
 
 class BlogController extends Controller
 {
@@ -38,9 +39,15 @@ class BlogController extends Controller
      */
     public function show(Blog $blog)
     {
-        $blog->load('Image','Comment');
-        return response()->json($blog);
+        $comments = $blog->comment()->with('client.user')->get();
+        $blog->load('image');
+        
+        return response()->json([
+            'blog' => $blog,
+            'comments' => $comments
+        ]);
     }
+    
     
     
 

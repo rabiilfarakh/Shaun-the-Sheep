@@ -39,6 +39,7 @@ Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);
 
 Route::apiResource('categorie', CategorieController::class);
 Route::apiResource('/user', UserController::class)->middleware('auth:sanctum');
+
 Route::group(['middleware' => ['auth:sanctum']],function(){
 
 

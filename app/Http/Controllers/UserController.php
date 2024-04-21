@@ -16,6 +16,8 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+
     public function index()
     {
         $user=Auth::user();
@@ -134,5 +136,6 @@ class UserController extends Controller
             'message' => 'Logout successfully'
         ]);
     }
+    
     
 }
