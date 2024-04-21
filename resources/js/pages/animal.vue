@@ -11,10 +11,10 @@
       </div>
       <div class="w-full sm:w-[70%] md:w-[60%] lg:w-[50%]">
         <h1 class="text-black font-bold text-3xl mt-6 mb-8">
-          {{ blog.title }}
+          {{ blog.blog.title }}
         </h1>
         <p class="w-full sm:w-[35rem] md:w-[30rem] lg:w-[25rem] mb-10">
-          {{ blog.content }}
+          {{ blog.blog.content }}
         </p>
         <div id="social" class="flex flex-wrap justify-start items-center gap-4">
           <!-- Étoiles pour les avis -->
@@ -55,11 +55,18 @@
             <h3 class="text-lg font-bold">{{ comment.client.user.name }}</h3>
             <p class="text-gray-700 text-sm mb-2">{{ comment.created_at }}</p>
             <p class="text-gray-700">{{ comment.contenu }}</p>
-            <!-- Condition pour afficher le bouton de suppression -->
-            <button v-if="comment.client.user.id === user.id" class="bg-red-600">Supprimer</button>
+
+            <button @click="deleteComment(comment.id)" v-if="comment.client.user.id === user.id" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Supprimer
+            </button>
           </div>
         </div>
       </div> 
+    </div>
+
+    <!-- Alert box -->
+    <div v-if="showAlert" class="absolute top-0 left-0 right-0 bg-green-500 text-white px-4 py-2 text-center">
+      Commentaire supprimé avec succès!
     </div>
     <Footer class="mt-20" />
   </div>
@@ -73,6 +80,7 @@ import { useRouter } from 'vue-router';
 let isLoading = ref(true);
 let blog = ref({ comments: [] });
 let user = ref(null);
+let showAlert = ref(false); // Variable pour contrôler l'affichage de l'alerte
 
 const router = useRouter();
 
@@ -80,7 +88,7 @@ onMounted(async () => {
   try { 
     const id = router.currentRoute.value.params.id; 
     const response = await axios.get(`/api/blog/${id}`);
-    blog = response.data; 
+    blog.value = response.data; 
     isLoading.value = false;
   } catch (error) {
     console.error('Error fetching blog data:', error);
@@ -98,12 +106,25 @@ async function fetchUserData() {
         },
       });
       user = res.data.user;
-      console.log(user);
     }
   } catch (error) {
     console.error("Error fetching user data:", error);
   }
 }
+
+const deleteComment = async (commentId) => {
+  try {
+    const response = await axios.delete(`/api/comment/${commentId}`);
+    if (response.status === 200) {
+      showAlert.value = true; // Mettre à jour la variable showAlert pour afficher l'alerte
+      setTimeout(() => {
+        showAlert.value = false; // Masquer l'alerte après un certain délai (par exemple, 3 secondes)
+      }, 3000);
+    }
+  } catch (error) {
+    console.error('Error deleting comment:', error);
+  }
+};
 
 const rate = (rating) => {
   // Logique pour noter le blog
