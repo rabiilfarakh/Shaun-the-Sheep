@@ -16,34 +16,6 @@
         <p class="w-full sm:w-[35rem] md:w-[30rem] lg:w-[25rem] mb-10">
           {{ blog.blog.content }}
         </p>
-        <div id="social" class="flex flex-wrap justify-start items-center gap-4">
-          <!-- Étoiles pour les avis -->
-          <div class="flex items-center gap-2">
-            <span class="text-lg font-bold mr-2">Rate:</span>
-            <template v-for="n in 5">
-              <svg
-                @click="rate(n)"
-                class="cursor-pointer w-6 h-6 fill-current text-yellow-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  v-if="n <= blog.rating"
-                  fill="currentColor"
-                  d="M12 2l2.17 6.565H22l-5.505 3.915 2.175 6.545L12 16.13l-6.67 4.895 2.175-6.545L2 8.565h7.83z"
-                />
-                <path
-                  v-else
-                  fill="none"
-                  stroke="currentColor"
-                  :stroke-width="2"
-                  stroke-linejoin="round"
-                  d="M12 2l2.17 6.565H22l-5.505 3.915 2.175 6.545L12 16.13l-6.67 4.895 2.175-6.545L2 8.565h7.83z"
-                />
-              </svg>
-            </template>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -62,7 +34,16 @@
           </div>
         </div>
       </div> 
+      <form @submit.prevent="addComment" class="bg-white p-4 rounded-lg shadow-md mt-8">
+        <h3 class="text-lg font-bold mb-2">Add a comment</h3>
+        <div class="mb-4">
+          <label class="block text-gray-700 font-bold mb-2" for="comment">Comment</label>
+          <textarea v-model="newComment" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="comment" rows="3" placeholder="Enter your comment"></textarea>
+        </div>
+        <button type="submit" class="bg-gray-900 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Envoyer</button>
+      </form>
     </div>
+
 
     <!-- Alert box -->
     <div v-if="showAlert" class="absolute top-0 left-0 right-0 bg-green-500 text-white px-4 py-2 text-center">
@@ -77,17 +58,21 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
-let isLoading = ref(true);
-let blog = ref({ comments: [] });
-let user = ref(null);
-let showAlert = ref(false); // Variable pour contrôler l'affichage de l'alerte
+const token = localStorage.getItem('token');
+const headers = { headers: { 'Authorization': `Bearer ${token}` } };
+
+const isLoading = ref(true);
+const blog = ref({ comments: [] });
+const showAlert = ref(false);
+const newComment = ref('');
 
 const router = useRouter();
+
 
 onMounted(async () => {
   try { 
     const id = router.currentRoute.value.params.id; 
-    const response = await axios.get(`/api/blog/${id}`);
+    const response = await axios.get(`/api/blog/${id}`, headers);
     blog.value = response.data; 
     isLoading.value = false;
   } catch (error) {
@@ -96,47 +81,42 @@ onMounted(async () => {
   }
 });
 
-async function fetchUserData() {
+//ajouter comment
+const addComment = async () => {
   try {
-    const token = localStorage.getItem("token");
-    if (token) {
-      const res = await axios.get("/api/user", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      user = res.data.user;
+    const id = router.currentRoute.value.params.id;
+    
+    const addCommentResponse = await axios.post(`/api/blog/${id}/comment`, { content: newComment.value }, headers);
+  
+    if (addCommentResponse.status === 200) {
+      const newCommentData = addCommentResponse.data;
+      blog.value.comments.push(newCommentData);
+      newComment.value = '';
+      console.log('Comment added successfully');
+    } else {
+      console.error('Unexpected status code:', addCommentResponse.status);
     }
   } catch (error) {
-    console.error("Error fetching user data:", error);
+    console.error('Error adding comment:', error);
   }
 }
 
+
+
+// Supprimer un commentaire
 const deleteComment = async (commentId) => {
   try {
-    const response = await axios.delete(`/api/comment/${commentId}`);
+    const response = await axios.delete(`/api/comment/${commentId}`, headers);
+  
     if (response.status === 200) {
-      showAlert.value = true; // Mettre à jour la variable showAlert pour afficher l'alerte
-      setTimeout(() => {
-        showAlert.value = false; // Masquer l'alerte après un certain délai (par exemple, 3 secondes)
-      }, 3000);
+      console.log('Comment deleted successfully');
+    } else {
+      console.error('Unexpected status code:', response.status);
     }
   } catch (error) {
     console.error('Error deleting comment:', error);
   }
-};
+}
 
-const rate = (rating) => {
-  // Logique pour noter le blog
-};
-
-const like = () => {
-  // Logique pour "liker" le blog
-};
-
-const dislike = () => {
-  // Logique pour "disliker" le blog
-};
-
-fetchUserData();
 </script>
+
