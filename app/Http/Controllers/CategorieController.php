@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Categorie;
 use App\Http\Requests\StoreCategorieRequest;
 use App\Http\Requests\UpdateCategorieRequest;
+use App\Repositories\Interfaces\CategoriesRepositoryInterface;
 
 class CategorieController extends Controller
 {
+    public function __construct(public CategoriesRepositoryInterface  $repository) {}
+        
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Categorie::All();
+       $categories = $this->repository->index();
+        // $categories = Categorie::All();
         return response()->json($categories);
     }
 

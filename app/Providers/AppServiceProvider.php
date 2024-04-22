@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Implementations\CategoriesRepository;
+use App\Repositories\Interfaces\CategoriesRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        app()->bind(CategoriesRepositoryInterface::class, CategoriesRepository::class);
     }
 }
