@@ -17,11 +17,6 @@ class CategoriesRepository implements CategoriesRepositoryInterface
         return Categorie::create($data);
     }
 
-    public function show($id)
-    {
-        return Categorie::findOrFail($id);
-    }
-
     public function update(array $data, $id)
     {
         $resource = Categorie::findOrFail($id);

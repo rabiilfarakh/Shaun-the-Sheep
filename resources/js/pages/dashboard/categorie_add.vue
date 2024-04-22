@@ -544,7 +544,7 @@
                 </h2>
     
                 <!-- form add -->
-                <Form_add/>
+                <Cat_add/>
               </div>
             </main>
           </div>
@@ -554,7 +554,7 @@
     </template>
     
     <script setup>
-      import Form_add from "../../layouts/dashboard/form_add.vue"
+      import Cat_add from "../../layouts/dashboard/cat_add.vue"
     </script>
     <script>
     export default {

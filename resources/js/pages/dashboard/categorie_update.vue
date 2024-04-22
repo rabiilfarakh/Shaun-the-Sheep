@@ -544,7 +544,7 @@
                 </h2>
     
                 <!-- form add -->
-                <Form_update/>
+                <Cat_update/>
               </div>
             </main>
           </div>
@@ -553,8 +553,10 @@
     </html>
     </template>
     
-<script>
-    import Form_update from "../../layouts/dashboard/form_update.vue"
+    <script setup>
+      import Cat_update from "../../layouts/dashboard/cat_update.vue"
+    </script>
+    <script>
     export default {
         data() {
             return {

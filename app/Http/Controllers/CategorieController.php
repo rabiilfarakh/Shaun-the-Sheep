@@ -10,62 +10,33 @@ use App\Repositories\Interfaces\CategoriesRepositoryInterface;
 class CategorieController extends Controller
 {
     public function __construct(public CategoriesRepositoryInterface  $repository) {}
-        
-    /**
-     * Display a listing of the resource.
-     */
+
+    // index method
     public function index()
     {
-       $categories = $this->repository->index();
-        // $categories = Categorie::All();
+        $categories = $this->repository->index();
         return response()->json($categories);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // store method
     public function store(StoreCategorieRequest $request)
     {
-        //
+        $categories = $this->repository->store($request->all());
+        return response()->json($categories);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Categorie $categorie)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Categorie $categorie)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // update method
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
-        //
+        $categories = $this->repository->update($request->all(), $categorie->id);
+        return response()->json($categories);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // destroy method
     public function destroy(Categorie $categorie)
     {
-        //
+        $categories = $this->repository->destroy($categorie->id);
+        return response()->json($categories);
     }
+
 }

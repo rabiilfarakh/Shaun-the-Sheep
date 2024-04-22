@@ -5,8 +5,6 @@ namespace App\Repositories\Interfaces;
 interface CategoriesRepositoryInterface
 {
     public function index();
-
-    public function show($id);
     
     public function store(array $data);
 
