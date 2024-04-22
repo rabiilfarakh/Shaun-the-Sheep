@@ -1,6 +1,6 @@
 <template>
     <div class="flex h-screen">
-      <div class="w-96 overflow-hidden rounded-lg shadow-xs">
+      <div class="w-full overflow-hidden rounded-lg shadow-xs">
         <div class="w-full overflow-x-auto">
           <table class="w-full whitespace-no-wrap">
             <thead>
@@ -53,46 +53,60 @@
 </template>
   
   
-  <script>
-  import axios from 'axios';
-  import Swal from 'sweetalert2';
-  
-  export default {
-    data() {
-      return {
-        categories: [],
-        selectedCategory: null
-      };
-    },
-    mounted() {
-      this.getCategories();
-    },
-    methods: {
-      getCategories() {
-        axios.get(`/api/categorie`).then(res => {
-          this.categories = res.data;
-        });
-      },
-      updateCategory(id) {
-        axios.put(`/api/categorie/${id}`, this.selectedCategory).then(res => {
-          this.getCategories();
-          this.closePopup();
-          Swal.fire('Succès', 'Catégorie mise à jour avec succès', 'success');
-        });
-      },
-      deleteCategory(id) {
-        axios.delete(`/api/categorie/${id}`).then(res => {
-          this.getCategories();
-          Swal.fire('Succès', 'Catégorie supprimée avec succès', 'success');
-        });
-      },
-      showUpdatePopup(category) {
-        this.selectedCategory = { ...category };
-      },
-      closePopup() {
-        this.selectedCategory = null;
+<script>
+import axios from 'axios';
+import Swal from 'sweetalert2';
+
+export default {
+  data() {
+    return {
+      categories: [],
+      selectedCategory: null
+    };
+  },
+  mounted() {
+    this.getCategories();
+  },
+  methods: {
+    async getCategories() {
+      try {
+        const res = await axios.get(`/api/categorie`);
+        this.categories = res.data;
+      } catch (error) {
+        console.error('Une erreur est survenue lors de la récupération des catégories:', error);
+        // Afficher un message d'erreur à l'utilisateur en cas d'échec de la récupération des catégories
+        Swal.fire('Erreur', 'Une erreur est survenue lors de la récupération des catégories', 'error');
       }
+    },
+    async updateCategory(id) {
+      try {
+        const res = await axios.put(`/api/categorie/${id}`, this.selectedCategory);
+        this.getCategories();
+        this.closePopup();
+        Swal.fire('Succès', 'Catégorie mise à jour avec succès', 'success');
+      } catch (error) {
+        console.error('Une erreur est survenue lors de la mise à jour de la catégorie:', error);
+        // Afficher un message d'erreur à l'utilisateur en cas d'échec de la mise à jour de la catégorie
+        Swal.fire('Erreur', 'Une erreur est survenue lors de la mise à jour de la catégorie', 'error');
+      }
+    },
+    async deleteCategory(id) {
+      try {
+        const res = await axios.delete(`/api/categorie/${id}`);
+        this.getCategories();
+        Swal.fire('Succès', 'Catégorie supprimée avec succès', 'success');
+      } catch (error) {
+        console.error('Une erreur est survenue lors de la suppression de la catégorie:', error);
+        // Afficher un message d'erreur à l'utilisateur en cas d'échec de la suppression de la catégorie
+        Swal.fire('Erreur', 'Une erreur est survenue lors de la suppression de la catégorie', 'error');
+      }
+    },
+    showUpdatePopup(category) {
+      this.selectedCategory = { ...category };
+    },
+    closePopup() {
+      this.selectedCategory = null;
     }
-  };
-  </script>
-  
+  }
+};
+</script>
