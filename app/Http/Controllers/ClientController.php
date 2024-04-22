@@ -1,11 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\DB;
 use App\Models\client;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreclientRequest;
 use App\Http\Requests\UpdateclientRequest;
-use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -27,6 +28,12 @@ class ClientController extends Controller
         $clients = client::all();
         return response()->json($clients);
     }
+    public function getClient($id)
+    {
+        $client=client::findOrFaild($id);
+        return response()->json(['clientId'=>$client->id]);
+    }
+
 
     /**
      * Show the form for creating a new resource.

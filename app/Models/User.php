@@ -19,10 +19,10 @@ class User extends Authenticatable
         'password',"role"
     ];
 
-    public function client()
+    public function clients()
     {
         return $this->hasMany(Client::class);
-    }
+    }    
 
     public function admin()
     {

@@ -20,20 +20,24 @@
     </div>
 
     <div class="w-auto px-24 justify-center relative mt-8">
-      <div class=" w-auto px-24 justify-center relative">
+      <div class="w-auto px-24 justify-center relative">
         <h2 class="text-lg font-bold mb-4">Comments</h2>
         <div class="flex flex-col space-y-4">
-          <div v-for="comment in blog.comments" :key="comment.id" class="bg-white p-4 rounded-lg shadow-md">
-            <h3 class="text-lg font-bold">{{ comment.client.user.name }}</h3>
-            <p class="text-gray-700 text-sm mb-2">{{ comment.created_at }}</p>
-            <p class="text-gray-700">{{ comment.contenu }}</p>
-
-            <button @click="deleteComment(comment.id)" v-if="comment.client.user.id === user.id" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Supprimer
-            </button>
+          <div v-for="comment in blog.comments" :key="comment.id" class="bg-white p-4 rounded-lg shadow-md flex items-start">
+            <div class="flex-1">
+              <h3 class="text-lg font-bold">{{ comment.client.user.name }}</h3>
+              <p class="text-gray-700 text-sm mb-2">{{ comment.created_at }}</p>
+              <p class="text-gray-700">{{ comment.contenu }}</p>
+            </div>
+            <div class="ml-auto">
+              <button @click="deleteComment(comment.id)" v-if="comment.client.user.id === user.id" class="text-gray-600 hover:text-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Supprimer
+              </button>
+              <div class="w-full border-t mt-2"></div> <!-- Ligne sous le bouton -->
+            </div>
           </div>
         </div>
-      </div> 
+      </div>
       <form @submit.prevent="addComment" class="bg-white p-4 rounded-lg shadow-md mt-8">
         <h3 class="text-lg font-bold mb-2">Add a comment</h3>
         <div class="mb-4">
@@ -44,11 +48,6 @@
       </form>
     </div>
 
-
-    <!-- Alert box -->
-    <div v-if="showAlert" class="absolute top-0 left-0 right-0 bg-green-500 text-white px-4 py-2 text-center">
-      Commentaire supprimé avec succès!
-    </div>
     <Footer class="mt-20" />
   </div>
 </template>
@@ -63,17 +62,32 @@ const headers = { headers: { 'Authorization': `Bearer ${token}` } };
 
 const isLoading = ref(true);
 const blog = ref({ comments: [] });
-const showAlert = ref(false);
 const newComment = ref('');
-
 const router = useRouter();
+const user = ref('');
 
-
+// const getClient = async (id) => {
+//   try {
+//     const res = await axios.post("/api/getClient", { id }, { headers: { Authorization: `Bearer ${token}` } });
+//     return res.data;
+//   } catch (error) {
+//     console.error('Error fetching client:', error);
+//     throw error;
+//   }
+// }
+// Fetch blog data on component mount
 onMounted(async () => {
-  try { 
-    const id = router.currentRoute.value.params.id; 
+  try {
+    if (token) {
+      
+      const res = await axios.get("/api/user", { headers: { Authorization: `Bearer ${token}` } });
+      user.value = res.data.user;
+
+      // console.log(getClient(20));
+    }
+    const id = router.currentRoute.value.params.id;
     const response = await axios.get(`/api/blog/${id}`, headers);
-    blog.value = response.data; 
+    blog.value = response.data;
     isLoading.value = false;
   } catch (error) {
     console.error('Error fetching blog data:', error);
@@ -81,13 +95,15 @@ onMounted(async () => {
   }
 });
 
-//ajouter comment
+
+// Function to add a comment
 const addComment = async () => {
   try {
     const id = router.currentRoute.value.params.id;
-    
-    const addCommentResponse = await axios.post(`/api/blog/${id}/comment`, { content: newComment.value }, headers);
-  
+
+
+    const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value,}, headers);
+
     if (addCommentResponse.status === 200) {
       const newCommentData = addCommentResponse.data;
       blog.value.comments.push(newCommentData);
@@ -101,15 +117,14 @@ const addComment = async () => {
   }
 }
 
-
-
-// Supprimer un commentaire
+// Function to delete a comment
 const deleteComment = async (commentId) => {
   try {
     const response = await axios.delete(`/api/comment/${commentId}`, headers);
-  
     if (response.status === 200) {
       console.log('Comment deleted successfully');
+      // Remove the deleted comment from the list
+      blog.value.comments = blog.value.comments.filter(comment => comment.id !== commentId);
     } else {
       console.error('Unexpected status code:', response.status);
     }
@@ -117,6 +132,8 @@ const deleteComment = async (commentId) => {
     console.error('Error deleting comment:', error);
   }
 }
-
 </script>
+
+
+
 

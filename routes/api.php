@@ -30,8 +30,11 @@ Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 
 Route::apiResource('client', ClientController::class);
 Route::get('/getClients', [ClientController::class, 'getAll']);
+Route::post('/getClient', [ClientController::class, 'getClient']);
 
 Route::apiResource('comment', CommentController::class);
+ Route::post('/blog/{id}/animal/comment', [CommentController::class, 'store'])->name('add_comments');
+
 
 Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);
