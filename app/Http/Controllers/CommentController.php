@@ -32,7 +32,7 @@ class CommentController extends Controller
         $validatedData = $request->validated();
         $comment = Comment::create($validatedData);
     
-        return response()->json(["message" => "add comment avec succe"], 201);
+        return response()->json($comment, 201);
     }
 
     /**

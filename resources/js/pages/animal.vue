@@ -103,21 +103,13 @@ const addComment = async () => {
     const clientObj = await getClient(user.value.id);
 
     const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value, client_id: clientObj.clientId, blog_id: blog_id }, headers);
-
-    console.log('Add comment response:', addCommentResponse);
-
-    if (addCommentResponse.status === 200) {
-      const response = await axios.get(`/api/blog/${id}`, headers);
-      blog.value = response.data;
-      newComment.value = '';
-
-      console.log('Updated blog data:', blog.value);
-    }
+    blog.value.comments.push(addCommentResponse.data);
+    newComment.value = '';
+    
   } catch (error) {
     console.error('Error adding comment:', error);
   }
 }
-
 
 
 
@@ -127,7 +119,6 @@ const deleteComment = async (commentId) => {
     const response = await axios.delete(`/api/comment/${commentId}`, headers);
     if (response.status === 200) {
       console.log('Comment deleted successfully');
-      // Remove the deleted comment from the list
       blog.value.comments = blog.value.comments.filter(comment => comment.id !== commentId);
     } else {
       console.error('Unexpected status code:', response.status);
