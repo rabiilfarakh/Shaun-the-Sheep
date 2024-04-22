@@ -169,17 +169,12 @@
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <router-link class="w-full" to="/dashboard/animal_add">Add Catégorie</router-link>
+                      <router-link class="w-full" to="/dashboard/categorie_add">Add Catégorie</router-link>
                     </li>
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <router-link class="w-full" to="/dashboard/animal_update">Update Catégorie</router-link>
-                    </li>
-                    <li
-                      class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    >
-                      <router-link class="w-full" to="/dashboard/animal_delete">Delete Catégorie</router-link>
+                      <router-link class="w-full" to="/dashboard/categorie_update">Update && delete</router-link>
                     </li>
                   </ul>
                 </template>

@@ -553,10 +553,8 @@
     </html>
     </template>
     
-    <script setup>
-      import Form_update from "../../layouts/dashboard/form_update.vue"
-    </script>
-    <script>
+<script>
+    import Form_update from "../../layouts/dashboard/form_update.vue"
     export default {
         data() {
             return {

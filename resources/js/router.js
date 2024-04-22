@@ -4,6 +4,8 @@ import { AuthStore } from "@/store/AuthStore";
 import dashboardIndex from './pages/dashboard/dashboardIndex.vue';
 import animal_add from './pages/dashboard/animal_add.vue';
 import animal_update from './pages/dashboard/animal_update.vue';
+import categorie_add from './pages/dashboard/categorie_add.vue';
+import categorie_update from './pages/dashboard/categorie_update.vue';
 //-------------------------- fin--------------------------------
 
 import index from './pages/index.vue';
@@ -37,6 +39,17 @@ const routes = [
     component: animal_update,
     meta: { requiresAuth: true , role: "admin"} 
   },
+
+  {
+    path: '/dashboard/categorie_add',
+    component: categorie_add,
+    meta: { requiresAuth: true , role: "admin"} 
+  },
+  {
+    path: '/dashboard/categorie_update',
+    component: categorie_update,
+    meta: { requiresAuth: true , role: "admin"} 
+  },
   // --------------------------fin---------------------------------
   {
     path: '/index',
@@ -58,11 +71,6 @@ const routes = [
     component: login,
     meta: { requiresAuth: false } 
   },
-  // {
-  //   path: '/loginA',
-  //   component: loginA,
-  //   meta: { requiresAuth: false } 
-  // },
   {
     path: '/register',
     component: register,
