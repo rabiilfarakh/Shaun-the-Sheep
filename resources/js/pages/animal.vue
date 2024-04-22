@@ -106,10 +106,15 @@ const addComment = async () => {
     blog.value.comments.push(addCommentResponse.data);
     newComment.value = '';
     
+    // Mettre à jour la liste des commentaires une fois le commentaire ajouté
+    const response = await axios.get(`/api/blog/${id}`, headers);
+    blog.value.comments = response.data.comments;
+    
   } catch (error) {
     console.error('Error adding comment:', error);
   }
 }
+
 
 
 
