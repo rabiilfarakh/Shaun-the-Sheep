@@ -6,14 +6,6 @@
           <h2 class="text-2xl font-semibold text-gray-700 text-center"></h2>
           <!-- <div class="bg-red" v-if="message">{{ message }}</div> -->
           <p class="text-xl text-gray-600 text-center">Login</p>
-          <a href="#" class="flex items-center justify-center mt-4 text-white rounded-lg shadow-md hover:bg-gray-100">
-            <div class="px-4 py-3">
-              <svg class="h-6 w-6" viewBox="0 0 40 40">
-                <!-- SVG icon code -->
-              </svg>
-            </div>
-            <h1 class="px-4 py-3 w-5/6 text-center text-gray-600 font-bold">Login in with Google</h1>
-          </a>
           <form @submit.prevent="login">
             <div class="mt-8">
               <label class="block text-gray-700 text-sm font-bold mb-2">Email Address</label>

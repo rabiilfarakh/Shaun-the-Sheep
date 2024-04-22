@@ -23,7 +23,8 @@ class StoreCommentRequest extends FormRequest
     {
         return [
             'contenu' => 'required',
-            'client_id' => 'required'
+            'client_id' => 'required',
+            'blog_id'=> 'required'
         ];
     }
 }

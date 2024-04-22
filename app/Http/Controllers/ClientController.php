@@ -30,9 +30,11 @@ class ClientController extends Controller
     }
     public function getClient($id)
     {
-        $client=client::findOrFaild($id);
-        return response()->json(['clientId'=>$client->id]);
+        $client = Client::where('user_id', $id)->first();
+        return response()->json(['clientId' => $client->id]);
     }
+    
+    
 
 
     /**

@@ -26,7 +26,7 @@
           <div v-for="comment in blog.comments" :key="comment.id" class="bg-white p-4 rounded-lg shadow-md flex items-start">
             <div class="flex-1">
               <h3 class="text-lg font-bold">{{ comment.client.user.name }}</h3>
-              <p class="text-gray-700 text-sm mb-2">{{ comment.created_at }}</p>
+              <p class="text-gray-700 text-sm mb-2">{{ formatDate(comment.created_at) }}</p>
               <p class="text-gray-700">{{ comment.contenu }}</p>
             </div>
             <div class="ml-auto">
@@ -66,24 +66,22 @@ const newComment = ref('');
 const router = useRouter();
 const user = ref('');
 
-// const getClient = async (id) => {
-//   try {
-//     const res = await axios.post("/api/getClient", { id }, { headers: { Authorization: `Bearer ${token}` } });
-//     return res.data;
-//   } catch (error) {
-//     console.error('Error fetching client:', error);
-//     throw error;
-//   }
-// }
-// Fetch blog data on component mount
+const getClient = async (id) => {
+  try {
+    const res = await axios.get(`/api/getClient/${id}`, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' } });
+    return res.data;
+  } catch (error) {
+    console.error('Error fetching client:', error);
+    throw error;
+  }
+};
+
+
 onMounted(async () => {
   try {
     if (token) {
-      
       const res = await axios.get("/api/user", { headers: { Authorization: `Bearer ${token}` } });
       user.value = res.data.user;
-
-      // console.log(getClient(20));
     }
     const id = router.currentRoute.value.params.id;
     const response = await axios.get(`/api/blog/${id}`, headers);
@@ -100,22 +98,28 @@ onMounted(async () => {
 const addComment = async () => {
   try {
     const id = router.currentRoute.value.params.id;
+    const blog_id = blog.value.blog.id;
 
+    const clientObj = await getClient(user.value.id);
 
-    const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value,}, headers);
+    const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value, client_id: clientObj.clientId, blog_id: blog_id }, headers);
+
+    console.log('Add comment response:', addCommentResponse);
 
     if (addCommentResponse.status === 200) {
-      const newCommentData = addCommentResponse.data;
-      blog.value.comments.push(newCommentData);
+      const response = await axios.get(`/api/blog/${id}`, headers);
+      blog.value = response.data;
       newComment.value = '';
-      console.log('Comment added successfully');
-    } else {
-      console.error('Unexpected status code:', addCommentResponse.status);
+
+      console.log('Updated blog data:', blog.value);
     }
   } catch (error) {
     console.error('Error adding comment:', error);
   }
 }
+
+
+
 
 // Function to delete a comment
 const deleteComment = async (commentId) => {
@@ -131,6 +135,11 @@ const deleteComment = async (commentId) => {
   } catch (error) {
     console.error('Error deleting comment:', error);
   }
+}
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
 }
 </script>
 
