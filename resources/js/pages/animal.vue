@@ -105,8 +105,7 @@ const addComment = async () => {
     const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value, client_id: clientObj.clientId, blog_id: blog_id }, headers);
     blog.value.comments.push(addCommentResponse.data);
     newComment.value = '';
-    
-    // Mettre à jour la liste des commentaires une fois le commentaire ajouté
+
     const response = await axios.get(`/api/blog/${id}`, headers);
     blog.value.comments = response.data.comments;
     

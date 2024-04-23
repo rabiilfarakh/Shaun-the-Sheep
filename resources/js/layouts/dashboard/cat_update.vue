@@ -71,10 +71,9 @@ export default {
     async getCategories() {
       try {
         const res = await axios.get(`/api/categorie`);
-        this.categories = res.data;
+         this.categories = res.data;
       } catch (error) {
-        console.error('Une erreur est survenue lors de la récupération des catégories:', error);
-        // Afficher un message d'erreur à l'utilisateur en cas d'échec de la récupération des catégories
+        console.error(error);
         Swal.fire('Erreur', 'Une erreur est survenue lors de la récupération des catégories', 'error');
       }
     },
