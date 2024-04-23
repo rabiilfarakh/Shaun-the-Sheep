@@ -94,7 +94,7 @@ onMounted(async () => {
 });
 
 
-// Function to add a comment
+//  add a comment
 const addComment = async () => {
   try {
     const id = router.currentRoute.value.params.id;

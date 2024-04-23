@@ -23,34 +23,33 @@ use App\Http\Controllers\ProgressionController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::apiResource('blog', BlogController::class);
-Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 
-Route::apiResource('client', ClientController::class);
-Route::get('/getClient/{id}', [ClientController::class, 'getClient']);
-Route::get('/getClients', [ClientController::class, 'getAll']);
+Route::group(['middleware' => ['auth:sanctum']], function () {
 
-Route::apiResource('comment', CommentController::class);
-Route::post('/blog/{id}/animal/comment', [CommentController::class, 'store'])->name('add_comments');
+    Route::apiResource('/user', UserController::class);
+    Route::post('/logout', [UserController::class, 'logout']);
 
-//cart
-Route::apiResource('product/panier', PanierController::class);
+    Route::apiResource('client', ClientController::class);
+    Route::get('/getClient/{id}', [ClientController::class, 'getClient']);
+    Route::get('/getClients', [ClientController::class, 'getAll']);
 
-Route::apiResource('animal', AnimalController::class);
-Route::get('/getAnimals', [AnimalController::class, 'getAll']);
-Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);  
+    Route::apiResource('comment', CommentController::class);
+    Route::post('/blog/{id}/animal/comment', [CommentController::class, 'store'])->name('add_comments');
 
-Route::apiResource('categorie', CategorieController::class);
-Route::apiResource('/user', UserController::class)->middleware('auth:sanctum');
+    //cart
+    Route::apiResource('/product/panier', PanierController::class);
 
-Route::group(['middleware' => ['auth:sanctum']],function(){
+    Route::apiResource('animal', AnimalController::class);
+    Route::get('/getAnimals', [AnimalController::class, 'getAll']);
+    Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);  
 
+    Route::apiResource('categorie', CategorieController::class);
+    Route::apiResource('/user', UserController::class)->middleware('auth:sanctum');
 
-   
+    Route::apiResource('blog', BlogController::class);
+    Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
 });
+
 
 Route::post('/logout', [UserController::class, 'logout']);
 Route::post('/register', [UserController::class, 'register']);

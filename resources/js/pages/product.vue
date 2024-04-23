@@ -123,7 +123,7 @@
 <script>
 import axios from 'axios';
 const token = localStorage.getItem('token');
-const header = { headers: { 'Authorization': `Bearer ${token}` } };
+const headers = { headers: { 'Authorization': `Bearer ${token}` } };
     export  default {
 
         data(){
@@ -133,9 +133,9 @@ const header = { headers: { 'Authorization': `Bearer ${token}` } };
         props:[],
 
         methods:{
-            addProduct(id){
-                console.log(header);
-               let response = axios.post(`/api/product/panier`,{id: id},header);
+           async addProduct(id){
+            console.log(headers);
+               const response = await axios.post(`api/product/panier`,{id: id},headers);
                console.log(response);
             }
         }

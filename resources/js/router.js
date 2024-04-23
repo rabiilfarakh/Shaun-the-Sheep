@@ -10,7 +10,6 @@ import categorie_update from './pages/dashboard/categorie_update.vue';
 
 import index from './pages/index.vue';
 import login from './pages/login.vue';
-import loginA from './pages/loginA.vue';
 import blog from './pages/blog.vue';
 import product from './pages/product.vue';
 import register from './pages/register.vue';
