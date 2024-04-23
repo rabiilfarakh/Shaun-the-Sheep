@@ -9,7 +9,7 @@ class Panier extends Model
 {
     use HasFactory;
     protected $table = 'paniers';
-    // protected $fillable = [''];
+    protected $fillable = ['animal_id','client_id'];
 
     public function animal()
     {

@@ -131,11 +131,14 @@ import Header from "../layouts/header.vue";
 import Footer from "../layouts/footer.vue";
 import Head from "../layouts/head.vue";
 
+const token = localStorage.getItem('token');
+const headers = { headers: { 'Authorization': `Bearer ${token}` } };
+
 let blogs = [];
 let isLoading = ref(true);
 onMounted(async () => {
   try { 
-    const response = await axios.get('/api/blog');
+    const response = await axios.get('/api/blog',headers);
     blogs=response.data;
     isLoading.value = false;
  

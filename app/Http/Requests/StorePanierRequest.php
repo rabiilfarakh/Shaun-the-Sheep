@@ -22,7 +22,8 @@ class StorePanierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'animal_id' => 'required',
+            'client_id' => 'required'
         ];
     }
 }

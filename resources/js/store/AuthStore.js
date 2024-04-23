@@ -1,3 +1,4 @@
+// AuthStore.js
 import { defineStore } from "pinia";
 import axios from "axios";
 
@@ -47,6 +48,23 @@ export const AuthStore = defineStore("AuthStore", {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+      }
+    },
+    async getClient(id) {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const res = await axios.get(`/api/getClient/${id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              Accept: 'application/json'
+            }
+          });
+          return res.data;
+        }
+      } catch (error) {
+        console.error('Error fetching client:', error);
+        throw error;
       }
     }
   },

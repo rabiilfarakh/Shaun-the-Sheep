@@ -101,7 +101,6 @@ const addComment = async () => {
     const blog_id = blog.value.blog.id;
 
     const clientObj = await getClient(user.value.id);
-
     const addCommentResponse = await axios.post(`/api/blog/${id}/animal/comment`, { contenu: newComment.value, client_id: clientObj.clientId, blog_id: blog_id }, headers);
     blog.value.comments.push(addCommentResponse.data);
     newComment.value = '';

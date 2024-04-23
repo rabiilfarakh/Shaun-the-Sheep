@@ -28,8 +28,11 @@ class PanierController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StorePanierRequest $request)
-    {
-        return response()->json(['message' => "test"]);
+    {       
+        $validatedData = $request->validated();
+        $product = Panier::create($validatedData);
+    
+        return response()->json($product, 200);
     }
 
     /**
