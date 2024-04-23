@@ -83,7 +83,8 @@
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { AuthStore } from '../store/AuthStore';
-import Toast from 'vue-toast-notification';
+import Toast from 'vue-toast-notification'; // Importez Toast depuis le plugin de toast
+
 import 'vue-toast-notification/dist/theme-default.css';
 
 export default {
@@ -137,13 +138,23 @@ export default {
             try {
                 const clientInfo = await authStore.getClient(authStore.user.id);
                 const clientId = clientInfo.clientId; 
+
+                const productExists = originalAnimals.value.some(product => product.animal_id === animalId);
+                if (productExists) {
+                    // Utilisez Toast.info pour afficher un message informatif
+                    Toast.info('Ce produit est déjà dans votre panier.');
+                    return;
+                }
+
                 const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
 
+                // Utilisez Toast.success pour afficher un message de succès
                 Toast.success('Produit ajouté au panier avec succès !');
 
                 console.log(response);
             } catch (error) {
                 console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);
+                // Utilisez Toast.error pour afficher un message d'erreur
                 Toast.error('Une erreur s\'est produite lors de l\'ajout du produit au panier.');
             }
         };
@@ -152,6 +163,9 @@ export default {
     }
 }
 </script>
+
+
+
 
 
 
