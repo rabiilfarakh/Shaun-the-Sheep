@@ -29,7 +29,7 @@ class PanierController extends Controller
      */
     public function store(StorePanierRequest $request)
     {
-        //
+        return response()->json(['message' => "test"]);
     }
 
     /**

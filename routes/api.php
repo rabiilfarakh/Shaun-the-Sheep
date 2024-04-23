@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\ProgressionController;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
-use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PanierController;
 use App\Http\Controllers\CommentController;
-use App\Models\Categorie;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ProgressionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,10 @@ Route::get('/getClient/{id}', [ClientController::class, 'getClient']);
 Route::get('/getClients', [ClientController::class, 'getAll']);
 
 Route::apiResource('comment', CommentController::class);
- Route::post('/blog/{id}/animal/comment', [CommentController::class, 'store'])->name('add_comments');
+Route::post('/blog/{id}/animal/comment', [CommentController::class, 'store'])->name('add_comments');
 
+//cart
+Route::apiResource('product/panier', PanierController::class);
 
 Route::apiResource('animal', AnimalController::class);
 Route::get('/getAnimals', [AnimalController::class, 'getAll']);
