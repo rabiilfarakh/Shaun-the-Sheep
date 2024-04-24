@@ -78,18 +78,19 @@
     </div>
     <Footer />
 </template>
-
 <script>
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { AuthStore } from '../store/AuthStore';
-import {useToast} from 'vue-toast-notification';
+import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
 
 export default {
     setup() {
-        const $toast = useToast();
+        const $toast = useToast({
+            position: 'top',
+            duration: 1000 
+        });
 
         const authStore = AuthStore();
         const token = localStorage.getItem('token');
@@ -104,7 +105,7 @@ export default {
         const fetchAnimals = async (page = 1) => {
             try {
                 await authStore.fetchUserData();
-                const userId = authStore.user.id; 
+                const userId = authStore.user.id;
                 const response = await axios.get('/api/animal', {
                     params: { searchTerm: searchTerm.value, page: page, user_id: userId },
                     headers: { 'Authorization': `Bearer ${token}` }
@@ -120,7 +121,7 @@ export default {
         };
 
         const fetchNextPage = async () => {
-            if (currentPage.value < totalPages.value) { 
+            if (currentPage.value < totalPages.value) {
                 await fetchAnimals(currentPage.value + 1);
             }
         };
@@ -139,27 +140,13 @@ export default {
         const addProduct = async (animalId) => {
             try {
                 const clientInfo = await authStore.getClient(authStore.user.id);
-                const clientId = clientInfo.clientId; 
-
-                // const productExists = originalAnimals.value.some(product => product.animal_id === animalId);
-                // if (productExists) {
-                //     // Utilisez Toast.info pour afficher un message informatif
-                //     $toast.success('Ce produit est déjà dans votre panier.');
-                //     Toast.info('Ce produit est déjà dans votre panier.');
-                //     return;
-                // }
+                const clientId = clientInfo.clientId;
 
                 const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
-
-                // Utilisez Toast.success pour afficher un message de succès
-                $toast.success('Ce produit est déjà dans votre panier.');
-                // Toast.success('Produit ajouté au panier avec succès !');
-
+                $toast.success('Ce produit a été ajouté à votre panier avec succès.');
                 console.log(response);
             } catch (error) {
                 console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);
-                // Utilisez Toast.error pour afficher un message d'erreur
-                Toast.error('Une erreur s\'est produite lors de l\'ajout du produit au panier.');
             }
         };
 
