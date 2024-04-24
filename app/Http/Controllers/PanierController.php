@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Panier;
+use Illuminate\Http\Request;
 use App\Http\Requests\StorePanierRequest;
 use App\Http\Requests\UpdatePanierRequest;
 
@@ -66,4 +67,10 @@ class PanierController extends Controller
     {
         //
     }
+
+    public function getProductClient(Request $request){
+        $products = Panier::where('client_id', $request->id)->get();
+        return response()->json($products);
+    }
+    
 }

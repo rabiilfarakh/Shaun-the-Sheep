@@ -78,82 +78,81 @@
     </div>
     <Footer />
 </template>
-<script>
+
+<script setup>
+import Header from "../layouts/header.vue";
+import Footer from "../layouts/footer.vue";
+import Head from "../layouts/head.vue"
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { AuthStore } from '../store/AuthStore';
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-export default {
-    setup() {
-        const $toast = useToast({
-            position: 'top',
-            duration: 1000 
+const $toast = useToast({
+    position: 'top',
+    duration: 1000 
+});
+
+const authStore = AuthStore();
+const token = localStorage.getItem('token');
+const headers = { headers: { 'Authorization': `Bearer ${token}` } };
+
+const searchTerm = ref('');
+const originalAnimals = ref([]);
+const animals = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(1);
+
+const fetchAnimals = async (page = 1) => {
+    try {
+        await authStore.fetchUserData();
+        const userId = authStore.user.id;
+        const response = await axios.get('/api/animal', {
+            params: { searchTerm: searchTerm.value, page: page, user_id: userId },
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        const authStore = AuthStore();
-        const token = localStorage.getItem('token');
-        const headers = { headers: { 'Authorization': `Bearer ${token}` } };
-
-        const searchTerm = ref('');
-        const originalAnimals = ref([]);
-        const animals = ref([]);
-        const currentPage = ref(1);
-        const totalPages = ref(1);
-
-        const fetchAnimals = async (page = 1) => {
-            try {
-                await authStore.fetchUserData();
-                const userId = authStore.user.id;
-                const response = await axios.get('/api/animal', {
-                    params: { searchTerm: searchTerm.value, page: page, user_id: userId },
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                animals.value = response.data.data;
-                currentPage.value = response.data.current_page;
-                totalPages.value = response.data.last_page;
-                originalAnimals.value = response.data;
-            } catch (error) {
-                console.error('Erreur lors de la récupération des animaux :', error);
-            }
-        };
-
-        const fetchNextPage = async () => {
-            if (currentPage.value < totalPages.value) {
-                await fetchAnimals(currentPage.value + 1);
-            }
-        };
-
-        watch(searchTerm, async (newValue) => {
-            currentPage.value = 1;
-            await fetchAnimals();
-        });
-
-        watch(currentPage, async () => {
-            await fetchAnimals(currentPage.value);
-        });
-
-        onMounted(fetchAnimals);
-
-        const addProduct = async (animalId) => {
-            try {
-                const clientInfo = await authStore.getClient(authStore.user.id);
-                const clientId = clientInfo.clientId;
-
-                const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
-                $toast.success('Ce produit a été ajouté à votre panier avec succès.');
-                console.log(response);
-            } catch (error) {
-                console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);
-            }
-        };
-
-        return { searchTerm, originalAnimals, animals, currentPage, totalPages, addProduct };
+        animals.value = response.data.data;
+        currentPage.value = response.data.current_page;
+        totalPages.value = response.data.last_page;
+        originalAnimals.value = response.data;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des animaux :', error);
     }
-}
+};
+
+const fetchNextPage = async () => {
+    if (currentPage.value < totalPages.value) {
+        await fetchAnimals(currentPage.value + 1);
+    }
+};
+
+watch(searchTerm, async (newValue) => {
+    currentPage.value = 1;
+    await fetchAnimals();
+});
+
+watch(currentPage, async () => {
+    await fetchAnimals(currentPage.value);
+});
+
+onMounted(fetchAnimals);
+
+const addProduct = async (animalId) => {
+    try {
+        const clientInfo = await authStore.getClient(authStore.user.id);
+        const clientId = clientInfo.clientId;
+
+        const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
+        $toast.success('Ce produit a été ajouté à votre panier avec succès.');
+        console.log(response);
+    } catch (error) {
+        console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);
+    }
+};
 </script>
+
 
 
 
