@@ -83,12 +83,14 @@
 import axios from 'axios';
 import { ref, onMounted, watch } from 'vue';
 import { AuthStore } from '../store/AuthStore';
-import Toast from 'vue-toast-notification'; // Importez Toast depuis le plugin de toast
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
-import 'vue-toast-notification/dist/theme-default.css';
 
 export default {
     setup() {
+        const $toast = useToast();
+
         const authStore = AuthStore();
         const token = localStorage.getItem('token');
         const headers = { headers: { 'Authorization': `Bearer ${token}` } };
@@ -139,17 +141,19 @@ export default {
                 const clientInfo = await authStore.getClient(authStore.user.id);
                 const clientId = clientInfo.clientId; 
 
-                const productExists = originalAnimals.value.some(product => product.animal_id === animalId);
-                if (productExists) {
-                    // Utilisez Toast.info pour afficher un message informatif
-                    Toast.info('Ce produit est déjà dans votre panier.');
-                    return;
-                }
+                // const productExists = originalAnimals.value.some(product => product.animal_id === animalId);
+                // if (productExists) {
+                //     // Utilisez Toast.info pour afficher un message informatif
+                //     $toast.success('Ce produit est déjà dans votre panier.');
+                //     Toast.info('Ce produit est déjà dans votre panier.');
+                //     return;
+                // }
 
                 const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
 
                 // Utilisez Toast.success pour afficher un message de succès
-                Toast.success('Produit ajouté au panier avec succès !');
+                $toast.success('Ce produit est déjà dans votre panier.');
+                // Toast.success('Produit ajouté au panier avec succès !');
 
                 console.log(response);
             } catch (error) {
