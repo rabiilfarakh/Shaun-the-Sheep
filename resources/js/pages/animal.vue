@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header/>
     <div v-if="isLoading" class="text-center">Loading...</div>
     <div v-else class="p-20 sm:p-16 md:p-20 lg:p-24 xl:p-20 w-auto flex flex-col md:flex-row px-4 sm:px-8 md:px-24 lg:px-24 xl:px-24 relative">
       <div class="mr-10">
@@ -53,6 +54,9 @@
 </template>
 
 <script setup>
+import Header from "../layouts/header.vue";
+import Footer from "../layouts/footer.vue";
+import Head from "../layouts/head.vue";
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';

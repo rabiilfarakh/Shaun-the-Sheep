@@ -1,53 +1,84 @@
 <template>
   <div>
-    <div class="h-screen bg-gray-100 pt-20">
-      <h1 class="mb-10 text-center text-2xl font-bold">Panier</h1>
-      <!-- Animaux dans les paniers -->
-      <div v-for="animal in animauxDansPaniers" :key="animal.id" class="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div class="rounded-lg md:w-2/3">
-          <div class="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start">
-            <!-- Affichage de l'image de l'animal -->
-            <img  :src="'storage/images/' + animal.image.url" alt="Image de l'animal" class="w-full rounded-lg sm:w-40" />
-            <div class="sm:ml-4 sm:flex sm:w-full sm:justify-between">
-              <div class="mt-5 sm:mt-0">
-                <!-- Affichage du nom et d'autres détails de l'animal -->
-                <h2 class="text-lg font-bold text-gray-900">{{ animal.categorie.name }}</h2>
-                <!-- Tu peux ajouter d'autres détails de l'animal ici -->
+    <Header/>
+    <div class="container mx-auto mt-10">
+      <div class="sm:flex shadow-md my-10">
+        <div class="w-full sm:w-3/4 bg-white px-10 py-10">
+          <div class="flex justify-between border-b pb-8">
+            <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+            <h2 class="font-semibold text-2xl">{{ animauxDansPaniers.length }} Items</h2>
+          </div>
+
+          <!-- Affichage des animaux dans le panier -->
+          <div v-for="animal in animauxDansPaniers" :key="animal.id" class="md:flex items-stretch py-8 md:py-10 lg:py-8 border-t border-gray-50">
+            <div class="md:w-4/12 2xl:w-1/4 w-full">
+              <!-- Image de l'animal -->
+              <img :src="'storage/images/' + animal.image.url" :alt="animal.name" class="h-full object-center object-cover md:block hidden" />
+            </div>
+            <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
+              <p class="text-xs leading-3 text-gray-800 md:pt-0 pt-4">{{ animal.reference }}</p>
+              <div class="flex items-center justify-between w-full">
+                <p class="text-base font-black leading-none text-gray-800">{{ animal.name }}</p>
+                <select aria-label="Select quantity" class="py-2 px-1 border border-gray-200 mr-6 focus:outline-none">
+                  <option>01</option>
+                  <option>02</option>
+                  <option>03</option>
+                </select>
               </div>
-              <div class="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-                <div class="flex items-center border-gray-100">
-                  <span class="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"> - </span>
-                  <input class="h-8 w-8 border bg-white text-center text-xs outline-none" type="number" value="1" min="1" />
-                  <span class="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"> + </span>
+              <p class="text-xs leading-3 text-gray-600 pt-2">Height: {{ animal.height }}</p>
+              <p class="text-xs leading-3 text-gray-600 py-4">Color: {{ animal.color }}</p>
+              <p class="w-96 text-xs leading-3 text-gray-600">Composition: {{ animal.composition }}</p>
+              <div class="flex items-center justify-between pt-5">
+                <div class="flex items-center">
+                  <p class="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
+                  <p class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
                 </div>
-                <div class="flex items-center space-x-4">
-                  <!-- Affichage du prix ou d'autres informations -->
-                  <p class="text-sm">{{ animal.prix }} €</p>
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
+                <p class="text-base font-black leading-none text-gray-800">{{ animal.prix }} DH</p>
               </div>
             </div>
           </div>
+
+          <a href="#" class="flex font-semibold text-indigo-600 text-sm mt-10">
+            <svg class="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+              <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+            </svg>
+            Continue Shopping
+          </a>
         </div>
-        <!-- Sous-total -->
-        <div class="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
-          <div class="mb-2 flex justify-between">
-            <p class="text-gray-700">Sous-total</p>
-            <p class="text-gray-700">{{ animal.prix }} €</p>
+
+        <!-- Résumé de la commande -->
+        <div id="summary" class="w-full sm:w-1/4 md:w-1/2 px-8 py-10">
+          <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+          <div class="flex justify-between mt-10 mb-5">
+            <span class="font-semibold text-sm uppercase">Items {{ animauxDansPaniers.length }}</span>
+            <span class="font-semibold text-sm">{{ total }} €</span>
           </div>
-          <!-- Tu peux ajouter d'autres détails de paiement ici -->
-          <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Passer la commande</button>
+          <div>
+            <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
+            <select class="block p-2 text-gray-600 w-full text-sm">
+              <option>Standard shipping - 10.00 €</option>
+            </select>
+          </div>
+
+          <div class="border-t mt-8">
+            <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+              <span>Total cost</span>
+              <span>{{ total }} €</span>
+            </div>
+            <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          </div>
         </div>
       </div>
     </div>
+    <Footer/>
   </div>
 </template>
 
 <script setup>
 import axios from 'axios';
-import { ref, onMounted } from 'vue';
+import Header from "../layouts/header.vue";
+import Footer from "../layouts/footer.vue";
+import { ref, onMounted, computed } from 'vue';
 import { AuthStore } from '../store/AuthStore';
 
 const authStore = AuthStore();
@@ -69,6 +100,11 @@ async function getProduct() {
 }
 
 onMounted(getProduct);
+
+// Calcul du total en additionnant les prix de tous les animaux
+const total = computed(() => {
+  return animauxDansPaniers.value.reduce((sum, animal) => sum + animal.price, 0);
+});
 </script>
 
 <style scoped>
