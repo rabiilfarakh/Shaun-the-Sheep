@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animal;
 use App\Models\Panier;
 use Illuminate\Http\Request;
 use App\Http\Requests\StorePanierRequest;
 use App\Http\Requests\UpdatePanierRequest;
+use App\Models\Categorie;
 
 class PanierController extends Controller
 {
@@ -32,7 +34,8 @@ class PanierController extends Controller
     {       
         $validatedData = $request->validated();
         $product = Panier::create($validatedData);
-    
+        
+        
         return response()->json($product, 200);
     }
 
@@ -69,8 +72,13 @@ class PanierController extends Controller
     }
 
     public function getProductClient(Request $request){
-        $products = Panier::where('client_id', $request->id)->get();
-        return response()->json($products);
+        $animauxDansPaniers = Animal::whereIn('id', function($query) use ($request) {
+            $query->select('animal_id')->from('paniers')->where('client_id', $request->id);
+        })->with('image','Categorie')->get();
+
+        return response()->json($animauxDansPaniers);
     }
+    
+    
     
 }
