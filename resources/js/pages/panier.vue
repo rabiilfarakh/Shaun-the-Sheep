@@ -83,6 +83,11 @@ import { AuthStore } from '../store/AuthStore';
 import { useToast } from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
+const $toast = useToast({
+    position: 'top',
+    duration: 1000 
+});
+
 const authStore = AuthStore();
 const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
@@ -105,10 +110,9 @@ async function deleteProduct(id){
   try{
     console.log(id)
     const response = await axios.delete(`/api/product/panier/${id}`, headers);
-    // Supprimer l'élément correspondant de la liste animauxDansPaniers
     animauxDansPaniers.value = animauxDansPaniers.value.filter(animal => animal.id !== id);
-    $toast.erreur('Ce produit a été supprimé de votre panier.');
-    $toast.success('Ce produit a été ajouté à votre panier avec succès.');
+
+    $toast.info('Ce produit a été supprimé de votre panier avec succès.');
     console.log(response);
   } catch (erreur){
     console.error('Erreur lors de la suppression du produit :', erreur)
