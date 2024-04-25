@@ -143,14 +143,29 @@ const addProduct = async (animalId) => {
     try {
         const clientInfo = await authStore.getClient(authStore.user.id);
         const clientId = clientInfo.clientId;
-
-        const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
-        $toast.success('Ce produit a été ajouté à votre panier avec succès.');
-        console.log(response);
+        const exist = await product_exist(animalId);
+        if(exist == 1){
+            $toast.info('Animal existe dans votre panier');
+        } else {
+            const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
+            $toast.success('Animal a été ajouté à votre panier avec succès.');
+        }
     } catch (error) {
         console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);
     }
 };
+
+const product_exist = async (animalId) => {
+    try {
+        const clientInfo = await authStore.getClient(authStore.user.id);
+        const clientId = clientInfo.clientId;
+        const response = await axios.post(`api/product/panier_exist`, { animal_id: animalId, client_id: clientId }, headers);
+        return response.data;
+    } catch (error) {
+        console.error('Une erreur s\'est produite lors de la vérification de l\'existence du produit dans le panier :', error);
+    }
+}
+
 </script>
 
 

@@ -111,7 +111,6 @@ async function deleteProduct(id){
     console.log(id)
     const response = await axios.delete(`/api/product/panier/${id}`, headers);
     animauxDansPaniers.value = animauxDansPaniers.value.filter(animal => animal.id !== id);
-
     $toast.info('Ce produit a été supprimé de votre panier avec succès.');
     console.log(response);
   } catch (erreur){

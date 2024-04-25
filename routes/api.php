@@ -39,6 +39,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //cart
     Route::apiResource('/product/panier', PanierController::class);
     Route::post('/panier', [PanierController::class, 'getProductClient']);
+    Route::post('/product/panier_exist', [PanierController::class, 'panier_exist']);
+
     Route::apiResource('animal', AnimalController::class);
     Route::get('/getAnimals', [AnimalController::class, 'getAll']);
     Route::get('/getAnimal/{id}', [AnimalController::class, 'getAnimal']);  

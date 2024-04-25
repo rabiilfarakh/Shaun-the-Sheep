@@ -85,7 +85,13 @@ class PanierController extends Controller
     
         return response()->json($animauxDansPaniers);
     }
-    
-    
-    
+
+    public function panier_exist(Request $request){
+        
+        if (Panier::where("client_id", $request->client_id)->where("animal_id", $request->animal_id)->exists()) {    
+            return 1;
+        }
+        return 0;
+    }
+
 }
