@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Animal;
 use App\Models\Panier;
+use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePanierRequest;
 use App\Http\Requests\UpdatePanierRequest;
-use App\Models\Categorie;
 
 class PanierController extends Controller
 {
@@ -68,14 +69,20 @@ class PanierController extends Controller
      */
     public function destroy(Panier $panier)
     {
-        //
+        $panier->delete();
+        return response()->json(['message' => 'product supprime avec succès']);
     }
 
-    public function getProductClient(Request $request){
-        $animauxDansPaniers = Animal::whereIn('id', function($query) use ($request) {
-            $query->select('animal_id')->from('paniers')->where('client_id', $request->id);
-        })->with('image','Categorie')->get();
-
+    public function getProductClient(Request $request)
+    {
+        $animauxDansPaniers = DB::table('paniers as p')
+            ->join('animals as a', 'a.id', '=', 'p.animal_id')
+            ->join('categories as c', 'c.id', '=', 'a.categorie_id')
+            ->join('images as i', 'i.imageable_id', '=', 'a.id')
+            ->select('p.*', 'c.name', 'a.lieu','a.prix','i.url')
+            ->where('p.client_id', $request->id)
+            ->get();
+    
         return response()->json($animauxDansPaniers);
     }
     

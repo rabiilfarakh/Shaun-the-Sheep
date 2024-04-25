@@ -14,10 +14,10 @@
           <div v-for="animal in animauxDansPaniers" :key="animal.id" class="md:flex items-stretch py-8 md:py-10 lg:py-8 border-t border-gray-50">
             <div class="md:w-4/12 2xl:w-1/4 w-full">
               <!-- Image de l'animal -->
-              <img :src="'storage/images/' + animal.image.url" :alt="animal.name" class="h-full object-center object-cover md:block hidden" />
+              <img :src="'storage/images/' + animal.url" :alt="animal.name" class="h-full object-center object-cover md:block hidden" />
             </div>
             <div class="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
-              <p class="text-xs leading-3 text-gray-800 md:pt-0 pt-4">{{ animal.reference }}</p>
+              <p class="text-xs leading-3 text-gray-800 md:pt-0 pt-4"></p>
               <div class="flex items-center justify-between w-full">
                 <p class="text-base font-black leading-none text-gray-800">{{ animal.name }}</p>
                 <select aria-label="Select quantity" class="py-2 px-1 border border-gray-200 mr-6 focus:outline-none">
@@ -26,13 +26,11 @@
                   <option>03</option>
                 </select>
               </div>
-              <p class="text-xs leading-3 text-gray-600 pt-2">Height: {{ animal.height }}</p>
-              <p class="text-xs leading-3 text-gray-600 py-4">Color: {{ animal.color }}</p>
-              <p class="w-96 text-xs leading-3 text-gray-600">Composition: {{ animal.composition }}</p>
+              <p class="text-xs leading-3 text-gray-600 pt-2">Catégorie: {{ animal.name }}</p>
+              <p class="mt-2 w-96 text-xs leading-3 text-gray-600">Lieu: {{ animal.lieu }}</p>
               <div class="flex items-center justify-between pt-5">
                 <div class="flex items-center">
-                  <p class="text-xs leading-3 underline text-gray-800 cursor-pointer">Add to favorites</p>
-                  <p class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</p>
+                  <button @click="deleteProduct(animal.id)" class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</button>
                 </div>
                 <p class="text-base font-black leading-none text-gray-800">{{ animal.prix }} DH</p>
               </div>
@@ -82,12 +80,14 @@ import Header from "../layouts/header.vue";
 import Footer from "../layouts/footer.vue";
 import { ref, onMounted, computed } from 'vue';
 import { AuthStore } from '../store/AuthStore';
+import { useToast } from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 const authStore = AuthStore();
 const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
-
 const animauxDansPaniers = ref([]);
+
 
 async function getProduct() {
   try {
@@ -95,11 +95,26 @@ async function getProduct() {
     const id = clientInfo.clientId;
     const response = await axios.post(`/api/panier`, { id: id }, headers);
     animauxDansPaniers.value = response.data;
-    console.log(animauxDansPaniers);
+    console.log(animauxDansPaniers.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des produits :', error);
   }
 }
+
+async function deleteProduct(id){
+  try{
+    console.log(id)
+    const response = await axios.delete(`/api/product/panier/${id}`, headers);
+    // Supprimer l'élément correspondant de la liste animauxDansPaniers
+    animauxDansPaniers.value = animauxDansPaniers.value.filter(animal => animal.id !== id);
+    $toast.erreur('Ce produit a été supprimé de votre panier.');
+    $toast.success('Ce produit a été ajouté à votre panier avec succès.');
+    console.log(response);
+  } catch (erreur){
+    console.error('Erreur lors de la suppression du produit :', erreur)
+  }
+}
+
 
 onMounted(getProduct);
 
