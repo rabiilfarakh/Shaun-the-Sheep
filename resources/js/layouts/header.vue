@@ -48,6 +48,7 @@
   
   <script setup>
   import axios from 'axios';
+  import Product from "../pages/product.vue";
   import { ref, onMounted } from 'vue';
   import { AuthStore } from '../store/AuthStore';
   const authStore = AuthStore();

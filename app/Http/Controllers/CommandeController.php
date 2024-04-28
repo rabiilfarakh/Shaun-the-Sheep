@@ -42,10 +42,10 @@ class CommandeController extends Controller
             $product = Commande::create(['panier_id' => $value]);
 
             $panier = Panier::find($value);
-            $panier->update([ 'status' => 0 ]); // Utilisez 0 pour false
+            $panier->update([ 'status' => 'false']); // Utilisez 0 pour false
         
-            $animal = Animal::find($panier->animal_id);
-            $animal->update([ 'status' => 0 ]); // Utilisez 0 pour false
+            // $animal = Animal::find($panier->animal_id);
+            // $animal->update([ 'status' => 0 ]); // Utilisez 0 pour false
         }
         return response()->json($product, 200);
     }

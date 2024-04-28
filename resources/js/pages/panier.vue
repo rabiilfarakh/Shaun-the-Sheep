@@ -118,6 +118,7 @@ async function commande(){
     const arr = animauxDansPaniers.value.map(animal => animal.id);
     const response = await axios.post(`/api/panier/commande`, { arr_id: arr }, headers);
     // console.log(response);
+    getProduct();
     
     $toast.success('Les produits ont été achetés avec succès.');
   } catch (erreur){
