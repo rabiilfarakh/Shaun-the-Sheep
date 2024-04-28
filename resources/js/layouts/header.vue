@@ -36,7 +36,7 @@
         </div>
     </header>
                     <!-- notifications-->
-              <div class="absolute top-0 right-0 mr-6 mt-24">
+              <div id="notifications" class="absolute top-0 right-0 mr-36 mt-24 hidden">
                 <div class='flex flex-col gap-3 bg-red-200 border p-2 border-gray-500 shadow-lg w-96 rounded-lg'>
                   <div class="relative border  rounded-lg bg-white  shadow-lg border-gray-400">
                             <button onClick='return this.parentNode.remove()'
@@ -78,35 +78,40 @@
 
 </template>
   
-  <script setup>
-  import axios from 'axios';
-  import Product from "../pages/product.vue";
-  import { ref, onMounted } from 'vue';
-  import { AuthStore } from '../store/AuthStore';
-  const authStore = AuthStore();
-  const token = localStorage.getItem('token');
-  const headers = { headers: { 'Authorization': `Bearer ${token}` } };
-  
-  const nombreProduitsDansPanier = ref(0);
-  const notification = ref(0);
-  async function getNombreProduitsDansPanier() {
-      try {
-          const clientInfo = await authStore.getClient(authStore.user.id);
-          const id = clientInfo.clientId;
-          const response = await axios.post(`/api/panier`, { id: id }, headers);
-          nombreProduitsDansPanier.value = response.data.length;
-      } catch (error) {
-          console.error('Erreur lors de la récupération des produits :', error);
-      }
-  }
+<script setup>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import { AuthStore } from '../store/AuthStore';
+const authStore = AuthStore();
+const token = localStorage.getItem('token');
+const headers = { headers: { 'Authorization': `Bearer ${token}` } };
 
-  async  function afficheNotif(){
-       let n=notification.value+1;
-       notification.value=n;
-  }
-  
-  onMounted(getNombreProduitsDansPanier);
-  </script>
+const nombreProduitsDansPanier = ref(0);
+const notification = ref(0);
+
+async function getNombreProduitsDansPanier() {
+    try {
+        const clientInfo = await authStore.getClient(authStore.user.id);
+        const id = clientInfo.clientId;
+        const response = await axios.post(`/api/panier`, { id: id }, headers);
+        nombreProduitsDansPanier.value = response.data.length;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des produits :', error);
+    }
+}
+
+async function afficheNotif(){
+    const  notifs = document.getElementById("notifications");
+    if(notifs.style.display == "none"){
+        notifs.style.display = "block";
+    }else{
+        notifs.style.display = "none";
+    }
+}
+
+onMounted(getNombreProduitsDansPanier);
+</script>
+
   
   
   
