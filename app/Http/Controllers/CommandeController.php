@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Commande;
 use App\Http\Requests\StoreCommandeRequest;
 use App\Http\Requests\UpdateCommandeRequest;
+use App\Models\Animal;
+use App\Models\Panier;
+use Illuminate\Console\Command;
 
 class CommandeController extends Controller
 {
@@ -29,8 +32,25 @@ class CommandeController extends Controller
      */
     public function store(StoreCommandeRequest $request)
     {
-        //
+
+        // dd($request->arr_id);
+        $validatedData = $request->validated();
+        $arr = $validatedData[ 'arr_id' ];
+        // dd($arr);
+
+        foreach ($arr as $value) {
+            $product = Commande::create(['panier_id' => $value]);
+
+            $panier = Panier::find($value);
+            $panier->update([ 'status' => 0 ]); // Utilisez 0 pour false
+        
+            $animal = Animal::find($panier->animal_id);
+            $animal->update([ 'status' => 0 ]); // Utilisez 0 pour false
+        }
+        return response()->json($product, 200);
     }
+    
+
 
     /**
      * Display the specified resource.

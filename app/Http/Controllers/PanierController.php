@@ -81,6 +81,7 @@ class PanierController extends Controller
             ->join('images as i', 'i.imageable_id', '=', 'a.id')
             ->select('p.*', 'c.name', 'a.lieu','a.prix','i.url')
             ->where('p.client_id', $request->id)
+            ->where('p.status',true)
             ->get();
     
         return response()->json($animauxDansPaniers);

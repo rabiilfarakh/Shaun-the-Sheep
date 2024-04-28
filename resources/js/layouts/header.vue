@@ -24,7 +24,12 @@
               </router-link>
               <router-link to="/panier" class="py-2 px-6 flex relative">
                 <i class="fas fa-shopping-cart fa-lg mr-1"></i>
-                <span class="text-center h-7 w-7 ml-4 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreProduitsDansPanier }}</span>
+                <span v-if="nombreProduitsDansPanier > 0" class="text-center h-7 w-7 ml-4 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreProduitsDansPanier }}</span>
+                <span v-if="nombreProduitsDansPanier < 1" class="text-center h-7 w-7 ml-4 font-semibold rounded-full absolute -top-3 "></span>
+              </router-link>
+              <router-link to="/panier" class="py-2 px-6 flex relative ml-6">
+                <i class="fas fa-bell fa-lg text-gray-800 dark:text-white"></i>
+                <span class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ notification}}</span>
               </router-link>
             </nav>
             <button class="lg:hidden flex flex-col ml-4">
@@ -50,18 +55,20 @@
   const headers = { headers: { 'Authorization': `Bearer ${token}` } };
   
   const nombreProduitsDansPanier = ref(0);
-  
+  const notification = ref(0);
   async function getNombreProduitsDansPanier() {
-    try {
-      const clientInfo = await authStore.getClient(authStore.user.id);
-      const id = clientInfo.clientId;
-      const response = await axios.post(`/api/panier`, { id: id }, headers);
-      nombreProduitsDansPanier.value = response.data.length;
-    } catch (error) {
-      console.error('Erreur lors de la récupération des produits :', error);
-    }
+      try {
+          const clientInfo = await authStore.getClient(authStore.user.id);
+          const id = clientInfo.clientId;
+          const response = await axios.post(`/api/panier`, { id: id }, headers);
+          nombreProduitsDansPanier.value = response.data.length;
+      } catch (error) {
+          console.error('Erreur lors de la récupération des produits :', error);
+      }
   }
   
   onMounted(getNombreProduitsDansPanier);
   </script>
+  
+  
   

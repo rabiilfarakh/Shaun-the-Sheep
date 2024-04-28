@@ -89,56 +89,37 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      animals: [],
-      selectedAnimal: null,
+      animaux: [],
+      animalSelectionne: null,
       categories: [],
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     };
   },
   mounted() {
-    this.fetchAnimals();
-    this.fetchCategories(); 
+    this.recupererAnimaux();
+    this.recupererCategories(); 
   },
   methods: {
-    async fetchCategories() {
+    async recupererCategories() {
       try {
-        const response = await axios.get('/api/categorie');
-        this.categories = response.data;
-      } catch (error) {
-        console.error('Erreur lors de la récupération des catégories:', error);
+        const reponse = await axios.get('/api/categorie', { headers: this.headers });
+        this.categories = reponse.data;
+      } catch (erreur) {
+        console.error('Erreur lors de la récupération des catégories:', erreur);
       }
     },
 
-    async fetchAnimals() {
+    async recupererAnimaux() {
       try { 
-        const response = await axios.get('/api/getAnimals');
-        this.animals = response.data;
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données des animaux:', error);
+        const reponse = await axios.get('/api/getAnimaux', { headers: this.headers });
+        this.animaux = reponse.data;
+      } catch (erreur) {
+        console.error('Erreur lors de la récupération des données des animaux:', erreur);
       }
     },
-    prevPage() {
-      if (this.animals.current_page > 1) {
-        this.fetchPage(this.animals.current_page - 1);
-      }
-    },
-    nextPage() {
-      if (this.animals.current_page < this.animals.last_page) {
-        this.fetchPage(this.animals.current_page + 1);
-      }
-    },
-    async fetchPage(page) {
+    async supprimerAnimal(idAnimal) {
       try {
-        const response = await axios.get(`/api/getAnimals?page=${page}`);
-        this.animals = response.data;
-   
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données des animaux:', error);
-      }
-    },
-
-    async deleteAnimal(animalId) {
-      try {
-        await axios.delete(`/api/animal/${animalId}`);
+        await axios.delete(`/api/animal/${idAnimal}`, { headers: this.headers });
 
         await Swal.fire({
           icon: 'success',
@@ -147,14 +128,14 @@ export default {
           showConfirmButton: false,
           timer: 2000 
         });
-        this.fetchAnimals();
-      } catch (error) {
-        console.error('Erreur lors de la suppression de l\'animal:', error);
+        this.recupererAnimaux();
+      } catch (erreur) {
+        console.error('Erreur lors de la suppression de l\'animal:', erreur);
       }
     },
-    async updateAnimal() {
+    async mettreAJourAnimal() {
       try {
-        await axios.put(`/api/animal/${this.selectedAnimal.id}`, this.selectedAnimal);
+        await axios.put(`/api/animal/${this.animalSelectionne.id}`, this.animalSelectionne, { headers: this.headers });
         await Swal.fire({
           icon: 'success',
           title: 'Succès!',
@@ -162,29 +143,30 @@ export default {
           showConfirmButton: false,
           timer: 2000
         });
-        this.selectedAnimal = null; 
-        this.fetchAnimals();
-      } catch (error) {
-        console.error('Erreur lors de la mise à jour de l\'animal:', error);
+        this.animalSelectionne = null; 
+        this.recupererAnimaux();
+      } catch (erreur) {
+        console.error('Erreur lors de la mise à jour de l\'animal:', erreur);
       }
     },
-    showUpdatePopup(animalId) {
-      axios.get(`/api/getAnimal/${animalId}`,)
-        .then(response => {
-          this.selectedAnimal = response.data;
+    afficherPopupMiseAJour(idAnimal) {
+      axios.get(`/api/getAnimal/${idAnimal}`, { headers: this.headers })
+        .then(reponse => {
+          this.animalSelectionne = reponse.data;
         })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des détails de l\'animal:', error);
+        .catch(erreur => {
+          console.error('Erreur lors de la récupération des détails de l\'animal:', erreur);
         });
     },
-    closePopup() {
-      this.selectedAnimal = null;
+    fermerPopup() {
+      this.animalSelectionne = null;
     }
   },
   computed: {
     totalPages() {
-      return this.animals.last_page ? Array.from({ length: this.animals.last_page }, (_, i) => i + 1) : [];
+      return this.animaux.last_page ? Array.from({ length: this.animaux.last_page }, (_, i) => i + 1) : [];
     }
   }
 };
 </script>
+

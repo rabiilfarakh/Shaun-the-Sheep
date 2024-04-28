@@ -20,19 +20,14 @@
               <p class="text-xs leading-3 text-gray-800 md:pt-0 pt-4"></p>
               <div class="flex items-center justify-between w-full">
                 <p class="text-base font-black leading-none text-gray-800">{{ animal.name }}</p>
-                <select aria-label="Select quantity" class="py-2 px-1 border border-gray-200 mr-6 focus:outline-none">
-                  <option>01</option>
-                  <option>02</option>
-                  <option>03</option>
-                </select>
               </div>
-              <p class="text-xs leading-3 text-gray-600 pt-2">Catégorie: {{ animal.name }}</p>
-              <p class="mt-2 w-96 text-xs leading-3 text-gray-600">Lieu: {{ animal.lieu }}</p>
+              <p class="text-xs leading-3 text-black pt-2">Catégorie: <span class="text-gray-500">{{ animal.name }}</span></p>
+              <p class="mt-2 w-96 text-xs leading-3 text-black">Lieu: <span class="text-gray-500">{{ animal.lieu }}</span></p>
               <div class="flex items-center justify-between pt-5">
                 <div class="flex items-center">
                   <button @click="deleteProduct(animal.id)" class="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer">Remove</button>
                 </div>
-                <p class="text-base font-black leading-none text-gray-800">{{ animal.prix }} DH</p>
+                <p class="text-base font-black leading-none text-gray-800">{{ animal.prix }}.00 DH</p>
               </div>
             </div>
           </div>
@@ -50,25 +45,27 @@
           <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
           <div class="flex justify-between mt-10 mb-5">
             <span class="font-semibold text-sm uppercase">Items {{ animauxDansPaniers.length }}</span>
-            <span class="font-semibold text-sm">{{ total }} €</span>
+            <span class="font-semibold text-sm">{{ total }}.00 DH</span>
           </div>
           <div>
             <label class="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
             <select class="block p-2 text-gray-600 w-full text-sm">
-              <option>Standard shipping - 10.00 €</option>
+              <option>Standard shipping - 50.00 DH</option>
             </select>
           </div>
 
           <div class="border-t mt-8">
             <div class="flex font-semibold justify-between py-6 text-sm uppercase">
               <span>Total cost</span>
-              <span>{{ total }} €</span>
+              <span>{{ total }}.00 DH</span>
             </div>
-            <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+            <button @click="commande()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
           </div>
         </div>
       </div>
     </div>
+
+
     <Footer/>
   </div>
 </template>
@@ -100,7 +97,6 @@ async function getProduct() {
     const id = clientInfo.clientId;
     const response = await axios.post(`/api/panier`, { id: id }, headers);
     animauxDansPaniers.value = response.data;
-    console.log(animauxDansPaniers.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des produits :', error);
   }
@@ -108,7 +104,6 @@ async function getProduct() {
 
 async function deleteProduct(id){
   try{
-    console.log(id)
     const response = await axios.delete(`/api/product/panier/${id}`, headers);
     animauxDansPaniers.value = animauxDansPaniers.value.filter(animal => animal.id !== id);
     $toast.info('Ce produit a été supprimé de votre panier avec succès.');
@@ -118,12 +113,25 @@ async function deleteProduct(id){
   }
 }
 
+async function commande(){
+  try{
+    const arr = animauxDansPaniers.value.map(animal => animal.id);
+    const response = await axios.post(`/api/panier/commande`, { arr_id: arr }, headers);
+    // console.log(response);
+    
+    $toast.success('Les produits ont été achetés avec succès.');
+  } catch (erreur){
+    console.error('Erreur lors de l\'achat des produits :', erreur);
+  }
+}
+
+
 
 onMounted(getProduct);
 
 // Calcul du total en additionnant les prix de tous les animaux
 const total = computed(() => {
-  return animauxDansPaniers.value.reduce((sum, animal) => sum + animal.price, 0);
+  return animauxDansPaniers.value.reduce((sum, animal) => sum + animal.prix+50, 0);
 });
 </script>
 

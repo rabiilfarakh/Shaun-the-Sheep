@@ -1,7 +1,7 @@
 <template>
 
     <Head />
-    <Header />
+    <Header :getNombreProduitsDansPanier="getNombreProduitsDansPanier" />
     <div class="mx-auto container px-6 xl:px-0 py-12">
         <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
         <div class="flex flex-col">
@@ -94,6 +94,10 @@ const $toast = useToast({
     duration: 1000 
 });
 
+const props = defineProps({
+    getNombreProduitsDansPanier: Function // Type de prop à ajuster en fonction de ce qui est attendu
+});
+
 const authStore = AuthStore();
 const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
@@ -149,6 +153,7 @@ const addProduct = async (animalId) => {
         } else {
             const response = await axios.post(`api/product/panier`, { animal_id: animalId, client_id: clientId }, headers);
             $toast.success('Animal a été ajouté à votre panier avec succès.');
+            getNombreProduitsDansPanier();
         }
     } catch (error) {
         console.error('Une erreur s\'est produite lors de l\'ajout du produit au panier :', error);

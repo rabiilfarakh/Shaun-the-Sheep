@@ -85,7 +85,7 @@ export default {
       selectedCategorie: 'defaultCategoryId',
       image: null,
       lieu: '',
-      showSuccessMessage: false 
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     };
   },
 
@@ -96,7 +96,7 @@ export default {
   methods: {
     async fetchCategories() {
       try {
-        const response = await axios.get('/api/categorie');
+        const response = await axios.get('/api/categorie',{ headers: this.headers });
         console.log(response.data);
         this.categories = response.data;
       } catch (error) {
@@ -128,9 +128,7 @@ export default {
 
       try {
         const response = await axios.post('/api/animal', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          headers: this.headers,
         });
 
         await Swal.fire({
@@ -159,6 +157,7 @@ export default {
   }
 }
 </script>
+
 
 <style>
 .success-message {

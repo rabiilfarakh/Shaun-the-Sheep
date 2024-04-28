@@ -10,6 +10,8 @@ class Commande extends Model
     use HasFactory;
     protected $table = 'commandes';
 
+    protected $fillable = ['panier_id'];
+
     public function paniers()
     {
         return $this->hasMany(Panier::class);

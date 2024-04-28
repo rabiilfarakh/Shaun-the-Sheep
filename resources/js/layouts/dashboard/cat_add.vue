@@ -27,13 +27,14 @@
         return {
           categorie: '', // Variable pour stocker le nom de la catégorie à ajouter
           categories: [], // Initialisation de la liste des catégories
+          headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
         };
       },
   
       methods: {
         async addCategorie() {
           try {
-            const response = await axios.post(`/api/categorie`, { name: this.categorie });
+            const response = await axios.post(`/api/categorie`, { name: this.categorie }, { headers: this.headers });
             this.categories.push(response.data);
             this.categorie = '';
             Swal.fire('Succès', 'Catégorie ajoutée avec succès', 'success');
@@ -44,5 +45,4 @@
         },
       },
     };
-  </script>
-  
+</script>

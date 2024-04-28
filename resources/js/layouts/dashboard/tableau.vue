@@ -33,7 +33,6 @@
     <!-- Pagination et autres éléments -->
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 
@@ -41,6 +40,7 @@ export default {
   data() {
     return {
       clients: [],
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     };
   },
   mounted() {
@@ -49,7 +49,7 @@ export default {
   methods: {
     async fetchClients() {
       try { 
-        const response = await axios.get('/api/client');
+        const response = await axios.get('/api/client', { headers: this.headers });
         this.clients = response.data.map(client => ({
           ...client,
           status: client.status === 1 ? true : false, 
@@ -60,21 +60,17 @@ export default {
     },
 
     async toggleStatus(client) {
-    try {
-    
-
-      await axios.put(`/api/client/${client.id}`, { status: client.status });
-      this.fetchClients()
-     
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du statut du client:', error);
-      
-    }
-  },
-
+      try {
+        await axios.put(`/api/client/${client.id}`, { status: client.status }, { headers: this.headers });
+        this.fetchClients();
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour du statut du client:', error);
+      }
+    },
   },
 };
 </script>
+
 
 <style>
 /* Styles pour le switch button */

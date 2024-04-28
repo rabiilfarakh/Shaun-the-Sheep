@@ -109,7 +109,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+                </div>
 </template>
 
 <script>
@@ -120,6 +120,7 @@ export default {
     return {
       totalClients: 0,
       totalAnimals: 0,
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     };
   },
   mounted() {
@@ -130,7 +131,7 @@ export default {
 
     async fetchTotalClients() {
       try {
-        const response = await axios.get('/api/getClients');
+        const response = await axios.get('/api/getClients', { headers: this.headers });
         this.totalClients = response.data.length; 
       } catch (error) {
         console.error('Erreur lors de la récupération des statistiques des clients:', error);
@@ -139,10 +140,10 @@ export default {
 
     async fetchTotalAnimals(){
       try{
-        const response = await axios.get('/api/getAnimals');
+        const response = await axios.get('/api/getAnimals', { headers: this.headers });
         this.totalAnimals = response.data.length;
       }catch(error){
-        console.error('Erreur lors de la récupération des statistiques des animals:', error);
+        console.error('Erreur lors de la récupération des statistiques des animaux:', error);
       }
     }
 

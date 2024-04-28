@@ -61,7 +61,8 @@ export default {
   data() {
     return {
       categories: [],
-      selectedCategory: null
+      selectedCategory: null,
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     };
   },
   mounted() {
@@ -70,7 +71,7 @@ export default {
   methods: {
     async getCategories() {
       try {
-        const res = await axios.get(`/api/categorie`);
+        const res = await axios.get(`/api/categorie`, { headers: this.headers });
          this.categories = res.data;
       } catch (error) {
         console.error(error);
@@ -79,7 +80,7 @@ export default {
     },
     async updateCategory(id) {
       try {
-        const res = await axios.put(`/api/categorie/${id}`, this.selectedCategory);
+        const res = await axios.put(`/api/categorie/${id}`, this.selectedCategory, { headers: this.headers });
         this.getCategories();
         this.closePopup();
         Swal.fire('Succès', 'Catégorie mise à jour avec succès', 'success');
@@ -91,7 +92,7 @@ export default {
     },
     async deleteCategory(id) {
       try {
-        const res = await axios.delete(`/api/categorie/${id}`);
+        const res = await axios.delete(`/api/categorie/${id}`, { headers: this.headers });
         this.getCategories();
         Swal.fire('Succès', 'Catégorie supprimée avec succès', 'success');
       } catch (error) {
@@ -109,3 +110,4 @@ export default {
   }
 };
 </script>
+

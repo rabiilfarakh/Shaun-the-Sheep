@@ -8,9 +8,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PanierController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ProgressionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::apiResource('blog', BlogController::class);
     Route::get('/blog/{id}/animal', [BlogController::class, 'show']);
+
+    //commande 
+    Route::apiResource( '/panier/commande', CommandeController::class );
+
 });
 
 
