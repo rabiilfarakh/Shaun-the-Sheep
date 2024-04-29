@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head />
-    <Header/>
+    <Header />
     <div class="container mx-auto mt-10">
       <div class="sm:flex shadow-md my-10">
         <div class="w-full sm:w-3/4 bg-white px-10 py-10">
@@ -90,7 +90,6 @@ const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
 const animauxDansPaniers = ref([]);
 
-
 async function getProduct() {
   try {
     const clientInfo = await authStore.getClient(authStore.user.id);
@@ -122,11 +121,11 @@ async function commande(){
     console.log(response);    
     $toast.success('Les produits ont été achetés avec succès.');
     getProduct();
+    getNombreProduitsDansPanier();
   } catch (erreur){
     console.error('Erreur lors de l\'achat des produits :', erreur);
   }
 }
-
 
 onMounted(getProduct);
 
@@ -134,6 +133,7 @@ onMounted(getProduct);
 const total = computed(() => {
   return animauxDansPaniers.value.reduce((sum, animal) => sum + animal.prix+50, 0);
 });
+
 </script>
 
 <style scoped>
@@ -144,4 +144,6 @@ const total = computed(() => {
     margin: 0;
   }
 }
+
+
 </style>

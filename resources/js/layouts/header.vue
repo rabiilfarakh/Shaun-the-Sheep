@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
 </template>
   
@@ -67,6 +67,8 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import { AuthStore } from '../store/AuthStore';
+
+
 const authStore = AuthStore();
 const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
@@ -80,10 +82,13 @@ async function getNombreProduitsDansPanier() {
         const id = clientInfo.clientId;
         const response = await axios.post(`/api/panier`, { id: id }, headers);
         nombreProduitsDansPanier.value = response.data.length;
+        console.log('test');
     } catch (error) {
         console.error('Erreur lors de la récupération des produits :', error);
     }
 }
+
+
 
 async function fetchNotifications() {
   try {
@@ -113,7 +118,15 @@ function removeNotification(index) {
 }
 
 onMounted(fetchNotifications);
+
 </script>
+
+
+
+
+
+
+
   
   
   
