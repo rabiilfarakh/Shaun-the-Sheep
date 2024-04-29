@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //commande 
     Route::apiResource( '/panier/commande', CommandeController::class );
+    Route::post('/panier/getNotifs', [CommandeController::class, 'getNotifPanier']);
+    Route::post('/panier/getCommande', [CommandeController::class, 'getCommande']);
 
 });
 

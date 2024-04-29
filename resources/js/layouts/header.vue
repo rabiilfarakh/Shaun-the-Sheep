@@ -1,6 +1,6 @@
 <template>
 <div class="flex-col">
-    <header class="bg-red-400  h-24 sm:h-32 flex items-center z-30 w-full">
+    <header class=" h-24 sm:h-32 flex items-center z-30 w-full">
         <div class="container mx-auto px-6 flex items-center justify-between">
             <router-link class="text-gray-800 dark:text-white font-black text-3xl" to="/">
                 Farm<span class="text-3xl text-gray-600">Con</span>  
@@ -37,7 +37,7 @@
     </header>
                     <!-- notifications-->
               <div id="notifications" class="absolute top-0 right-0 mr-36 mt-24 hidden">
-                <div class='flex flex-col gap-3 bg-red-200 border p-2 border-gray-500 shadow-lg w-96 rounded-lg'>
+                <div class='flex flex-col gap-3 bg-gray-200 border p-2 border-gray-400 shadow-lg w-96 rounded-lg'>
                   <div class="relative border  rounded-lg bg-white  shadow-lg border-gray-400">
                             <button onClick='return this.parentNode.remove()'
                               class="absolute p-1 bg-gray-100 border border-gray-300 rounded-full -top-1 -right-1"
@@ -102,12 +102,29 @@ async function getNombreProduitsDansPanier() {
 
 async function afficheNotif(){
     const  notifs = document.getElementById("notifications");
+    const clientInfo = await authStore.getClient(authStore.user.id);
+    const id = clientInfo.clientId;
     if(notifs.style.display == "none"){
+        const response = await axios.post(`/api/panier/getCommande`, { client_id: id }, headers);
         notifs.style.display = "block";
+        console.log(response);
     }else{
         notifs.style.display = "none";
     }
 }
+
+
+// async function getNotifPanier(){
+//   try {
+//     const clientInfo = await authStore.getClient(authStore.user.id);
+//         const id = clientInfo.clientId;
+//         const response = await axios.post(`/api/panier/commande`, { client_id: id }, headers);
+//         console.log(response.value);
+
+//     } catch (error) {
+//         console.error('Erreur lors de la récupération des produits :', error);
+//     }
+// }
 
 onMounted(getNombreProduitsDansPanier);
 </script>

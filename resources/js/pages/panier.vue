@@ -59,7 +59,7 @@
               <span>Total cost</span>
               <span>{{ total }}.00 DH</span>
             </div>
-            <button @click="commande()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+            <button  @click="commande()" class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
           </div>
         </div>
       </div>
@@ -115,17 +115,17 @@ async function deleteProduct(id){
 
 async function commande(){
   try{
+    const clientInfo = await authStore.getClient(authStore.user.id);
+    const id = clientInfo.clientId;
     const arr = animauxDansPaniers.value.map(animal => animal.id);
-    const response = await axios.post(`/api/panier/commande`, { arr_id: arr }, headers);
-    // console.log(response);
-    getProduct();
-    
+    const response = await axios.post(`/api/panier/commande`, { arr_id: arr ,client_id:id}, headers);
+    console.log(response);    
     $toast.success('Les produits ont été achetés avec succès.');
+    getProduct();
   } catch (erreur){
     console.error('Erreur lors de l\'achat des produits :', erreur);
   }
 }
-
 
 
 onMounted(getProduct);

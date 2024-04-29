@@ -22,7 +22,6 @@ export const AuthStore = defineStore("AuthStore", {
         if (res.data.token) {
           localStorage.setItem("token", res.data.token);
           this.user = res.data.user;
-          // Send token in GET method
           await this.fetchUserData();
           return this.user;
         }
