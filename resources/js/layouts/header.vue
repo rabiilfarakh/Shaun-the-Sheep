@@ -29,52 +29,37 @@
                     </router-link>
                     <button class="py-2 px-6 flex relative ml-6">
                         <i @click="afficheNotif()" class="fas fa-bell fa-lg text-gray-800 dark:text-white"></i>
-                        <span class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ notification}}</span>
+                        <span class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
                     </button>                  
                 </nav>
             </div>
         </div>
     </header>
-                    <!-- notifications-->
-              <div id="notifications" class="absolute top-0 right-0 mr-36 mt-24 hidden">
-                <div class='flex flex-col gap-3 bg-gray-200 border p-2 border-gray-400 shadow-lg w-96 rounded-lg'>
-                  <div class="relative border  rounded-lg bg-white  shadow-lg border-gray-400">
-                            <button onClick='return this.parentNode.remove()'
-                              class="absolute p-1 bg-gray-100 border border-gray-300 rounded-full -top-1 -right-1"
-                            >
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-3 h-3"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                              >
-                                <path
-                                  fill-rule="evenodd"
-                                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                  clip-rule="evenodd"
-                                />
-                              </svg>
-                            </button>
-                          
-                            <div class="flex items-center p-4">
-                              <img
-                                class="object-cover w-12 h-12 rounded-lg"
-                                src="https://randomuser.me/api/portraits/women/71.jpg"
-                                alt=""
-                              />
-                          
-                              <div class="ml-3 overflow-hidden">
-                                <p class="font-medium text-gray-900">Jan Doe</p>
-                                <p class="max-w-xs text-sm text-gray-500 truncate">
-                                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet,
-                                  laborum?
-                                </p>
-                              </div>
-                            </div>
-                  </div>   
-                </div>
-              </div>
-</div>
+ <!-- Notifications -->
+ <div id="notifications" class="absolute top-0 right-0 mr-36 mt-24 hidden">
+      <div class='flex flex-col gap-3 bg-gray-200 border p-2 border-gray-400 shadow-lg w-96 rounded-lg'>
+        <!-- Loop through notifications -->
+        <div v-for="(notification, index) in notifications" :key="index" class="relative border rounded-lg bg-white shadow-lg border-gray-400">
+          <!-- Close button -->
+          <button @click="removeNotification(index)" class="absolute p-1 bg-gray-100 border border-gray-300 rounded-full -top-1 -right-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <!-- Notification content -->
+          <div class="flex items-center p-4">
+            <!-- Notification Avatar -->
+            <img class="object-cover w-12 h-12 rounded-lg" :src="notification.avatar" alt=""/>
+            <!-- Notification Text -->
+            <div class="ml-3 overflow-hidden">
+              <p class="font-medium text-gray-900">{{ notification.sender }}</p>
+              <p class="max-w-xs text-sm text-gray-500 truncate">{{ notification.message }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </template>
   
@@ -85,9 +70,9 @@ import { AuthStore } from '../store/AuthStore';
 const authStore = AuthStore();
 const token = localStorage.getItem('token');
 const headers = { headers: { 'Authorization': `Bearer ${token}` } };
-
-const nombreProduitsDansPanier = ref(0);
-const notification = ref(0);
+const nombreProduitsDansPanier = ref(0); 
+const nombreNotifs = ref(0); 
+const notifications = ref([]);
 
 async function getNombreProduitsDansPanier() {
     try {
@@ -100,35 +85,35 @@ async function getNombreProduitsDansPanier() {
     }
 }
 
-async function afficheNotif(){
-    const  notifs = document.getElementById("notifications");
+async function fetchNotifications() {
+  try {
     const clientInfo = await authStore.getClient(authStore.user.id);
     const id = clientInfo.clientId;
-    if(notifs.style.display == "none"){
-        const response = await axios.post(`/api/panier/getCommande`, { client_id: id }, headers);
-        notifs.style.display = "block";
-        console.log(response);
-    }else{
-        notifs.style.display = "none";
-    }
+    const response = await axios.post(`/api/panier/getCommande`, { client_id: id }, headers);
+    getNombreProduitsDansPanier();
+    notifications.value = response.data;
+    nombreNotifs.value = response.data.length;
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+  }
 }
 
+async function afficheNotif() {
+  const notifs = document.getElementById("notifications");
+  if (notifs.style.display === "none") {
+    await fetchNotifications();
+    notifs.style.display = "block";
+  } else {
+    notifs.style.display = "none";
+  }
+}
 
-// async function getNotifPanier(){
-//   try {
-//     const clientInfo = await authStore.getClient(authStore.user.id);
-//         const id = clientInfo.clientId;
-//         const response = await axios.post(`/api/panier/commande`, { client_id: id }, headers);
-//         console.log(response.value);
+function removeNotification(index) {
+  notifications.value.splice(index, 1);
+}
 
-//     } catch (error) {
-//         console.error('Erreur lors de la récupération des produits :', error);
-//     }
-// }
-
-onMounted(getNombreProduitsDansPanier);
+onMounted(fetchNotifications);
 </script>
-
   
   
   
