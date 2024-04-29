@@ -41,7 +41,7 @@ class CommandeController extends Controller
         foreach ($arr as $value) {
             $product = Commande::create(['panier_id' => $value,'client_id' => $request->client_id]);
             $panier = Panier::find($value);
-            $panier->update([ 'status' => 'false']);
+            $panier->update([ 'status' => false]);
         }
 
         return response()->json($product, 200);
