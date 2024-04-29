@@ -88,11 +88,13 @@ class PanierController extends Controller
     }
 
     public function panier_exist(Request $request){
-        
-        if (Panier::where("client_id", $request->client_id)->where("animal_id", $request->animal_id)->exists()->where("status",'true')) {    
+        if (Panier::where("client_id", $request->client_id)
+                  ->where("animal_id", $request->animal_id)
+                  ->where("status", true)
+                  ->exists()) {    
             return 1;
         }
         return 0;
     }
-
+    
 }
