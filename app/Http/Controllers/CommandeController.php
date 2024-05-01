@@ -62,7 +62,7 @@ class CommandeController extends Controller
      */
     public function edit(Commande $commande)
     {
-        //
+
     }
 
     /**
@@ -78,7 +78,8 @@ class CommandeController extends Controller
      */
     public function destroy(Commande $commande)
     {
-        //
+        $resultat = $commande->delete();
+        return response()->json($resultat, 200);
     }
     public function getNotifPanier(StoreCommandeRequest $request){
         $validatedData = $request->validated();
@@ -96,8 +97,10 @@ class CommandeController extends Controller
         $resultats = DB::table('animals as a')
         ->join('paniers as p', 'p.animal_id', '=', 'a.id')
         ->join('commandes as c', 'c.panier_id', '=', 'p.id')
+        ->join('images as i','i.imageable_id',"=","a.id")
+        // ->join('categories as cat','cat.id','=','a.categorie_id')
         ->where('c.client_id', $request->client_id)
-        ->select('a.*')
+        ->select('a.prix','i.url','c.id')
         ->get();
 
         return response()->json($resultats, 200);

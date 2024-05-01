@@ -213,7 +213,7 @@ const $toast = useToast({
 });
 
 const props = defineProps({
-    getNombreProduitsDansPanier: Function // Type de prop à ajuster en fonction de ce qui est attendu
+    getNombreProduitsDansPanier: Function 
 });
 
 const fetchAnimals = async (page = 1) => {

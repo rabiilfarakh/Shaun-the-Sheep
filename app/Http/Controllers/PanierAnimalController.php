@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facture;
-use App\Http\Requests\StoreFactureRequest;
-use App\Http\Requests\UpdateFactureRequest;
+use App\Models\panier_animal;
+use App\Http\Requests\Storepanier_animalRequest;
+use App\Http\Requests\Updatepanier_animalRequest;
 
-class FactureController extends Controller
+class PanierAnimalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class FactureController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreFactureRequest $request)
+    public function store(Storepanier_animalRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class FactureController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Facture $facture)
+    public function show(panier_animal $panier_animal)
     {
         //
     }
@@ -43,7 +43,7 @@ class FactureController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Facture $facture)
+    public function edit(panier_animal $panier_animal)
     {
         //
     }
@@ -51,7 +51,7 @@ class FactureController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateFactureRequest $request, Facture $facture)
+    public function update(Updatepanier_animalRequest $request, panier_animal $panier_animal)
     {
         //
     }
@@ -59,7 +59,7 @@ class FactureController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Facture $facture)
+    public function destroy(panier_animal $panier_animal)
     {
         //
     }

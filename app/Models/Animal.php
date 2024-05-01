@@ -32,11 +32,6 @@ class Animal extends Model
         return $this->belongsTo(Categorie::class);
     }
 
-    public function nouritures()
-    {
-        return $this->belongsToMany(Nouriture::class, 'animal_nourriture');
-    }
-
     public function image()
     {
         return $this->morphOne(Image::class, 'imageable');
@@ -44,6 +39,6 @@ class Animal extends Model
 
     public function panier()
     {
-        return $this->hasOne(Panier::class);
+        return $this->belongsToMany(Panier::class);
     }
 }

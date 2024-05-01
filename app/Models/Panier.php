@@ -13,7 +13,7 @@ class Panier extends Model
 
     public function animal()
     {
-        return $this->belongsTo(Animal::class);
+        return $this->belongsToMany(Animal::class);
     }
 
     public function client()
