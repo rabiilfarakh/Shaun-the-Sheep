@@ -65,10 +65,6 @@ public function getAnimal($id){
     public function store(StoreAnimalRequest $request)
     {
         $validatedData = $request->validated();
-        
-
-        $user_id = 1;
-        //  Auth::id();
         $image=new Image();
         $animal = Animal::create([
             
