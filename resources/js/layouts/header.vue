@@ -33,7 +33,7 @@
     </header>
 
     <!-- Menu pour les écrans petits -->
-    <nav v-if="showMenu" class="shadow-lg font-sen text-gray-00 dark:text-white uppercase text-lg lg:hidden flex flex-col justify-center items-center h-full">
+    <nav v-if="showMenu" class="shadow-sm font-sen text-gray-00 dark:text-white uppercase text-lg lg:hidden flex flex-col justify-center items-center h-full">
       <router-link to="/index" class="py-2 px-6 flex">Home</router-link>
       <router-link to="/blog" class="py-2 px-6 flex">Blog</router-link>
       <router-link to="/product" class="py-2 px-6 flex">Product</router-link>
