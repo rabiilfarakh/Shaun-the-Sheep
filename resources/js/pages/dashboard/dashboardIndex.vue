@@ -52,24 +52,58 @@
           <ul>
 
             <li class="relative px-6 py-3">
-              <a
-                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                href="tables.html"
-              >
-                <svg
-                  class="w-5 h-5"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <button
+                  class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                  @click="toggleBlogMenu"
+                  aria-haspopup="true"
                 >
-                  <path d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                </svg>
-                <span class="ml-4">Tables</span>
-              </a>
+                  <span class="inline-flex items-center">
+                    <svg
+                      class="w-5 h-5"
+                      aria-hidden="true"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"
+                      ></path>
+                    </svg>
+                    <span class="ml-4">Blog Crud</span>
+                  </span>
+                  <svg
+                    class="w-4 h-4"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+                <template v-if="isBlogMenuOpen">
+                  <ul
+                    class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-red dark:text-gray-400 dark:bg-gray-900"
+                    aria-label="submenu"
+                  >
+                    <li
+                      class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    >
+                      <router-link class="w-full" to="/dashboard/blog_add">Add Blog</router-link>
+                    </li>
+                    <li
+                      class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
+                    >
+                    <router-link class="w-full" to="/dashboard/blog_update">Update && Delete</router-link>
+                    </li>
+                  </ul>
+                </template>
             </li>
             <li class="relative px-6 py-3">
                 <button
@@ -169,16 +203,12 @@
                     <li
                       class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
                     >
-                      <router-link class="w-full" to="/dashboard/categorie_add">Add Catégorie</router-link>
-                    </li>
-                    <li
-                      class="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                    >
                       <router-link class="w-full" to="/dashboard/categorie_update">Update && delete</router-link>
                     </li>
                   </ul>
                 </template>
             </li>
+
             <li class="relative px-6 py-3">
                 <button
                   class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
@@ -298,12 +328,16 @@ export default {
         return {
             isFormsMenuOpen: false,
             isAuthMenuOpen: false,
-            isCatMenuOpen: false
+            isCatMenuOpen: false,
+            isBlogMenuOpen: false
         };
     },
     methods: {
         toggleFormsMenu() {
             this.isFormsMenuOpen = !this.isFormsMenuOpen;
+        },
+        toggleBlogMenu() {
+            this.isBlogMenuOpen = !this.isBlogMenuOpen;
         },
         toggleAuthMenu() {
             this.isAuthMenuOpen = !this.isAuthMenuOpen;

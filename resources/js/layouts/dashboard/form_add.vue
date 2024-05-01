@@ -10,22 +10,7 @@
         class="mt-1 focus:outline-none focus:border-purple-400 focus:shadow-outline-purple dark:focus:shadow-outline-gray" />
     </label>
 
-    <!-- Status -->
-    <label class="block mt-4 text-sm">
-      <span class="text-gray-700 dark:text-gray-400">Status</span>
-      <div class="mt-2">
-        <button
-          class="px-4 py-2 bg-gray-200 rounded-lg dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-green-500 hover:text-white"
-          @click="status = true" :class="{ 'bg-green-500 text-white': status === true }">
-          Available
-        </button>
-        <button
-          class="px-4 py-2 ml-2 bg-gray-200 rounded-lg dark:bg-gray-700 text-gray-800 dark:text-gray-300 transition-colors duration-300 ease-in-out hover:bg-red-500 hover:text-white"
-          @click="status = 'false'" :class="{ 'bg-red-500 text-white': status === false }">
-          Not Available
-        </button>
-      </div>
-    </label>
+
 
     <!-- Ville -->
     <label class="block mt-4 text-sm">

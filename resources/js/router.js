@@ -4,7 +4,8 @@ import { AuthStore } from "@/store/AuthStore";
 import dashboardIndex from './pages/dashboard/dashboardIndex.vue';
 import animal_add from './pages/dashboard/animal_add.vue';
 import animal_update from './pages/dashboard/animal_update.vue';
-import categorie_add from './pages/dashboard/categorie_add.vue';
+import blog_add from './pages/dashboard/blog_add.vue';
+import blog_update from './pages/dashboard/blog_update.vue';
 import categorie_update from './pages/dashboard/categorie_update.vue';
 //-------------------------- fin--------------------------------
 
@@ -38,10 +39,14 @@ const routes = [
     component: animal_update,
     meta: { requiresAuth: true , role: "admin"} 
   },
-
   {
-    path: '/dashboard/categorie_add',
-    component: categorie_add,
+    path: '/dashboard/blog_add',
+    component: blog_add,
+    meta: { requiresAuth: true , role: "admin"} 
+  },
+  {
+    path: '/dashboard/blog_update',
+    component: blog_update,
     meta: { requiresAuth: true , role: "admin"} 
   },
   {

@@ -64,7 +64,12 @@ class BlogController extends Controller
      */
     public function update(UpdateBlogRequest $request, Blog $blog)
     {
-        //
+        $blog->update([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ]);
+    
+        return response()->json(['message' => 'Blog mis à jour avec succès'], 200);
     }
 
     /**
@@ -72,6 +77,7 @@ class BlogController extends Controller
      */
     public function destroy(Blog $blog)
     {
-        //
+        $resultat = $blog->delete();
+        return response()->json($resultat, 200);
     }
 }

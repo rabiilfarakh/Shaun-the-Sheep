@@ -11,7 +11,6 @@ class Blog extends Model
 
     protected $table = 'blogs';
     protected $fillable = [
-        'id',
         'title',
         'content',
     ];
@@ -26,8 +25,4 @@ class Blog extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function review()
-    {
-        return $this->belongsTo(Review::class);
-    }
 }

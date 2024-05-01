@@ -574,7 +574,7 @@
                 </h2>
     
                 <!-- form add -->
-                <Cat_add/>
+                <Blog_update/>
               </div>
             </main>
           </div>
@@ -584,7 +584,7 @@
     </template>
     
     <script setup>
-      import Cat_add from "../../layouts/dashboard/cat_add.vue"
+      import Blog_update from "../../layouts/dashboard/blog_update.vue"
     </script>
 <script>
 export default {
