@@ -574,7 +574,7 @@
                 </h2>
     
                 <!-- form add -->
-                <Form_add/>
+                <Blog_add/>
               </div>
             </main>
           </div>
@@ -584,7 +584,7 @@
     </template>
     
     <script setup>
-      import Form_add from "../../layouts/dashboard/form_add.vue"
+      import Blog_add from "../../layouts/dashboard/blog_add.vue"
     </script>
 <script>
 export default {

@@ -19,7 +19,8 @@
           </router-link>
           <button class="py-2 px-6 flex relative ml-6">
             <i @click="afficheNotif()" class="fas fa-bell fa-lg text-gray-800 dark:text-white"></i>
-            <span class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
+            <span v-if="nombreNotifs > 0" class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
+            <span v-if="nombreNotifs < 1" class="text-center h-7 w-7 ml-3  text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
           </button>                  
         </nav>
         <!-- Bouton de menu pour les écrans petits -->

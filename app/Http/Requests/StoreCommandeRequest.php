@@ -22,7 +22,7 @@ class StoreCommandeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'arr_id' => 'required|array',
+            'arr_id' => 'required',
         ];
     }
 }

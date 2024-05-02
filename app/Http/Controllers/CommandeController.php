@@ -34,15 +34,12 @@ class CommandeController extends Controller
      */
     public function store(StoreCommandeRequest $request)
     {
-        // dd($request->client_id);
         $validatedData = $request->validated();
         $arr = $validatedData[ 'arr_id' ];
-
-        foreach ($arr as $value) {
-            $product = Commande::create(['panier_id' => $value,'client_id' => $request->client_id]);
-            $panier = Panier::find($value);
+            
+            $product = Commande::create(['panier_id' => $arr,'client_id' => $request->client_id]);
+            $panier = Panier::find($arr);
             $panier->update([ 'status' => false]);
-        }
 
         return response()->json($product, 200);
     }

@@ -179,7 +179,15 @@ export default {
     },
     fermerPopup() {
       this.animalSelectionne = null;
+    },
+
+    async nextPage() {
+      if (this.animaux.current_page < this.animaux.last_page) {
+        const page = this.animaux.current_page + 1;
+        await this.fetchPage(page);
+      }
     }
+
   },
   computed: {
     totalPages() {

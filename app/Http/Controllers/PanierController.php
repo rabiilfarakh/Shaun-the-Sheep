@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePanierRequest;
 use App\Http\Requests\UpdatePanierRequest;
+use App\Models\panier_animal;
 
 class PanierController extends Controller
 {
@@ -32,14 +33,32 @@ class PanierController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StorePanierRequest $request)
-    {       
-        $validatedData = $request->validated();
-        $product = Panier::create($validatedData);
-        
-        
-        return response()->json($product, 200);
-    }
+    {
 
+        $validatedData = $request->validate([
+            'animal_id' => 'required|exists:animals,id',
+            'client_id' => 'required|exists:clients,id',
+        ]);
+
+
+        $panier = Panier::where('client_id', $validatedData['client_id'])->first();
+
+
+        if ($panier) {
+            $panier->animals()->attach($validatedData['animal_id']);
+            return response()->json(["message" => "Animal added to existing panier successfully"], 200);
+        }
+
+        $panier = Panier::create([
+            'animal_id' => $validatedData['animal_id'], 'client_id' => $validatedData['client_id'],
+        ]);
+
+
+        $panier->animals()->attach($validatedData['animal_id']);
+
+
+        return response()->json(["message" => "Panier created successfully"], 200);
+    }
     /**
      * Display the specified resource.
      */
@@ -67,34 +86,38 @@ class PanierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Panier $panier)
+    public function destroyA(Request $request)
     {
-        $panier->delete();
+        // dd($request);
+        panier_animal::where('animal_id', $request->idAnimal)->delete();
+        // $request->delete();
         return response()->json(['message' => 'product supprime avec succès']);
     }
 
     public function getProductClient(Request $request)
     {
-        $animauxDansPaniers = DB::table('paniers as p')
-            ->join('animals as a', 'a.id', '=', 'p.animal_id')
-            ->join('categories as c', 'c.id', '=', 'a.categorie_id')
-            ->join('images as i', 'i.imageable_id', '=', 'a.id')
-            ->select('p.*', 'c.name', 'a.lieu','a.prix','i.url')
-            ->where('p.client_id', $request->id)
-            ->where('p.status',true)
-            ->get();
-    
+    $animauxDansPaniers = DB::table('animals as a')
+        ->join('panier_animal as pn', 'a.id', '=', 'pn.animal_id')
+        ->join('paniers as p', 'p.id', '=', 'pn.panier_id')
+        ->join('categories as c', 'c.id', '=', 'a.categorie_id')
+        ->join('images as i', 'i.imageable_id', '=', 'a.id')
+        ->where('p.client_id', $request->id)
+        ->where('p.status',true)
+        ->select('pn.*', 'c.name', 'a.lieu', 'a.prix', 'i.url')
+        ->get();
+
         return response()->json($animauxDansPaniers);
     }
 
-    public function panier_exist(Request $request){
+    public function panier_exist(Request $request)
+    {
         if (Panier::where("client_id", $request->client_id)
-                  ->where("animal_id", $request->animal_id)
-                  ->where("status", true)
-                  ->exists()) {    
+            ->where("animal_id", $request->animal_id)
+            ->where("status", true)
+            ->exists()
+        ) {
             return 1;
         }
         return 0;
     }
-    
 }

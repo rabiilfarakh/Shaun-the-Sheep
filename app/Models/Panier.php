@@ -11,9 +11,9 @@ class Panier extends Model
     protected $table = 'paniers';
     protected $fillable = ['animal_id','client_id','status'];
 
-    public function animal()
+    public function animals()
     {
-        return $this->belongsToMany(Animal::class);
+        return $this->belongsToMany(Animal::class, 'panier_animal', 'panier_id', 'animal_id');
     }
 
     public function client()

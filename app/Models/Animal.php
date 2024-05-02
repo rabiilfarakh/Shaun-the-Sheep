@@ -37,7 +37,7 @@ class Animal extends Model
         return $this->morphOne(Image::class, 'imageable');
     }
 
-    public function panier()
+    public function paniers()
     {
         return $this->belongsToMany(Panier::class);
     }

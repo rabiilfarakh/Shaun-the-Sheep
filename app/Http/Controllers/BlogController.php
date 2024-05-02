@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Image;
 use App\Models\Blog;
 use App\Http\Requests\StoreBlogRequest;
 use App\Http\Requests\UpdateBlogRequest;
-use App\Models\Comment;
 
 class BlogController extends Controller
 {
@@ -31,7 +30,31 @@ class BlogController extends Controller
      */
     public function store(StoreBlogRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        
+        // Crée le blog
+        $blog = Blog::create([
+            'title' => $validatedData['title'],
+            'content' => $validatedData['content'],
+        ]);
+
+        // Vérifie s'il y a une image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $name = $file->getClientOriginalName();
+
+            // Enregistre l'image dans le dossier public/images
+            $file->storeAs('images', $name, 'public');
+
+            // Crée une entrée dans la table images pour lier l'image au blog
+            $image = new Image();
+            $image->url = $name;
+            $image->imageable_id = $blog->id;
+            $image->imageable_type = Blog::class;
+            $image->save();
+        }
+
+        return response()->json(['message' => 'Blog créé avec succès']);
     }
 
     /**

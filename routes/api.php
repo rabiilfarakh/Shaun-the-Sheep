@@ -12,6 +12,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\panier_animalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,7 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     //commande 
     Route::apiResource( '/panier/commande', CommandeController::class );
-    Route::post('/panier/getNotifs', [CommandeController::class, 'getNotifPanier']);
+    Route::post( '/product/panier/deleteA', [PanierController::class, 'destroyA'] );
     Route::post('/panier/getCommande', [CommandeController::class, 'getCommande']);
 
 });

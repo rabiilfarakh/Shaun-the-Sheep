@@ -111,8 +111,6 @@
         try { 
           const reponse = await axios.get('/api/blog', { headers: this.headers });
           this.blogs = reponse.data;
-
-          console.log(reponse.data);
         } catch (erreur) {
           console.error('Erreur lors de la récupération des données des blogs:', erreur);
         }
@@ -156,9 +154,7 @@
       showUpdatePopup(idBlog) {
         axios.get(`/api/blog/${idBlog}`, { headers: this.headers })
             .then(reponse => {
-            console.log(reponse.data);
             this.blogSelectionne = reponse.data.blog;
-            console.log(this.blogSelectionne.blog);
         })
         .catch(erreur => {
         console.error('Erreur lors de la récupération des détails du blog:', erreur);
