@@ -34,31 +34,26 @@ class PanierController extends Controller
      */
     public function store(StorePanierRequest $request)
     {
-
-        $validatedData = $request->validate([
-            'animal_id' => 'required|exists:animals,id',
-            'client_id' => 'required|exists:clients,id',
-        ]);
-
-
+        $validatedData = $request->validated();
+    
+        // Vérifie si un panier existe pour le client donné
         $panier = Panier::where('client_id', $validatedData['client_id'])->first();
-
-
+    
         if ($panier) {
+            // Ajoute l'animal au panier existant
             $panier->animals()->attach($validatedData['animal_id']);
             return response()->json(["message" => "Animal added to existing panier successfully"], 200);
         }
-
+    
+        // Crée un nouveau panier avec l'animal donné
         $panier = Panier::create([
-            'animal_id' => $validatedData['animal_id'], 'client_id' => $validatedData['client_id'],
+            'client_id' => $validatedData['client_id']
         ]);
-
-
         $panier->animals()->attach($validatedData['animal_id']);
-
-
+    
         return response()->json(["message" => "Panier created successfully"], 200);
     }
+    
     /**
      * Display the specified resource.
      */
