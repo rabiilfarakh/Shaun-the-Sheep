@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreCommandeRequest;
 
 use App\Http\Requests\UpdateCommandeRequest;
+use App\Models\panier_animal;
 use Symfony\Component\HttpFoundation\Request;
 
 class CommandeController extends Controller
@@ -35,14 +36,19 @@ class CommandeController extends Controller
     public function store(StoreCommandeRequest $request)
     {
         $validatedData = $request->validated();
-        $arr = $validatedData[ 'arr_id' ];
-            
-            $product = Commande::create(['panier_id' => $arr,'client_id' => $request->client_id]);
-            $panier = Panier::find($arr);
-            $panier->update([ 'status' => false]);
 
+        panier_animal::where('panier_id', $request->panier_id)->update(['status' => false]);
+    
+        // Créer la commande
+        $product = Commande::create([
+            'panier_id' => $request->panier_id,
+            'client_id' => $request->client_id
+        ]);
+    
         return response()->json($product, 200);
     }
+    
+    
     
 
 
@@ -101,6 +107,16 @@ class CommandeController extends Controller
         ->get();
 
         return response()->json($resultats, 200);
+    }
+
+    public function deleteStatus(Request $request)
+    {
+        dd($request);
+        // $panier = Panier::findOrFail($id);
+
+        // $panier->update(['status' => false]);
+
+        // return response()->json(['message' => 'Statut du panier mis à jour avec succès'], 200);
     }
     
 }

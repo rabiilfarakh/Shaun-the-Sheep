@@ -22,7 +22,8 @@ class StoreCommandeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'arr_id' => 'required',
+            'panier_id' => 'required',
+            'client_id' => 'required',
         ];
     }
 }

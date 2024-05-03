@@ -102,7 +102,7 @@ class PanierController extends Controller
         ->join('categories as c', 'c.id', '=', 'a.categorie_id')
         ->join('images as i', 'i.imageable_id', '=', 'a.id')
         ->where('p.client_id', $request->id)
-        ->where('p.status',true)
+        ->where('pn.status',true)
         ->select('pn.*', 'c.name', 'a.lieu', 'a.prix', 'i.url')
         ->get();
 

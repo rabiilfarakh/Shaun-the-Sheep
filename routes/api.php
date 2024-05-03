@@ -58,6 +58,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post( '/product/panier/deleteA', [PanierController::class, 'destroyA'] );
     Route::post('/panier/getCommande', [CommandeController::class, 'getCommande']);
 
+    Route::post('/panier/commande/deleteStatus', [CommandeController::class, 'deleteStatus']);
+
 });
 
 

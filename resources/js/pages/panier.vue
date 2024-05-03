@@ -25,6 +25,7 @@
             <span v-if="nombreNotifs < 1" class="text-center h-7 w-7 ml-3  text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
           </button>                  
         </nav>
+        <router-link to="/logout" class="text-sm border-b border-gray-500">Logout</router-link>
         <!-- Bouton de menu pour les écrans petits -->
         <button class="lg:hidden flex items-center" @click="toggleMenu">
           <svg class="h-6 w-6 fill-current text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -56,7 +57,7 @@
 
 
     <!-- Notifications -->
-    <div id="notifications" class="absolute top-0 right-0 mr-36 mt-24 hidden">
+    <div id="notifications" class="absolute top-0 right-0 mr-80 mt-24 hidden">
       <div class='flex flex-col gap-3 bg-gray-200 border p-2 border-gray-400 shadow-lg w-96 rounded-lg'>
         <!-- Loop through notifications -->
         <div v-for="(notification, index) in notifications" :key="index" class="relative border rounded-lg bg-white shadow-lg border-gray-400">
@@ -203,8 +204,8 @@ async function commande(){
   try{
     const clientInfo = await authStore.getClient(authStore.user.id);
     const id = clientInfo.clientId;
-    const arr = animauxDansPaniers.value[0].id;
-    const response = await axios.post(`/api/panier/commande`, { arr_id: arr ,client_id:id}, headers);
+    const panier_id = animauxDansPaniers.value[0].panier_id;
+    const response = await axios.post(`/api/panier/commande`, { panier_id: panier_id ,client_id:id}, headers);
     console.log(response);    
     $toast.success('Les produits ont été achetés avec succès.');
     getProduct();
@@ -257,7 +258,7 @@ async function afficheNotif() {
 }
 
 async function removeNotification(id) {
-  const response = await axios.delete(`/api/panier/commande${id}`, headers);
+  const response = await axios.post(`/panier/commande/deleteStatus`,{id:id},{headers});
   console.log(response);
 }
 

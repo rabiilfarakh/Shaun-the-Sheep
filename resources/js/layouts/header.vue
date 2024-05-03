@@ -21,8 +21,12 @@
             <i @click="afficheNotif()" class="fas fa-bell fa-lg text-gray-800 dark:text-white"></i>
             <span v-if="nombreNotifs > 0" class="text-center h-7 w-7 ml-3 bg-red-500 text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
             <span v-if="nombreNotifs < 1" class="text-center h-7 w-7 ml-3  text-white font-semibold rounded-full absolute -top-3 ">{{ nombreNotifs}}</span>
-          </button>                  
+          </button>      
+          
+          
         </nav>
+        <router-link to="/logout" class="text-sm border-b border-gray-500">Logout</router-link>
+
         <!-- Bouton de menu pour les écrans petits -->
         <button class="lg:hidden flex items-center" @click="toggleMenu">
           <svg class="h-6 w-6 fill-current text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -20,7 +20,7 @@
               </div>
               <input v-model="user.password" :class="{ 'border-red-500': !user.password || !passwordRegex.test(user.password) }" class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none" type="password" />
               <span v-if="!user.password" class="text-red-500 text-xs">Password is required</span>
-              <span v-if="user.password && !passwordRegex.test(user.password)" class="text-red-500 text-xs">Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.</span>
+              <span v-if="user.password && !passwordRegex.test(user.password)" class="text-red-500 text-xs">Password must contain at least 8 characters</span>
             </div>
             <div class="mt-8">
               <button @click="login" type="submit" class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600">Login</button>
@@ -52,7 +52,8 @@ export default {
       user: { email: "", password: "" , role:""},
       message: '',
       emailRegex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      passwordRegex:/^(?=.*[a-z])(?=.*[@$!%*?&])[^A-Z0-9\s]{8,}$/
+      passwordRegex:/^[^\s]{8,}$/
+
     };
   },
   methods: {
@@ -63,7 +64,7 @@ export default {
     }
 
     if (!this.user.password || !this.passwordRegex.test(this.user.password)) {
-        this.message = "Password must contain at least 8 characters, including uppercase, lowercase, number, and special character.";
+        this.message = "Password must contain at least 8 characters";
         return;
     }
     
