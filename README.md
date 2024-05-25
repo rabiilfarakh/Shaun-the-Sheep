@@ -1,12 +1,16 @@
+## Diagramme de classe
 ![image](https://github.com/rabiilfarakh/Shaun-the-Sheep/assets/109187438/732d0099-71fb-43a2-a2d5-3246974468cd)
 
-
+## Home
 ![image](https://github.com/rabiilfarakh/Shaun-the-Sheep/assets/109187438/2fbbd701-720e-4704-b51b-1a883237974f)
 
+## Blog
 ![image](https://github.com/rabiilfarakh/Shaun-the-Sheep/assets/109187438/b48c26a1-a3f1-441f-a04c-e7cb46215a9b)
 
+## Animaux
 ![image](https://github.com/rabiilfarakh/Shaun-the-Sheep/assets/109187438/ab1fefa4-951e-4341-aeab-14b8e3dfa82d)
 
+## Panier
 ![image](https://github.com/rabiilfarakh/Shaun-the-Sheep/assets/109187438/e156ca15-a11b-400c-99fc-5f0e12ee2e68)
 
 ## Admin
